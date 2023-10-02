@@ -1,12 +1,20 @@
+/*
+ * Copyright (c) 2023 by Yp Z (frostime). All Rights Reserved.
+ * @Author       : Yp Z
+ * @Date         : 2023-10-02 20:30:13
+ * @FilePath     : /src/index.ts
+ * @LastEditTime : 2023-10-02 22:35:24
+ * @Description  : 
+ */
 import {
     Plugin,
     Menu
 } from "siyuan";
-import "@/index.css";
+import "@/index.scss";
 
 import { setBlockAttrs } from "./api"
 import  * as create from "./creator";
-import { LightCSSVar, DarkCSSVar } from "./var";
+// import { LightCSSVar, DarkCSSVar } from "./var";
 
 const NewButton = [
     create.Info, create.Check, create.Question, create.Warn, create.Light, create.quoteError, create.Bug, create.Wrong, create.Bell, create.Note, create.Pen
@@ -18,17 +26,17 @@ async function setUpAttr(blockId: BlockId, value: string) {
     });
 }
 
-const insertCSSScript = (id: string, css: string) => {
-    const style = document.createElement("style");
-    style.id = id;
-    style.innerHTML = css;
-    document.head.appendChild(style);
-}
+// const insertCSSScript = (id: string, css: string) => {
+//     const style = document.createElement("style");
+//     style.id = id;
+//     style.innerHTML = css;
+//     document.head.appendChild(style);
+// }
 
-const removeCSSScript = (id: string) => {
-    const style = document.getElementById(id);
-    style?.remove();
-}
+// const removeCSSScript = (id: string) => {
+//     const style = document.getElementById(id);
+//     style?.remove();
+// }
 
 export default class BqCalloutPlugin extends Plugin {
 
@@ -37,13 +45,13 @@ export default class BqCalloutPlugin extends Plugin {
 
     async onload() {
         //@ts-ignore
-        let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
-        insertCSSScript(this.CSSRoot, css);
+        // let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
+        // insertCSSScript(this.CSSRoot, css);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
     }
 
     async onunload() {
-        removeCSSScript(this.CSSRoot);
+        // removeCSSScript(this.CSSRoot);
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
     }
 
