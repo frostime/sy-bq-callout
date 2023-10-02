@@ -7,12 +7,12 @@
   "backends": ["all"],
   "frontends": ["all"],
   "displayName": {
-    "en_US": "Plugin sample with vite",
-    "zh_CN": "插件样例 vite 版"
+    "en_US": "Blockquote Callout",
+    "zh_CN": "引述块 Callout"
   },
   "description": {
-    "en_US": "SiYuan plugin sample with vite",
-    "zh_CN": "使用 vite 开发的思源插件样例"
+    "en_US": "A callout based on blockquote.",
+    "zh_CN": "基于引述块实现的 callout"
   },
   "readme": {
     "en_US": "README.md",

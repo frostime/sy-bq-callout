@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2023 by Roy. All Rights Reserved.
- * @Author       : 
+ * @Author       : Roy; frostime
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.css
- * @LastEditTime : 2023-10-02 21:12:52
+ * @LastEditTime : 2023-10-02 21:26:52
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* 引述 */
@@ -49,7 +49,8 @@
 .bq[custom-b~=bell][data-type="NodeHeading"]:first-child {
     font-weight: 700 !important;
     font-size: 1.3em !important;
-    padding: 0em 0em 0em 1.7em;
+    padding: 0em 0em 0em 1.7em !important;
+    background: var(--b3-theme-primary-light);
 }
 
 /* 引述callout段落的内边距 */
@@ -79,7 +80,7 @@
 .bq[custom-b~=pen],
 .bq[custom-b~=note],
 .bq[custom-b~=bell] {
-    padding-left: 8px;
+    padding-left: 8px !important;
 }
 
 /* 引述callout列表的内边距 */
@@ -94,7 +95,7 @@
 .bq[custom-b~=pen] .list,
 .bq[custom-b~=note] .list,
 .bq[custom-b~=bell] .list {
-    padding-left: 1.6em;
+    padding-left: 1.6em !important;
 }
 
 .bq[custom-b~=error] .list .p,
@@ -108,7 +109,7 @@
 .bq[custom-b~=pen] .list .p,
 .bq[custom-b~=note] .list .p,
 .bq[custom-b~=bell] .list .p {
-    padding-left: 0em;
+    padding-left: 0em !important;
 }
 
 /*错误*/
