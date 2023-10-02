@@ -1,8 +1,8 @@
 {
-  "name": "plugin-sample-vite",
-  "author": "frostime",
-  "url": "https://github.com/frostime/plugin-sample-vite",
-  "version": "0.2.3",
+  "name": "sy-bq-callout",
+  "author": "roy",
+  "url": "https://github.com/frostime/sy-bq-callout",
+  "version": "0.1.0",
   "minAppVersion": "2.10.3",
   "backends": ["all"],
   "frontends": ["all"],
@@ -20,7 +20,7 @@
   },
   "funding": {
     "custom": [
-      "https://afdian.net/a/frostime"
+      "https://afdian.net/a/Savor"
     ]
   }
 }

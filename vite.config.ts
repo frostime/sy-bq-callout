@@ -45,6 +45,10 @@ export default defineConfig({
                     src: "./src/i18n/**",
                     dest: "./i18n/",
                 },
+                {
+                    src: "./assets/**",
+                    dest: "./assets/",
+                },
             ],
         }),
     ],
