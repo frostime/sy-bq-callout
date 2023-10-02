@@ -6,6 +6,7 @@ import "@/index.css";
 
 import { setBlockAttrs } from "./api"
 import  * as create from "./creator";
+import { LightCSSVar, DarkCSSVar } from "./var";
 
 const NewButton = [
     create.Info, create.Check, create.Question, create.Warn, create.Light, create.quoteError, create.Bug, create.Wrong, create.Bell, create.Note, create.Pen
@@ -17,15 +18,32 @@ async function setUpAttr(blockId: BlockId, value: string) {
     });
 }
 
+const insertCSSScript = (id: string, css: string) => {
+    const style = document.createElement("style");
+    style.id = id;
+    style.innerHTML = css;
+    document.head.appendChild(style);
+}
+
+const removeCSSScript = (id: string) => {
+    const style = document.getElementById(id);
+    style?.remove();
+}
+
 export default class BqCalloutPlugin extends Plugin {
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
+    CSSRoot = 'BqCalloutPlugin';
 
     async onload() {
+        //@ts-ignore
+        let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
+        insertCSSScript(this.CSSRoot, css);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
     }
 
     async onunload() {
+        removeCSSScript(this.CSSRoot);
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
     }
 

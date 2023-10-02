@@ -4,9 +4,10 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.css
- * @LastEditTime : 2023-10-02 21:26:52
+ * @LastEditTime : 2023-10-02 22:18:34
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
+
 /* 引述 */
 .protyle-wysiwyg .bq {
     color: var(--b3-theme-on-background);
@@ -50,7 +51,7 @@
     font-weight: 700 !important;
     font-size: 1.3em !important;
     padding: 0em 0em 0em 1.7em !important;
-    background: var(--b3-theme-primary-light);
+    /* background: var(--b3-theme-primary-light); */
 }
 
 /* 引述callout段落的内边距 */
@@ -114,10 +115,11 @@
 
 /*错误*/
 .protyle-wysiwyg [data-node-id][custom-b~=error].bq {
-    border: none;
-    background-color: var(--b3-bq-background13);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background13-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background13) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background13-callout) inset;
 }
 
 .bq[custom-b~=error]::after {
@@ -134,10 +136,11 @@
 
 /*警告*/
 .protyle-wysiwyg [data-node-id][custom-b~=warn].bq {
-    border: none;
-    background-color: var(--b3-bq-background7);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background7-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background7) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background7-callout) inset;
 }
 
 .bq[custom-b~=warn]::after {
@@ -154,10 +157,11 @@
 
 /*bug*/
 .protyle-wysiwyg [data-node-id][custom-b~=bug].bq {
-    border: none;
-    background-color: var(--b3-bq-background11);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background11-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background11) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background11-callout) inset;
 }
 
 .bq[custom-b~=bug]::after {
@@ -174,10 +178,11 @@
 
 /*正确*/
 .protyle-wysiwyg [data-node-id][custom-b~=check].bq {
-    border: none;
-    background-color: var(--b3-bq-background8);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background8-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background8) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background8-callout) inset;
 }
 
 .bq[custom-b~=check]::after {
@@ -194,10 +199,11 @@
 
 /*灵感*/
 .protyle-wysiwyg [data-node-id][custom-b~=light].bq {
-    border: none;
-    background-color: var(--b3-bq-background6);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background6-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background6) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background6-callout) inset;
 }
 
 .bq[custom-b~=light]::after {
@@ -214,10 +220,11 @@
 
 /*问题*/
 .protyle-wysiwyg [data-node-id][custom-b~=question].bq {
-    border: none;
-    background-color: var(--b3-bq-background12);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background12-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background12) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background12-callout) inset;
 }
 
 .bq[custom-b~=question]::after {
@@ -234,10 +241,11 @@
 
 /*错误*/
 .protyle-wysiwyg [data-node-id][custom-b~=wrong].bq {
-    border: none;
-    background-color: var(--b3-bq-background13);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background13-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background13) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background13-callout) inset;
 }
 
 .bq[custom-b~=wrong]::after {
@@ -254,10 +262,11 @@
 
 /*信息*/
 .protyle-wysiwyg [data-node-id][custom-b~=info].bq {
-    border: none;
-    background-color: var(--b3-bq-background10);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background10-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background10) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background10-callout) inset;
 }
 
 .bq[custom-b~=info]::after {
@@ -274,10 +283,11 @@
 
 /*记录*/
 .protyle-wysiwyg [data-node-id][custom-b~=pen].bq {
-    border: none;
-    background-color: var(--b3-bq-background3);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background3-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background3) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background3-callout) inset;
 }
 
 .bq[custom-b~=pen]::after {
@@ -294,10 +304,11 @@
 
 /*汇总*/
 .protyle-wysiwyg [data-node-id][custom-b~=note].bq {
-    border: none;
-    background-color: var(--b3-bq-background1);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background1-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background1) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background1-callout) inset;
 }
 
 .bq[custom-b~=note]::after {
@@ -314,10 +325,11 @@
 
 /*提醒*/
 .protyle-wysiwyg [data-node-id][custom-b~=bell].bq {
-    border: none;
-    background-color: var(--b3-bq-background5);
+    /*border: none;*/
+    border: none !important;
+    background-color: var(--b3-bq-background5-callout);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px var(--b3-font-background5) inset;
+    box-shadow: 0 0 0 2px var(--b3-font-background5-callout) inset;
 }
 
 .bq[custom-b~=bell]::after {
