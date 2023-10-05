@@ -7,12 +7,12 @@
   "backends": ["all"],
   "frontends": ["all"],
   "displayName": {
-    "en_US": "Blockquote Callout",
-    "zh_CN": "引述块 Callout"
+    "en_US": "Savor Callout",
+    "zh_CN": "Savor Callout"
   },
   "description": {
-    "en_US": "A callout based on blockquote.",
-    "zh_CN": "基于引述块实现的 callout"
+    "en_US": "A callout implemented in Savor theme",
+    "zh_CN": "仿 Savor 主题的 callout"
   },
   "readme": {
     "en_US": "README.md",
