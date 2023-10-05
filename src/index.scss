@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2023-10-02 22:54:56
+ * @LastEditTime : 2023-10-05 14:36:57
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
@@ -63,6 +63,65 @@
     --b3-bq-background13-dark: rgb(89, 65, 65, .3);
 }
 
+
+// html[data-theme-mode="light"] :root {
+//     --b3-font-background1: var(--b3-font-background1-light);
+//     --b3-font-background2: var(--b3-font-background2-light);
+//     --b3-font-background3: var(--b3-font-background3-light);
+//     --b3-font-background4: var(--b3-font-background4-light);
+//     --b3-font-background5: var(--b3-font-background5-light);
+//     --b3-font-background6: var(--b3-font-background6-light);
+//     --b3-font-background7: var(--b3-font-background7-light);
+//     --b3-font-background8: var(--b3-font-background8-light);
+//     --b3-font-background9: var(--b3-font-background9-light);
+//     --b3-font-background10: var(--b3-font-background10-light);
+//     --b3-font-background11: var(--b3-font-background11-light);
+//     --b3-font-background12: var(--b3-font-background12-light);
+//     --b3-font-background13: var(--b3-font-background13-light);
+//     --b3-bq-background1: var(--b3-bq-background1-light);
+//     --b3-bq-background2: var(--b3-bq-background2-light);
+//     --b3-bq-background3: var(--b3-bq-background3-light);
+//     --b3-bq-background4: var(--b3-bq-background4-light);
+//     --b3-bq-background5: var(--b3-bq-background5-light);
+//     --b3-bq-background6: var(--b3-bq-background6-light);
+//     --b3-bq-background7: var(--b3-bq-background7-light);
+//     --b3-bq-background8: var(--b3-bq-background8-light);
+//     --b3-bq-background9: var(--b3-bq-background9-light);
+//     --b3-bq-background10: var(--b3-bq-background10-light);
+//     --b3-bq-background11: var(--b3-bq-background11-light);
+//     --b3-bq-background12: var(--b3-bq-background12-light);
+//     --b3-bq-background13: var(--b3-bq-background13-light);
+// }
+
+// html[data-theme-mode="dark"] :root {
+//     --b3-font-background1: var(--b3-font-background1-dark);
+//     --b3-font-background2: var(--b3-font-background2-dark);
+//     --b3-font-background3: var(--b3-font-background3-dark);
+//     --b3-font-background4: var(--b3-font-background4-dark);
+//     --b3-font-background5: var(--b3-font-background5-dark);
+//     --b3-font-background6: var(--b3-font-background6-dark);
+//     --b3-font-background7: var(--b3-font-background7-dark);
+//     --b3-font-background8: var(--b3-font-background8-dark);
+//     --b3-font-background9: var(--b3-font-background9-dark);
+//     --b3-font-background10: var(--b3-font-background10-dark);
+//     --b3-font-background11: var(--b3-font-background11-dark);
+//     --b3-font-background12: var(--b3-font-background12-dark);
+//     --b3-font-background13: var(--b3-font-background13-dark);
+//     --b3-bq-background1: var(--b3-bq-background1-dark);
+//     --b3-bq-background2: var(--b3-bq-background2-dark);
+//     --b3-bq-background3: var(--b3-bq-background3-dark);
+//     --b3-bq-background4: var(--b3-bq-background4-dark);
+//     --b3-bq-background5: var(--b3-bq-background5-dark);
+//     --b3-bq-background6: var(--b3-bq-background6-dark);
+//     --b3-bq-background7: var(--b3-bq-background7-dark);
+//     --b3-bq-background8: var(--b3-bq-background8-dark);
+//     --b3-bq-background9: var(--b3-bq-background9-dark);
+//     --b3-bq-background10: var(--b3-bq-background10-dark);
+//     --b3-bq-background11: var(--b3-bq-background11-dark);
+//     --b3-bq-background12: var(--b3-bq-background12-dark);
+//     --b3-bq-background13: var(--b3-bq-background13-dark);
+// }
+
 /* 引述 */
 .protyle-wysiwyg .bq {
     color: var(--b3-theme-on-background);
@@ -80,48 +139,49 @@
 }
 
 /*列表里代码块对齐*/
-/*引述callout第一行样式 */
-.bq[custom-b~=error] .p:first-child,
-.bq[custom-b~=error][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=warn] .p:first-child,
-.bq[custom-b~=warn][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=bug] .p:first-child,
-.bq[custom-b~=bug][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=check] .p:first-child,
-.bq[custom-b~=check][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=light] .p:first-child,
-.bq[custom-b~=light][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=question] .p:first-child,
-.bq[custom-b~=question][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=wrong] .p:first-child,
-.bq[custom-b~=wrong][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=info] .p:first-child,
-.bq[custom-b~=info][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=pen] .p:first-child,
-.bq[custom-b~=pen][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=note] .p:first-child,
-.bq[custom-b~=note][data-type="NodeHeading"]:first-child,
-.bq[custom-b~=bell] .p:first-child,
-.bq[custom-b~=bell][data-type="NodeHeading"]:first-child {
+/*引述callout第一行样式, 用作 Callout 的标题 */
+.bq[custom-b~=error]>.p:first-child,
+.bq[custom-b~=error]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=warn]>.p:first-child,
+.bq[custom-b~=warn]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=bug]>.p:first-child,
+.bq[custom-b~=bug]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=check]>.p:first-child,
+.bq[custom-b~=check]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=light]>.p:first-child,
+.bq[custom-b~=light]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=question]>.p:first-child,
+.bq[custom-b~=question]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=wrong]>.p:first-child,
+.bq[custom-b~=wrong]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=info]>.p:first-child,
+.bq[custom-b~=info]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=pen]>.p:first-child,
+.bq[custom-b~=pen]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=note]>.p:first-child,
+.bq[custom-b~=note]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b~=bell]>.p:first-child,
+.bq[custom-b~=bell]>[data-type="NodeHeading"]:first-child {
     font-weight: 700 !important;
     font-size: 1.3em !important;
     padding: 0em 0em 0em 1.7em !important;
     /* background: var(--b3-theme-primary-light); */
 }
 
-/* 引述callout段落的内边距 */
-.bq[custom-b~=error] .p,
-.bq[custom-b~=warn] .p,
-.bq[custom-b~=bug] .p,
-.bq[custom-b~=check] .p,
-.bq[custom-b~=light] .p,
-.bq[custom-b~=question] .p,
-.bq[custom-b~=wrong] .p,
-.bq[custom-b~=info] .p,
-.bq[custom-b~=pen] .p,
-.bq[custom-b~=note] .p,
-.bq[custom-b~=bell] .p {
-    padding-left: 2.2em;
+.bq[custom-b~=error],
+.bq[custom-b~=warn],
+.bq[custom-b~=bug],
+.bq[custom-b~=check],
+.bq[custom-b~=light],
+.bq[custom-b~=question],
+.bq[custom-b~=wrong],
+.bq[custom-b~=info],
+.bq[custom-b~=pen],
+.bq[custom-b~=note],
+.bq[custom-b~=bell] {
+    .p {
+        padding-left: 2.2em;
+    }
 }
 
 /* 引述callout段落的内边距 */
