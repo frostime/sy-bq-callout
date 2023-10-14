@@ -48,11 +48,13 @@ export default class BqCalloutPlugin extends Plugin {
         // let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
         // insertCSSScript(this.CSSRoot, css);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
+        this.eventBus.on("loaded-protyle", () => this.addFoldButton());
     }
 
     async onunload() {
         // removeCSSScript(this.CSSRoot);
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
+        this.eventBus.off("loaded-protyle", () => this.removeFoldButton());
     }
 
     private blockIconEvent({ detail }: any) {
@@ -71,6 +73,7 @@ export default class BqCalloutPlugin extends Plugin {
             let btn = newbtn(ele.getAttribute("data-node-id"));
             btn.onclick = () => {
                 setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
+                this.addButtonItem(ele);
             }
             submenus.push({
                 element: btn,
@@ -82,6 +85,8 @@ export default class BqCalloutPlugin extends Plugin {
         let btn = create.Defaultbq(ele.getAttribute("data-node-id"));
         btn.onclick = () => {
             setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
+            const foldButton = ele.querySelector("[fold-button]");
+            foldButton.remove();
         }
         submenus.push({
             element: btn
@@ -92,5 +97,38 @@ export default class BqCalloutPlugin extends Plugin {
             type: "submenu",
             submenu: submenus
         });
+    }
+
+    private addFoldButton() {
+        const calloutBlocks = document.querySelectorAll("[custom-b]");
+        calloutBlocks.forEach(ele => this.addButtonItem(ele));
+    }
+
+    private removeFoldButton() {
+        const calloutBlocks = document.querySelectorAll("[fold-button]");
+        calloutBlocks.forEach(ele => ele.remove);
+    }
+
+    private addButtonItem(element: Element) {
+        const firstChild = element.firstElementChild;
+        let foldButton = firstChild.querySelector("[fold-button]");
+        if (!foldButton) {
+            foldButton = firstChild.appendChild(document.createElement("div"));
+            foldButton.setAttribute("fold-button", "1");
+        }
+        foldButton.addEventListener("click", this.listern);
+    }
+
+    listern(event: CustomEvent) {
+        const element = event.target as Element;
+        const parentElement = element.parentElement;
+        const grandparentElement = parentElement.parentElement;
+
+        const isFlod = grandparentElement.getAttribute("fold");
+        if (isFlod === "1") {
+            grandparentElement.setAttribute("fold", "0");
+        } else {
+            grandparentElement.setAttribute("fold", "1");
+        }
     }
 }

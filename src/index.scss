@@ -602,3 +602,15 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=bell].bq 
     background-image: url(/plugins/sy-bq-callout/assets/bell.png);
     background-size: 100% 100%;
 }
+
+// 折叠按钮样式
+[fold-button] {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+// 用伪元素占位以避免影响编辑器内容
+[fold-button]::after {
+    content: "占位文本";
+}
