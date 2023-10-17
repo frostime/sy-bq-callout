@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2023-10-02 22:35:24
+ * @LastEditTime : 2023-10-17 17:19:49
  * @Description  : 
  */
 import {
@@ -13,11 +13,22 @@ import {
 import "@/index.scss";
 
 import { setBlockAttrs } from "./api"
-import  * as create from "./creator";
+import * as create from "./creator";
+import * as I18n from "./i18n/zh_CN.json";
 // import { LightCSSVar, DarkCSSVar } from "./var";
 
 const NewButton = [
-    create.Info, create.Check, create.Question, create.Warn, create.Light, create.quoteError, create.Bug, create.Wrong, create.Bell, create.Note, create.Pen
+    create.Info,
+    create.Light,
+    create.Bell,
+    create.Check,
+    create.Wrong,
+    create.Warn,
+    create.Question,
+    create.quoteError,
+    create.Bug,
+    create.Note,
+    create.Pen
 ]
 
 async function setUpAttr(blockId: BlockId, value: string) {
@@ -42,11 +53,13 @@ export default class BqCalloutPlugin extends Plugin {
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
     CSSRoot = 'BqCalloutPlugin';
+    declare i18n: typeof I18n;
 
     async onload() {
         //@ts-ignore
         // let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
         // insertCSSScript(this.CSSRoot, css);
+        create.setI18n(this.i18n);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
     }
 
@@ -88,7 +101,7 @@ export default class BqCalloutPlugin extends Plugin {
         });
         menu.addItem({
             icon: "iconInfo",
-            label: "引用块Callout",
+            label: this.i18n.name,
             type: "submenu",
             submenu: submenus
         });

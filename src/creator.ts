@@ -2,6 +2,12 @@
  * CopyRight (C) 2023 Roy, All Right Reserved
  * Copy from https://github.com/royc01/notion-theme/blob/main/theme.js
  */
+import * as I18n from "./i18n/zh_CN.json";
+let i18n: typeof I18n;
+
+export const setI18n = (i18nObj: typeof I18n) => {
+    i18n = i18nObj;
+}
 
 
 export function quoteError(selectid) {
@@ -10,7 +16,7 @@ export function quoteError(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "error")
-    button.innerHTML = `<span class="b3-menu__label">🚫禁止</span>`
+    button.innerHTML = `<span class="b3-menu__label">🚫${i18n.button.abandon}</span>`
     return button
 }
 
@@ -20,7 +26,7 @@ export function Warn(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "warn")
-    button.innerHTML = `<span class="b3-menu__label">⚠警告</span>`
+    button.innerHTML = `<span class="b3-menu__label">⚠${i18n.button.warn}</span>`
 
     return button
 }
@@ -31,7 +37,7 @@ export function Bug(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "bug")
-    button.innerHTML = `<span class="b3-menu__label">🐛bug</span>`
+    button.innerHTML = `<span class="b3-menu__label">🐛${i18n.button.bug}</span>`
 
     return button
 }
@@ -42,7 +48,7 @@ export function Check(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "check")
-    button.innerHTML = `<span class="b3-menu__label">✅正确</span>`
+    button.innerHTML = `<span class="b3-menu__label">✅${i18n.button.yes}</span>`
 
     return button
 }
@@ -53,7 +59,7 @@ export function Light(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "light")
-    button.innerHTML = `<span class="b3-menu__label">💡灵感</span>`
+    button.innerHTML = `<span class="b3-menu__label">💡${i18n.button.intuition}</span>`
 
     return button
 }
@@ -64,7 +70,7 @@ export function Question(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "question")
-    button.innerHTML = `<span class="b3-menu__label">❓问题</span>`
+    button.innerHTML = `<span class="b3-menu__label">❓${i18n.button.question}</span>`
 
     return button
 }
@@ -75,7 +81,7 @@ export function Wrong(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "wrong")
-    button.innerHTML = `<span class="b3-menu__label">❌错误</span>`
+    button.innerHTML = `<span class="b3-menu__label">❌${i18n.button.wrong}</span>`
 
     return button
 }
@@ -86,7 +92,7 @@ export function Info(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "info")
-    button.innerHTML = `<span class="b3-menu__label">ℹ信息</span>`
+    button.innerHTML = `<span class="b3-menu__label">ℹ${i18n.button.info}</span>`
 
     return button
 }
@@ -97,7 +103,7 @@ export function Pen(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "pen")
-    button.innerHTML = `<span class="b3-menu__label">🖋记录</span>`
+    button.innerHTML = `<span class="b3-menu__label">🖋${i18n.button.record}</span>`
 
     return button
 }
@@ -108,7 +114,7 @@ export function Note(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "note")
-    button.innerHTML = `<span class="b3-menu__label">📓汇总</span>`
+    button.innerHTML = `<span class="b3-menu__label">📓${i18n.button.note}</span>`
 
     return button
 }
@@ -119,7 +125,7 @@ export function Bell(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "bell")
-    button.innerHTML = `<span class="b3-menu__label">🔔提醒</span>`
+    button.innerHTML = `<span class="b3-menu__label">🔔${i18n.button.notify}</span>`
 
     return button
 }
@@ -130,7 +136,7 @@ export function Defaultbq(selectid) {
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", "")
-    button.innerHTML = `<svg class="b3-menu__icon" style=""><use xlink:href="#iconRefresh"></use></svg><span class="b3-menu__label">恢复默认样式</span>`
+    button.innerHTML = `<svg class="b3-menu__icon" style=""><use xlink:href="#iconRefresh"></use></svg><span class="b3-menu__label">${i18n.button.default}</span>`
 
     return button
 }
