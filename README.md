@@ -1,4 +1,4 @@
-搬运自 Savor 主题，实现简单的 callout 样式。
+Migrated from Savor theme, implementing a simple callout style.
 
-点击引述块，将引述块转换成一个 callout。
-
+- Providing a button in a quote block's icon menu, click it to convert the quote block into a callout.
+- The content of the first child block of the quote block will be displayed as the title in the callout.
