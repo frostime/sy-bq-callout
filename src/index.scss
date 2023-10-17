@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2023-10-05 14:36:57
+ * @LastEditTime : 2023-10-17 18:44:32
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
@@ -606,11 +606,25 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=bell].bq 
 // 折叠按钮样式
 [fold-button] {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 10px;
+    top: 10px;
+    width: 15px;
+    height: 15px;
+    opacity: 70%;
+
+    >svg:hover {
+        color: var(--b3-theme-primary);
+        cursor: pointer;
+    }
+}
+:not([data-node-id][fold="1"]) [fold-button]>svg {
+    transform: rotate(90deg);
+}
+[data-node-id][fold="1"] [fold-button]>svg {
+    transform: rotate(180deg);
 }
 
 // 用伪元素占位以避免影响编辑器内容
-[fold-button]::after {
-    content: "占位文本";
-}
+// [fold-button]::after {
+//     content: "占位文本";
+// }

@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2023-10-17 17:19:49
+ * @LastEditTime : 2023-10-17 18:34:32
  * @Description  : 
  */
 import {
@@ -52,6 +52,9 @@ async function setUpAttr(blockId: BlockId, value: string) {
 export default class BqCalloutPlugin extends Plugin {
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
+    private addFoldButtonBindThis = this.addFoldButton.bind(this);
+    private destroyFoldButtonBindThis = this.removeFoldButton.bind(this);
+
     CSSRoot = 'BqCalloutPlugin';
     declare i18n: typeof I18n;
 
@@ -61,13 +64,15 @@ export default class BqCalloutPlugin extends Plugin {
         // insertCSSScript(this.CSSRoot, css);
         create.setI18n(this.i18n);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
-        this.eventBus.on("loaded-protyle", () => this.addFoldButton());
+        this.eventBus.on("loaded-protyle", this.addFoldButtonBindThis);
+        this.eventBus.on("destroy-protyle", this.destroyFoldButtonBindThis);
     }
 
     async onunload() {
         // removeCSSScript(this.CSSRoot);
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
-        this.eventBus.off("loaded-protyle", () => this.removeFoldButton());
+        this.eventBus.off("loaded-protyle", this.addFoldButtonBindThis);
+        this.eventBus.off("destroy-protyle", this.destroyFoldButtonBindThis);
     }
 
     private blockIconEvent({ detail }: any) {
@@ -123,10 +128,11 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private addButtonItem(element: Element) {
-        const firstChild = element.firstElementChild;
-        let foldButton = firstChild.querySelector("[fold-button]");
+        // const firstChild = element.firstElementChild;
+        let foldButton = element.querySelector("[fold-button]");
         if (!foldButton) {
-            foldButton = firstChild.appendChild(document.createElement("div"));
+            foldButton = element.appendChild(document.createElement("div"));
+            foldButton.innerHTML = `<svg style="width: 100%; height: 100%;"><use xlink:href="#iconRight"></use></svg>`
             foldButton.setAttribute("fold-button", "1");
         }
         foldButton.addEventListener("click", this.listern);
