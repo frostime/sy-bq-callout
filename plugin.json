@@ -2,8 +2,8 @@
   "name": "sy-bq-callout",
   "author": "roy",
   "url": "https://github.com/frostime/sy-bq-callout",
-  "version": "0.3.2",
-  "minAppVersion": "2.10.3",
+  "version": "0.3.3",
+  "minAppVersion": "2.10.11",
   "backends": ["all"],
   "frontends": ["all"],
   "displayName": {
