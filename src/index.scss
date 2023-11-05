@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2023-11-05 14:36:06
+ * @LastEditTime : 2023-11-05 14:53:55
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
@@ -22,19 +22,19 @@
     --b3-font-background11-light: rgb(234, 228, 242);
     --b3-font-background12-light: rgb(244, 223, 235);
     --b3-font-background13-light: rgb(251, 228, 228);
-    --b3-bq-background1-light: rgb(198, 203, 208 , .5);
-    --b3-bq-background2-light: rgb(225, 225, 225 , .5);
-    --b3-bq-background3-light: rgb(235, 236, 237 , .5);
-    --b3-bq-background4-light: rgb(233, 229, 227 , .5);
-    --b3-bq-background5-light: rgb(246, 225, 205 , .5);
-    --b3-bq-background6-light: rgb(250, 235, 221 , .5);
-    --b3-bq-background7-light: rgb(251, 243, 219 , .5);
-    --b3-bq-background8-light: rgba(221, 237, 226 , .5);
-    --b3-bq-background9-light: rgb(221, 237, 234 , .5);
-    --b3-bq-background10-light: rgb(221, 235, 241 , .5);
-    --b3-bq-background11-light: rgb(234, 228, 242 , .5);
-    --b3-bq-background12-light: rgb(244, 223, 235 , .5);
-    --b3-bq-background13-light: rgb(251, 228, 228 , .5);
+    --b3-bq-background1-light: rgb(198, 203, 208, .5);
+    --b3-bq-background2-light: rgb(225, 225, 225, .5);
+    --b3-bq-background3-light: rgb(235, 236, 237, .5);
+    --b3-bq-background4-light: rgb(233, 229, 227, .5);
+    --b3-bq-background5-light: rgb(246, 225, 205, .5);
+    --b3-bq-background6-light: rgb(250, 235, 221, .5);
+    --b3-bq-background7-light: rgb(251, 243, 219, .5);
+    --b3-bq-background8-light: rgba(221, 237, 226, .5);
+    --b3-bq-background9-light: rgb(221, 237, 234, .5);
+    --b3-bq-background10-light: rgb(221, 235, 241, .5);
+    --b3-bq-background11-light: rgb(234, 228, 242, .5);
+    --b3-bq-background12-light: rgb(244, 223, 235, .5);
+    --b3-bq-background13-light: rgb(251, 228, 228, .5);
     --b3-font-background1-dark: rgb(35, 38, 40);
     --b3-font-background2-dark: rgb(63, 68, 71);
     --b3-font-background3-dark: rgb(69, 75, 78);
@@ -253,246 +253,150 @@
     transform: none;
 }
 
-/*错误*/
+/*********** 设置背景颜色 ***********/
+html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq {
+    &[custom-b~=error] {
+        background-color: var(--b3-bq-background13-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background13-light) inset;
+    }
+    &[custom-b~=warn] {
+        background-color: var(--b3-bq-background7-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background7-light) inset;
+    }
+    &[custom-b~=bug] {
+        background-color: var(--b3-bq-background11-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background11-light) inset;
+    }
+    &[custom-b~=check] {
+        background-color: var(--b3-bq-background8-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background8-light) inset;
+    }
+    &[custom-b~=light] {
+        background-color: var(--b3-bq-background6-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background6-light) inset;
+    }
+    &[custom-b~=question] {
+        background-color: var(--b3-bq-background12-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background12-light) inset;
+    }
+    &[custom-b~=wrong] {
+        background-color: var(--b3-bq-background13-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background13-light) inset;
+    }
+    &[custom-b~=info] {
+        background-color: var(--b3-bq-background10-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background10-light) inset;
+    }
+    &[custom-b~=pen] {
+        background-color: var(--b3-bq-background3-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background3-light) inset;
+    }
+    &[custom-b~=note] {
+        background-color: var(--b3-bq-background1-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background1-light) inset;
+    }
+    &[custom-b~=bell] {
+        background-color: var(--b3-bq-background5-light);
+        box-shadow: 0 0 0 2px var(--b3-font-background5-light) inset;
+    }
 
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=error].bq {
-    background-color: var(--b3-bq-background13-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background13-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=error].bq {
-    background-color: var(--b3-bq-background13-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background13-dark) inset;
-}
-
-.bq[custom-b~=error]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/prohibited.png);
-    background-size: 100% 100%;
-}
-
-/*警告*/
-// .protyle-wysiwyg [data-node-id][custom-b~=warn].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background7-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background7-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=warn].bq {
-    background-color: var(--b3-bq-background7-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background7-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=warn].bq {
-    background-color: var(--b3-bq-background7-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background7-dark) inset;
-}
-
-
-.bq[custom-b~=warn]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/warning.png);
-    background-size: 100% 100%;
-}
-
-/*bug*/
-// .protyle-wysiwyg [data-node-id][custom-b~=bug].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background11-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background11-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=bug].bq {
-    background-color: var(--b3-bq-background11-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background11-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=bug].bq {
-    background-color: var(--b3-bq-background11-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background11-dark) inset;
 }
 
+html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
+    &[custom-b~=error] {
+        background-color: var(--b3-bq-background13-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background13-dark) inset;
+    }
+    &[custom-b~=warn] {
+        background-color: var(--b3-bq-background7-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background7-dark) inset;
+    }
+    &[custom-b~=bug] {
+        background-color: var(--b3-bq-background11-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background11-dark) inset;
+    }
+    &[custom-b~=check] {
+        background-color: var(--b3-bq-background8-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background8-dark) inset;
+    }
+    &[custom-b~=light] {
+        background-color: var(--b3-bq-background6-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background6-dark) inset;
+    }
+    &[custom-b~=question] {
+        background-color: var(--b3-bq-background12-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background12-dark) inset;
+    }
+    &[custom-b~=wrong] {
+        background-color: var(--b3-bq-background13-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background13-dark) inset;
+    }
+    &[custom-b~=info] {
+        background-color: var(--b3-bq-background10-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background10-dark) inset;
+    }
+    &[custom-b~=pen] {
+        background-color: var(--b3-bq-background3-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background3-dark) inset;
+    }
+    &[custom-b~=note] {
+        background-color: var(--b3-bq-background1-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background1-dark) inset;
+    }
+    &[custom-b~=bell] {
+        background-color: var(--b3-bq-background5-dark);
+        box-shadow: 0 0 0 2px var(--b3-font-background5-dark) inset;
+    }
 
-.bq[custom-b~=bug]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/bug.png);
-    background-size: 100% 100%;
-}
-
-/*正确*/
-// .protyle-wysiwyg [data-node-id][custom-b~=check].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background8-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background8-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=check].bq {
-    background-color: var(--b3-bq-background8-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background8-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=check].bq {
-    background-color: var(--b3-bq-background8-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background8-dark) inset;
-}
-
-.bq[custom-b~=check]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/check.png);
-    background-size: 100% 100%;
-}
-
-/*灵感*/
-// .protyle-wysiwyg [data-node-id][custom-b~=light].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background6-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background6-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=light].bq {
-    background-color: var(--b3-bq-background6-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background6-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=light].bq {
-    background-color: var(--b3-bq-background6-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background6-dark) inset;
-}
-
-
-.bq[custom-b~=light]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/light-bulb.png);
-    background-size: 100% 100%;
 }
 
-/*问题*/
-// .protyle-wysiwyg [data-node-id][custom-b~=question].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background12-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background12-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=question].bq {
-    background-color: var(--b3-bq-background12-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background12-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=question].bq {
-    background-color: var(--b3-bq-background12-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background12-dark) inset;
-}
+/*********** Icon ***********/
 
-.bq[custom-b~=question]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/question.png);
-    background-size: 100% 100%;
-}
+.protyle-wysiwyg div[data-node-id].bq {
+    &[custom-b~=error]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/prohibited.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=warn]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/warning.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=bug]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/bug.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=check]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/check.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=light]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/light-bulb.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=question]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/question.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=wrong]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/cross.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=info]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/info.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=pen]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/pen.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=note]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/notebook.png);
+        background-size: 100% 100%;
+    }
+    &[custom-b~=bell]::after {
+        background-image: url(/plugins/sy-bq-callout/assets/bell.png);
+        background-size: 100% 100%;
+        border: none;
+    }
 
-/*错误*/
-// .protyle-wysiwyg [data-node-id][custom-b~=wrong].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background13-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background13-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=wrong].bq {
-    background-color: var(--b3-bq-background13-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background13-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=wrong].bq {
-    background-color: var(--b3-bq-background13-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background13-dark) inset;
-}
-
-
-.bq[custom-b~=wrong]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/cross.png);
-    background-size: 100% 100%;
-}
-
-/*信息*/
-// .protyle-wysiwyg [data-node-id][custom-b~=info].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background10-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background10-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=info].bq {
-    background-color: var(--b3-bq-background10-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background10-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=info].bq {
-    background-color: var(--b3-bq-background10-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background10-dark) inset;
-}
-
-
-.bq[custom-b~=info]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/info.png);
-    background-size: 100% 100%;
-}
-
-/*记录*/
-// .protyle-wysiwyg [data-node-id][custom-b~=pen].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background3-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background3-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=pen].bq {
-    background-color: var(--b3-bq-background3-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background3-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=pen].bq {
-    background-color: var(--b3-bq-background3-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background3-dark) inset;
-}
-
-.bq[custom-b~=pen]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/pen.png);
-    background-size: 100% 100%;
-}
-
-/*汇总*/
-// .protyle-wysiwyg [data-node-id][custom-b~=note].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background1-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background1-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=note].bq {
-    background-color: var(--b3-bq-background1-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background1-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=note].bq {
-    background-color: var(--b3-bq-background1-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background1-dark) inset;
-}
-
-
-.bq[custom-b~=note]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/notebook.png);
-    background-size: 100% 100%;
-}
-
-/*提醒*/
-// .protyle-wysiwyg [data-node-id][custom-b~=bell].bq {
-//     /*border: none;*/
-//     border: none !important;
-//     background-color: var(--b3-bq-background5-callout);
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 2px var(--b3-font-background5-callout) inset;
-// }
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id][custom-b~=bell].bq {
-    background-color: var(--b3-bq-background5-light);
-    box-shadow: 0 0 0 2px var(--b3-font-background5-light) inset;
-}
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id][custom-b~=bell].bq {
-    background-color: var(--b3-bq-background5-dark);
-    box-shadow: 0 0 0 2px var(--b3-font-background5-dark) inset;
-}
-
-
-.bq[custom-b~=bell]::after {
-    background-image: url(/plugins/sy-bq-callout/assets/bell.png);
-    background-size: 100% 100%;
-    border: none;
 }
