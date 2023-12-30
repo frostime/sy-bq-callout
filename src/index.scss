@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2023-12-30 15:58:37
+ * @LastEditTime : 2023-12-30 21:34:06
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
@@ -51,23 +51,6 @@
     --callout-question-bg-dark: rgb(83, 59, 76, .3);
     --callout-error-bg-dark: rgb(89, 65, 65, .3);
 }
-
-
-/* 引述 */
-// .protyle-wysiwyg .bq {
-//     color: var(--b3-theme-on-background);
-//     border-left: 0.25em solid var(--b3-theme-on-background);
-//     border-radius: 0 3px 3px 0;
-//     background-color: var(--b3-bq-background);
-// }
-
-// .protyle-wysiwyg .bq .p {
-//     padding-left: 10px;
-// }
-
-// .list .bq {
-//     margin-right: 0px !important;
-// }
 
 /*列表里代码块对齐*/
 /*引述callout第一行样式, 用作 Callout 的标题 */
@@ -171,27 +154,6 @@
     }
 }
 
-/*********** Before & After 伪元素 ***********/
-
-.protyle-wysiwyg div.bq[custom-b]::before,
-.protyle-wysiwyg div.bq[custom-bq-callout]::before {
-    content: "";
-    border: none;
-}
-
-.protyle-wysiwyg .bq[custom-b]::after,
-.protyle-wysiwyg .bq[custom-bq-callout]::after {
-    content: "";
-    position: absolute;
-    top: .6em;
-    left: .2em;
-    margin-left: 10px;
-    width: 1.5em;
-    height: 1.5em;
-    border: none;
-    transform: none;
-}
-
 /*********** 设置背景颜色 ***********/
 html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq {
     &[custom-b~=error] {
@@ -289,53 +251,64 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
 
 }
 
+
+/*********** Before & After 伪元素 ***********/
+
+.protyle-wysiwyg div.bq[custom-b]::before,
+.protyle-wysiwyg div.bq[custom-bq-callout]::before {
+    content: "";
+    border: none;
+}
+
+.protyle-wysiwyg .bq[custom-b]::after,
+.protyle-wysiwyg .bq[custom-bq-callout]::after {
+    content: "";
+    position: absolute;
+    top: 0.12em;
+    left: 0.2em;
+    margin-left: 10px;
+    font-size: 1.4em;
+    border: none;
+    transform: none;
+}
+
+
 /*********** Icon ***********/
 
 .protyle-wysiwyg div[data-node-id].bq {
     &[custom-b~=error]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/prohibited.png);
-        background-size: 100% 100%;
+        content: "🚫"
     }
     &[custom-b~=warn]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/warning.png);
-        background-size: 100% 100%;
+        content: "⚠"
     }
     &[custom-b~=bug]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/bug.png);
-        background-size: 100% 100%;
+        content: "🐛";
     }
     &[custom-b~=check]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/check.png);
-        background-size: 100% 100%;
+        content: "✅";
     }
     &[custom-b~=light]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/light-bulb.png);
-        background-size: 100% 100%;
+        content: "💡";
     }
     &[custom-b~=question]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/question.png);
-        background-size: 100% 100%;
+        content: "❓";
     }
     &[custom-b~=wrong]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/cross.png);
-        background-size: 100% 100%;
+        content: "❌";
     }
     &[custom-b~=info]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/info.png);
-        background-size: 100% 100%;
+        content: "ℹ";
     }
     &[custom-b~=pen]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/pen.png);
-        background-size: 100% 100%;
+        content: "🖋";
     }
     &[custom-b~=note]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/notebook.png);
-        background-size: 100% 100%;
+        content: "📓";
     }
     &[custom-b~=bell]::after {
-        background-image: url(/plugins/sy-bq-callout/assets/bell.png);
-        background-size: 100% 100%;
-        border: none;
+        // content: "🔔";
+        content: "🔔";
     }
 
 }
