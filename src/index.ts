@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2023-10-17 17:19:49
+ * @LastEditTime : 2023-12-31 11:13:08
  * @Description  : 
  */
 import {
@@ -11,6 +11,8 @@ import {
     Menu
 } from "siyuan";
 import "@/index.scss";
+
+import { changelog } from "sy-plugin-changelog";
 
 import { setBlockAttrs } from "./api"
 import * as create from "./creator";
@@ -61,6 +63,11 @@ export default class BqCalloutPlugin extends Plugin {
         // insertCSSScript(this.CSSRoot, css);
         create.setI18n(this.i18n);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
+        changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+            if (ans.Dialog) {
+                ans.Dialog.setFont('20px');
+            }
+        })
     }
 
     async onunload() {
