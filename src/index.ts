@@ -49,8 +49,7 @@ export default class BqCalloutPlugin extends Plugin {
         //@ts-ignore
         // let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
         // insertCSSScript(this.CSSRoot, css);
-        callout.setI18n(I18n);
-        this.DefaultCallouts = callout.initDefaultCallouts();
+        this.DefaultCallouts = callout.initDefault(I18n);
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
         changelog(this, 'i18n/CHANGELOG.md').then(ans => {

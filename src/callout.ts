@@ -10,10 +10,6 @@
 import * as I18n from "./i18n/zh_CN.json";
 let i18n: typeof I18n;
 
-export const setI18n = (i18nObj: typeof I18n) => {
-    i18n = i18nObj;
-}
-
 
 const DefaultCallouts: ICallout[] = [
     {
@@ -84,7 +80,8 @@ const DefaultCallouts: ICallout[] = [
     }
 ]
 
-export function initDefaultCallouts() {
+export function initDefault(i18nObj: typeof I18n) {
+    i18n = i18nObj;
     for (let i = 0; i < DefaultCallouts.length; i++) {
         let callout = DefaultCallouts[i]
         if (i18n.button[callout.id]) {
