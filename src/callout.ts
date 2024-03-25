@@ -1,9 +1,108 @@
-interface Callout {
-    name: string;
-    icon: string;
-    backgroundColorVar: string;
-    boxShadowColorVar: string;
-    disabled?: boolean;
-    order?: number;
+/*
+ * Copyright (c) 2024 by frostime. All Rights Reserved.
+ * @Author       : frostime
+ * @Date         : 2023-12-30 22:53:34
+ * @FilePath     : /src/callout.ts
+ * @LastEditTime : 2024-03-25 15:08:39
+ * @Description  : 
+ */
+
+import * as I18n from "./i18n/zh_CN.json";
+let i18n: typeof I18n;
+
+export const setI18n = (i18nObj: typeof I18n) => {
+    i18n = i18nObj;
+}
+
+
+const DefaultCallouts: ICallout[] = [
+    {
+        id: 'info',
+        icon: 'ℹ',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'light',
+        icon: '💡',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'bell',
+        icon: '🔔',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'check',
+        icon: '✅',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'question',
+        icon: '❓',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'warn',
+        icon: '⚠',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'wrong',
+        icon: '❌',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'error',
+        icon: '🚫',
+        title: '', //等 initDefaultCallouts() 中初始化
+        order: 0  //默认都为 0
+    },
+    {
+        id: 'bug',
+        icon: '🐛',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'note',
+        icon: '📓',
+        title: '',
+        order: 0
+    },
+    {
+        id: 'pen',
+        icon: '🖋',
+        title: '',
+        order: 0
+    }
+]
+
+export function initDefaultCallouts() {
+    for (let i = 0; i < DefaultCallouts.length; i++) {
+        let callout = DefaultCallouts[i]
+        if (i18n.button[callout.id]) {
+            callout.title = i18n.button[callout.id] || callout.id;
+        }
+    }
+    return DefaultCallouts;
+}
+
+
+export function createCalloutMenu(selectid, callout: ICallout) {
+    let button = document.createElement("button")
+    let title = callout.title;
+    button.className = "b3-menu__item"
+    button.setAttribute("data-node-id", selectid)
+    button.setAttribute("custom-attr-name", "b")
+    button.setAttribute("custom-attr-value", callout.id);
+    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${title}</span>`
+    return button
 }
 

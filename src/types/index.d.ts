@@ -2,6 +2,25 @@
  * Copyright (c) 2023 frostime. All rights reserved.
  */
 
+interface ICallout {
+    id: string;
+    icon: string;
+    title?: string;
+
+    bg?: {
+        light: string;
+        dark: string;
+    };
+    box?: {
+        light: string;
+        dark: string;
+    };
+
+    hide?: boolean;
+    order?: number;
+    custom?: boolean;
+}
+
 /**
  * Frequently used data structures in SiYuan
  */

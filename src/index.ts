@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2023-12-31 11:13:08
+ * @LastEditTime : 2024-01-02 13:42:31
  * @Description  : 
  */
 import {
@@ -33,10 +33,10 @@ const NewButton = [
     create.Pen
 ]
 
-async function setUpAttr(blockId: BlockId, value: string) {
-    setBlockAttrs(blockId, {
-        'custom-b': value
-    });
+async function setUpAttr(blockId: BlockId, value: string, attr = 'custom-b') {
+    let payload = {};
+    payload[attr] = value;
+    setBlockAttrs(blockId, payload);
 }
 
 // const insertCSSScript = (id: string, css: string) => {
