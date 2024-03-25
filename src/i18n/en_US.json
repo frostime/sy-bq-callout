@@ -1,17 +1,17 @@
 {
     "name": "Savor Callout",
     "button": {
-        "abandon": "Abandon",
+        "error": "Abandon",
         "warn": "Warning",
         "bug": "Bug",
-        "yes": "Correct",
-        "intuition": "Intuition",
+        "check": "Correct",
+        "light": "Intuition",
         "question": "Question",
         "wrong": "Wrong",
         "info": "Information",
-        "record": "Record",
+        "pen": "Record",
         "note": "Note",
-        "notify": "Notify",
+        "bell": "Notify",
         "default": "Back to default"
     }
 }

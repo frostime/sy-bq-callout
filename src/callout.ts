@@ -3,7 +3,7 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-03-25 15:08:39
+ * @LastEditTime : 2024-03-25 20:43:22
  * @Description  : 
  */
 
@@ -95,7 +95,7 @@ export function initDefaultCallouts() {
 }
 
 
-export function createCalloutMenu(selectid, callout: ICallout) {
+export function createCalloutButton(selectid: BlockId, callout: ICallout): HTMLButtonElement{
     let button = document.createElement("button")
     let title = callout.title;
     button.className = "b3-menu__item"
@@ -106,3 +106,13 @@ export function createCalloutMenu(selectid, callout: ICallout) {
     return button
 }
 
+export function createRestoreButton(selectid: BlockId) {
+    let button = document.createElement("button")
+    button.className = "b3-menu__item"
+    button.setAttribute("data-node-id", selectid)
+    button.setAttribute("custom-attr-name", "b")
+    button.setAttribute("custom-attr-value", "")
+    button.innerHTML = `<svg class="b3-menu__icon" style=""><use xlink:href="#iconRefresh"></use></svg><span class="b3-menu__label">${i18n.button.default}</span>`
+
+    return button
+}

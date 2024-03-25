@@ -1,17 +1,17 @@
 {
     "name": "Savor Callout",
     "button": {
-        "abandon": "禁止",
+        "error": "禁止",
         "warn": "警告",
         "bug": "Bug",
-        "yes": "正确",
-        "intuition": "灵感",
+        "check": "正确",
+        "light": "灵感",
         "question": "问题",
         "wrong": "错误",
         "info": "信息",
-        "record": "记录",
+        "pen": "记录",
         "note": "注记",
-        "notify": "提醒",
+        "bell": "提醒",
         "default": "恢复默认样式"
     }
 }
