@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-03-26 15:40:46
+ * @LastEditTime : 2024-03-26 15:50:49
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
@@ -69,6 +69,8 @@
 .protyle-wysiwyg .bq[custom-bq-callout] {
     padding: 4px;
     padding-left: 8px !important;
+    color: var(--b3-theme-on-background);
+
     .p {
         padding-left: 2.2em;
     }
