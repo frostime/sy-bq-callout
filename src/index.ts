@@ -3,12 +3,13 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-03-25 20:41:49
+ * @LastEditTime : 2024-03-26 14:52:35
  * @Description  : 
  */
 import {
     Plugin,
-    Menu
+    Menu,
+    Protyle
 } from "siyuan";
 import "@/index.scss";
 
@@ -41,7 +42,7 @@ async function setUpAttr(blockId: BlockId, value: string) {
 export default class BqCalloutPlugin extends Plugin {
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
-    CSSRoot = 'BqCalloutPlugin';
+    CSSRoot = 'snippetCSS-BqCallout';
     declare i18n: typeof I18n;
     DefaultCallouts: ICallout[];
 
@@ -50,8 +51,8 @@ export default class BqCalloutPlugin extends Plugin {
         // let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
         // insertCSSScript(this.CSSRoot, css);
         this.DefaultCallouts = callout.initDefault(I18n);
-
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
+        this.initSlash();
         changelog(this, 'i18n/CHANGELOG.md').then(ans => {
             if (ans.Dialog) {
                 ans.Dialog.setFont('20px');
@@ -62,6 +63,19 @@ export default class BqCalloutPlugin extends Plugin {
     async onunload() {
         // removeCSSScript(this.CSSRoot);
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
+    }
+
+    private initSlash() {
+        for (let ct of this.DefaultCallouts) {
+            this.protyleSlash.push({
+                filter: [`callout-${ct.id}`, `bq-${ct.id}`],
+                html: `<span class="b3-menu__label">${ct.icon}${ct.id}</span>`,
+                id: ct.id,
+                callback: (protyle: Protyle) => {
+                    protyle.insert(`> ${ct.id}\n{: custom-b="${ct.id}"}`);
+                }
+            });
+        }
     }
 
     private blockIconEvent({ detail }: any) {
