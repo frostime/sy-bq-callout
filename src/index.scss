@@ -4,13 +4,11 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2023-12-30 22:45:33
+ * @LastEditTime : 2024-03-26 15:24:02
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
 :root {
-    --b3-font-family-emoji: 'Twitter Emoji', sans-serif !important;
-
     --callout-note-box-light: rgb(198, 203, 208);
     --callout-pen-box-light: rgb(235, 236, 237);
     --callout-bell-box-light: rgb(246, 225, 205);
@@ -56,28 +54,8 @@
 
 /*列表里代码块对齐*/
 /*引述callout第一行样式, 用作 Callout 的标题 */
-.bq[custom-b~=error]>.p:first-child,
-.bq[custom-b~=error]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=warn]>.p:first-child,
-.bq[custom-b~=warn]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=bug]>.p:first-child,
-.bq[custom-b~=bug]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=check]>.p:first-child,
-.bq[custom-b~=check]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=light]>.p:first-child,
-.bq[custom-b~=light]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=question]>.p:first-child,
-.bq[custom-b~=question]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=wrong]>.p:first-child,
-.bq[custom-b~=wrong]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=info]>.p:first-child,
-.bq[custom-b~=info]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=pen]>.p:first-child,
-.bq[custom-b~=pen]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=note]>.p:first-child,
-.bq[custom-b~=note]>[data-type="NodeHeading"]:first-child,
-.bq[custom-b~=bell]>.p:first-child,
-.bq[custom-b~=bell]>[data-type="NodeHeading"]:first-child,
+.bq[custom-b]>.p:first-child,
+.bq[custom-b]>[data-type="NodeHeading"]:first-child,
 .bq[custom-bq-callout]>.p:first-child,
 .bq[custom-bq-callout]>[data-type="NodeHeading"]:first-child {
     font-weight: 700 !important;
@@ -85,38 +63,11 @@
     padding: 0em 0em 0em 1.7em !important;
 }
 
-// .bq[custom-b~=error],
-// .bq[custom-b~=warn],
-// .bq[custom-b~=bug],
-// .bq[custom-b~=check],
-// .bq[custom-b~=light],
-// .bq[custom-b~=question],
-// .bq[custom-b~=wrong],
-// .bq[custom-b~=info],
-// .bq[custom-b~=pen],
-// .bq[custom-b~=note],
-// .bq[custom-b~=bell],
-// .bq[custom-bq-callout] {
-//     .p {
-//         padding-left: 2.2em;
-//     }
-// }
 
 /* 引述callout段落的内边距 */
-.bq[custom-b~=error],
-.bq[custom-b~=warn],
-.bq[custom-b~=bug],
-.bq[custom-b~=check],
-.bq[custom-b~=light],
-.bq[custom-b~=question],
-.bq[custom-b~=wrong],
-.bq[custom-b~=info],
-.bq[custom-b~=pen],
-.bq[custom-b~=note],
-.bq[custom-b~=bell],
+.bq[custom-b],
 .bq[custom-bq-callout] {
     padding-left: 8px !important;
-
     .p {
         padding-left: 2.2em;
     }
@@ -131,35 +82,6 @@
 }
 
 /* 引述callout列表的内边距 */
-// .bq[custom-b~=error] .list,
-// .bq[custom-b~=warn] .list,
-// .bq[custom-b~=bug] .list,
-// .bq[custom-b~=check] .list,
-// .bq[custom-b~=light] .list,
-// .bq[custom-b~=question] .list,
-// .bq[custom-b~=wrong] .list,
-// .bq[custom-b~=info] .list,
-// .bq[custom-b~=pen] .list,
-// .bq[custom-b~=note] .list,
-// .bq[custom-b~=bell] .list,
-// .bq[custom-bq-callout] .list {
-//     padding-left: 1.6em !important;
-// }
-
-// .bq[custom-b~=error] .list .p,
-// .bq[custom-b~=warn] .list .p,
-// .bq[custom-b~=bug] .list .p,
-// .bq[custom-b~=check] .list .p,
-// .bq[custom-b~=light] .list .p,
-// .bq[custom-b~=question] .list .p,
-// .bq[custom-b~=wrong] .list .p,
-// .bq[custom-b~=info] .list .p,
-// .bq[custom-b~=pen] .list .p,
-// .bq[custom-b~=note] .list .p,
-// .bq[custom-b~=bell] .list .p,
-// .bq[custom-bq-callout] .list .p {
-//     padding-left: 0em !important;
-// }
 
 .protyle-wysiwyg div[data-node-id][custom-b].bq,
 .protyle-wysiwyg div[data-node-id][custom-bq-callout].bq {
@@ -281,10 +203,10 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
 .protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-bq-callout]::after {
     content: "";
-    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
+    // font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
     position: absolute;
     top: 0.35em;
-    left: 0.2em;
+    left: 0.1em;
     margin-left: 10px;
     font-size: 1.4em;
     border: none;
