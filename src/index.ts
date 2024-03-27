@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-03-27 13:17:39
+ * @LastEditTime : 2024-03-27 22:22:36
  * @Description  : 
  */
 import {
@@ -38,6 +38,7 @@ export default class BqCalloutPlugin extends Plugin {
 
     private settingUtils: SettingUtils;
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
+    private onSettingUpdatedBindThis = this.onSettingUpdated.bind(this);
     private dynamicStyle: DynamicStyle = new DynamicStyle();
 
     DefaultCallouts: ICallout[];
@@ -47,9 +48,9 @@ export default class BqCalloutPlugin extends Plugin {
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
         this.initSlash();
 
-        this.settingUtils = new SettingUtils(this, SettingName);
+        this.settingUtils = new SettingUtils(this, SettingName, this.onSettingUpdatedBindThis, '40rem', '15rem');
         this.settingUtils.addItem({
-            key: 'iconFontStyle',
+            key: 'IconFont',
             value: `'Twitter Emoji', 'Noto Color Emoji', sans-serif`,
             type: 'textinput',
             title: this.i18n.setting.iconFontStyle.title,
@@ -57,7 +58,7 @@ export default class BqCalloutPlugin extends Plugin {
             placeholder: 'Value of "font-family" term in CSS'
         });
         this.settingUtils.load().then(() => {
-            let iconFontStyle = this.settingUtils.get('iconFontStyle');
+            let iconFontStyle = this.settingUtils.get('IconFont');
             this.dynamicStyle.init({
                 IconFont: iconFontStyle
             });
@@ -73,6 +74,12 @@ export default class BqCalloutPlugin extends Plugin {
     async onunload() {
         this.dynamicStyle.removeStyleDom();
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
+    }
+
+    private onSettingUpdated(data: IStyleFields) {
+        this.dynamicStyle.rebuild(data);
+        this.dynamicStyle.updateStyleDom();
+        this.settingUtils.save();
     }
 
     private initSlash() {

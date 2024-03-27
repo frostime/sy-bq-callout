@@ -21,6 +21,10 @@ interface ICallout {
     custom?: boolean;
 }
 
+interface IStyleFields {
+    IconFont?: string;
+}
+
 /**
  * Frequently used data structures in SiYuan
  */

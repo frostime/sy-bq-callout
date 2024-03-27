@@ -79,10 +79,6 @@ const render = (template: string, vars: Record<string, string>) => {
 }
 
 
-interface IStyleFields {
-    IconFont?: string;
-}
-
 //cssSnippet 的模板
 const StyleTemplate: IStyleFields = {
     //部分主题重写了字体, 所以需要在这里重新设置, 见 [必须要强制字体的几个主题](siyuan://blocks/20240326150451-lh4spfr)
