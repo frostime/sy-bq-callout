@@ -19,8 +19,10 @@ Users can insert custom CSS styles in the settings panel. The default style is:
 ```css
 .protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-bq-callout]::after {
-    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
+  font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
 }
 ```
 
 This style will make Callout prioritize using Twitter Emoji. If users prefer Google Emoji, they can set the `font-family` style to `'Noto Color Emoji', 'Twitter Emoji', sans-serif`.
+
+Note: If users set the Icon font to Google Emoji, it is recommended to also add style `top: 0.25em`.

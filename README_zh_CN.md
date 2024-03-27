@@ -20,8 +20,10 @@
 ```css
 .protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-bq-callout]::after {
-    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
+  font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
 }
 ```
 
 该样式会让 Callout 优先使用 Twitter Emoji，如果用户更喜欢 google emoji，可以将 `font-family` 样式设置为 `'Noto Color Emoji', 'Twitter Emoji', sans-serif`。
+
+附注: 如果用户将 Icon 字体设置为 Google Emoji, 建议同时设置样式 `top: 0.25em`。

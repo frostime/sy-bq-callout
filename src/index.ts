@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-03-27 22:42:37
+ * @LastEditTime : 2024-03-27 22:52:05
  * @Description  : 
  */
 import {
@@ -34,7 +34,7 @@ const SettingName = 'setting.json';
 const IconStyle = 
 `.protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-bq-callout]::after {
-    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
+  font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
 }
 `;
 
