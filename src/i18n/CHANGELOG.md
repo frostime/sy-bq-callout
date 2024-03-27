@@ -1,10 +1,8 @@
-## Callout Plugin v0.5.0
+## Callout Plugin v0.6.0
 
-- 支持通过 `/` 命令快速插入一个 callout 块，格式为: `/callout-{callout id}` 或者 `/bq-{callout id}`
-- 优化样式，修复部分主题下图标偏移的问题
+- 增加设置面板来配置 Emoji Icon 的默认字体样式
 
 ---
 
-- Supports quick insertion of a callout block via the `/` command in the format: `/callout-{callout id}` or `/bq-{callout id}`
-- Optimize the style, fix the problem of icon offset under some themes
+- Add settings panel to configure the default font style of Emoji Icon
 
