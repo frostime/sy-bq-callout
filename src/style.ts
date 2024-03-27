@@ -2,8 +2,8 @@
  * Copyright (c) 2023 by Yp Z (frostime). All Rights Reserved.
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
- * @FilePath     : /src/var.ts
- * @LastEditTime : 2023-10-02 22:15:43
+ * @FilePath     : /src/style.ts
+ * @LastEditTime : 2024-03-27 13:36:47
  * @Description  : 
  */
 
@@ -70,3 +70,97 @@ export const DarkCSSVar = `
     --b3-bq-background13-callout: rgb(89, 65, 65, .3);
 }
 `;
+
+const StyleDOMId = 'snippetCSS-BqCallout';
+
+const render = (template: string, vars: Record<string, string>) => {
+    const re = /{{\s*([\w.]+)\s*}}/g;
+    return template.replace(re, (_, key) => vars[key] || '');
+}
+
+
+interface IStyleFields {
+    IconFont?: string;
+}
+
+//cssSnippet 的模板
+const StyleTemplate: IStyleFields = {
+    //部分主题重写了字体, 所以需要在这里重新设置, 见 [必须要强制字体的几个主题](siyuan://blocks/20240326150451-lh4spfr)
+    IconFont: `
+.protyle-wysiwyg .bq[custom-b]::after,
+.protyle-wysiwyg .bq[custom-bq-callout]::after {
+    font-family: {{IconFont}} !important; 
+}
+`,
+}
+
+export class DynamicStyle {
+    //css 样式内容
+    private css: string;
+    //css 样式片段, 合并后生成 this.css
+    private cssSnippets: IStyleFields = {
+        IconFont: ""
+    }
+
+    constructor() {
+        this.css = "";
+    }
+
+    init(styleVar: IStyleFields) {
+        this.rebuild(styleVar);
+        this.updateStyleDom()
+    }
+
+    /**
+     * 根据 this.css 更新 style 标签内容, #snippetCSS-BqCallout
+     */
+    updateStyleDom() {
+        let style: HTMLStyleElement = document.getElementById(StyleDOMId) as HTMLStyleElement;
+        if (!style) {
+            style = document.createElement('style');
+            style.id = StyleDOMId;
+            document.head.appendChild(style);
+        }
+        style.innerHTML = this.css;
+    }
+
+    /**
+     * 移除 style 标签, #snippetCSS-BqCallout
+     */
+    removeStyleDom() {
+        const style = document.getElementById(StyleDOMId);
+        style?.remove();
+    }
+
+    /**
+     * 根据样式变量重建样式
+     * - 如果 val[key] 为 undefined, 则不会对样式进行修改
+     * - 如果 val[key] 为 null 或者 "", 则会清空样式
+     * - 如果 val[key] 有值, 则会根据模板渲染样式
+     * @param styleVar 
+     */
+    rebuild(styleVar: IStyleFields) {
+        this.css = "";
+        for (let key in styleVar) {
+            let value = styleVar?.[key];
+            if (value === undefined) {
+                continue;
+            }
+            //清空样式
+            if (value === "" || value === null) {
+                this.cssSnippets[key] = "";
+                continue;
+            }
+            //从模板中渲染样式
+            let template = StyleTemplate[key];
+            if (template) {
+                let css = render(template, { [key]: value });
+                this.cssSnippets[key] = css;
+            }
+        }
+        //合并样式
+        this.css = Object.values(this.cssSnippets).join("\n");
+    }
+
+}
+

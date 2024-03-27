@@ -13,5 +13,11 @@
         "note": "Note",
         "bell": "Notify",
         "default": "Back to default"
+    },
+    "setting": {
+        "iconFontStyle": {
+            "title": "Icon Font",
+            "description": "Configure the emoji font family of Callout Icon (CSS value)"
+        }
     }
 }

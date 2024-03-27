@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-03-26 14:52:35
+ * @LastEditTime : 2024-03-27 13:17:39
  * @Description  : 
  */
 import {
@@ -18,6 +18,8 @@ import { changelog } from "sy-plugin-changelog";
 import { setBlockAttrs } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
 import * as callout from "./callout";
+import { DynamicStyle } from "./style";
+import { SettingUtils } from "./libs/setting-utils";
 
 async function setUpAttr(blockId: BlockId, value: string) {
     let payload = {
@@ -27,32 +29,40 @@ async function setUpAttr(blockId: BlockId, value: string) {
     setBlockAttrs(blockId, payload);
 }
 
-// const insertCSSScript = (id: string, css: string) => {
-//     const style = document.createElement("style");
-//     style.id = id;
-//     style.innerHTML = css;
-//     document.head.appendChild(style);
-// }
 
-// const removeCSSScript = (id: string) => {
-//     const style = document.getElementById(id);
-//     style?.remove();
-// }
+const SettingName = 'setting.json';
 
 export default class BqCalloutPlugin extends Plugin {
 
-    private blockIconEventBindThis = this.blockIconEvent.bind(this);
-    CSSRoot = 'snippetCSS-BqCallout';
     declare i18n: typeof I18n;
+
+    private settingUtils: SettingUtils;
+    private blockIconEventBindThis = this.blockIconEvent.bind(this);
+    private dynamicStyle: DynamicStyle = new DynamicStyle();
+
     DefaultCallouts: ICallout[];
 
     async onload() {
-        //@ts-ignore
-        // let css = window.siyuan.config.appearance.mode === 0? LightCSSVar : DarkCSSVar;
-        // insertCSSScript(this.CSSRoot, css);
         this.DefaultCallouts = callout.initDefault(I18n);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
         this.initSlash();
+
+        this.settingUtils = new SettingUtils(this, SettingName);
+        this.settingUtils.addItem({
+            key: 'iconFontStyle',
+            value: `'Twitter Emoji', 'Noto Color Emoji', sans-serif`,
+            type: 'textinput',
+            title: this.i18n.setting.iconFontStyle.title,
+            description: this.i18n.setting.iconFontStyle.description,
+            placeholder: 'Value of "font-family" term in CSS'
+        });
+        this.settingUtils.load().then(() => {
+            let iconFontStyle = this.settingUtils.get('iconFontStyle');
+            this.dynamicStyle.init({
+                IconFont: iconFontStyle
+            });
+        });
+
         changelog(this, 'i18n/CHANGELOG.md').then(ans => {
             if (ans.Dialog) {
                 ans.Dialog.setFont('20px');
@@ -61,7 +71,7 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     async onunload() {
-        // removeCSSScript(this.CSSRoot);
+        this.dynamicStyle.removeStyleDom();
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
     }
 

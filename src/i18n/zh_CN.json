@@ -13,5 +13,11 @@
         "note": "注记",
         "bell": "提醒",
         "default": "恢复默认样式"
+    },
+    "setting": {
+        "iconFontStyle": {
+            "title": "Icon 字体样式",
+            "description": "配置 Callout Icon 的 emoji 字体样式 (CSS 字段)"
+        }
     }
 }

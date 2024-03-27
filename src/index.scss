@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-03-26 15:50:49
+ * @LastEditTime : 2024-03-27 13:39:34
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
@@ -206,7 +206,7 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
 .protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-bq-callout]::after {
     content: "";
-    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; //部分主题重写了字体, 所以需要在这里重新设置, 见 [必须要强制字体的几个主题](siyuan://blocks/20240326150451-lh4spfr)
+    // font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
     position: absolute;
     top: 0.35em;
     left: 0.1em;
