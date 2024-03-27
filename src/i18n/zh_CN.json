@@ -15,9 +15,13 @@
         "default": "恢复默认样式"
     },
     "setting": {
-        "iconFontStyle": {
+        "IconFont": {
             "title": "Icon 字体样式",
             "description": "配置 Callout Icon 的 emoji 字体样式 (CSS 字段)"
+        },
+        "CustomCSS": {
+            "title": "自定义 CSS",
+            "description": "填写任意自定义 CSS 样式"
         }
     }
 }

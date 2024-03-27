@@ -12,4 +12,15 @@ This plugin uses emoji icon as callout icon, SiYuan default built-in emoji displ
 
 We recommend downloading the Emoji plugin from the marketplace (twitter or google emoji can be used) to get a better display effect.
 
-The font style of the icon can be configured in the settings, and the value of the corresponding configuration field will be set to the `font-family` style of the emoji icon. Default as `'Twitter Emoji', 'Noto Color Emoji', sans-serif`.
+## Custom Styles
+
+Users can insert custom CSS styles in the settings panel. The default style is:
+
+```css
+.protyle-wysiwyg .bq[custom-b]::after,
+.protyle-wysiwyg .bq[custom-bq-callout]::after {
+    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
+}
+```
+
+This style will make Callout prioritize using Twitter Emoji. If users prefer Google Emoji, they can set the `font-family` style to `'Noto Color Emoji', 'Twitter Emoji', sans-serif`.

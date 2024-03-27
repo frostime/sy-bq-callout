@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-03-27 13:36:47
+ * @LastEditTime : 2024-03-27 22:40:26
  * @Description  : 
  */
 
@@ -81,7 +81,6 @@ const render = (template: string, vars: Record<string, string>) => {
 
 //cssSnippet 的模板
 const StyleTemplate: IStyleFields = {
-    //部分主题重写了字体, 所以需要在这里重新设置, 见 [必须要强制字体的几个主题](siyuan://blocks/20240326150451-lh4spfr)
     IconFont: `
 .protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-bq-callout]::after {
@@ -95,7 +94,7 @@ export class DynamicStyle {
     private css: string;
     //css 样式片段, 合并后生成 this.css
     private cssSnippets: IStyleFields = {
-        IconFont: ""
+        CustomCSS: ""
     }
 
     constructor() {
@@ -138,21 +137,28 @@ export class DynamicStyle {
     rebuild(styleVar: IStyleFields) {
         this.css = "";
         for (let key in styleVar) {
-            let value = styleVar?.[key];
-            if (value === undefined) {
+            //custom css 不需要模板, 单独处理
+            if (key === 'CustomCSS') {
+                this.cssSnippets[key] = styleVar[key];
                 continue;
             }
-            //清空样式
-            if (value === "" || value === null) {
-                this.cssSnippets[key] = "";
-                continue;
-            }
-            //从模板中渲染样式
-            let template = StyleTemplate[key];
-            if (template) {
-                let css = render(template, { [key]: value });
-                this.cssSnippets[key] = css;
-            }
+
+            // 需要模板的样式, 从模板中渲染
+            // let value = styleVar?.[key];
+            // if (value === undefined) {
+            //     continue;
+            // }
+            // //清空样式
+            // if (value === "" || value === null) {
+            //     this.cssSnippets[key] = "";
+            //     continue;
+            // }
+            // //从模板中渲染样式
+            // let template = StyleTemplate[key];
+            // if (template) {
+            //     let css = render(template, { [key]: value });
+            //     this.cssSnippets[key] = css;
+            // }
         }
         //合并样式
         this.css = Object.values(this.cssSnippets).join("\n");

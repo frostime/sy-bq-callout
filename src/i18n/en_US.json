@@ -15,9 +15,13 @@
         "default": "Back to default"
     },
     "setting": {
-        "iconFontStyle": {
+        "IconFont": {
             "title": "Icon Font",
             "description": "Configure the emoji font family of Callout Icon (CSS value)"
+        },
+        "CustomCSS": {
+            "title": "Custom CSS",
+            "description": "Fill with any custom css"
         }
     }
 }

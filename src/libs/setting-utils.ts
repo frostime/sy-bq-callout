@@ -3,7 +3,7 @@
  * @Author       : frostime
  * @Date         : 2023-12-17 18:28:19
  * @FilePath     : /src/libs/setting-utils.ts
- * @LastEditTime : 2024-03-26 15:34:22
+ * @LastEditTime : 2024-03-27 22:34:35
  * @Description  : 
  */
 
@@ -144,6 +144,7 @@ export class SettingUtils {
                 textareaElement.className = "b3-text-field fn__block";
                 textareaElement.value = item.value;
                 itemElement = textareaElement;
+                textareaElement.style.height = '10rem';
                 break;
             case 'number':
                 let numberElement: HTMLInputElement = document.createElement('input');

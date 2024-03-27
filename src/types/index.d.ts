@@ -23,6 +23,7 @@ interface ICallout {
 
 interface IStyleFields {
     IconFont?: string;
+    CustomCSS?: string;
 }
 
 /**

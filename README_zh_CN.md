@@ -13,4 +13,15 @@
 
 推荐在集市中下载 Emoji 插件（twitter 或 google emoji 均可）来获取更好的显示效果。
 
-图标字体的优先级可以在设置中配置，对应的配置字段的值将会被设置为 emoji icon 的 `font-family` 样式。默认为 `'Twitter Emoji', 'Noto Color Emoji', sans-serif`。
+## 自定义样式
+
+用户可以在设置面板中插入自定义的 CSS 样式，默认样式为:
+
+```css
+.protyle-wysiwyg .bq[custom-b]::after,
+.protyle-wysiwyg .bq[custom-bq-callout]::after {
+    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
+}
+```
+
+该样式会让 Callout 优先使用 Twitter Emoji，如果用户更喜欢 google emoji，可以将 `font-family` 样式设置为 `'Noto Color Emoji', 'Twitter Emoji', sans-serif`。

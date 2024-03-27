@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-03-27 22:22:36
+ * @LastEditTime : 2024-03-27 22:42:37
  * @Description  : 
  */
 import {
@@ -31,6 +31,12 @@ async function setUpAttr(blockId: BlockId, value: string) {
 
 
 const SettingName = 'setting.json';
+const IconStyle = 
+`.protyle-wysiwyg .bq[custom-b]::after,
+.protyle-wysiwyg .bq[custom-bq-callout]::after {
+    font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
+}
+`;
 
 export default class BqCalloutPlugin extends Plugin {
 
@@ -48,19 +54,21 @@ export default class BqCalloutPlugin extends Plugin {
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
         this.initSlash();
 
-        this.settingUtils = new SettingUtils(this, SettingName, this.onSettingUpdatedBindThis, '40rem', '15rem');
+        this.settingUtils = new SettingUtils(
+            this, SettingName, this.onSettingUpdatedBindThis, '40rem', '25rem'
+        );
         this.settingUtils.addItem({
-            key: 'IconFont',
-            value: `'Twitter Emoji', 'Noto Color Emoji', sans-serif`,
-            type: 'textinput',
-            title: this.i18n.setting.iconFontStyle.title,
-            description: this.i18n.setting.iconFontStyle.description,
-            placeholder: 'Value of "font-family" term in CSS'
+            key: 'CustomCSS',
+            value: IconStyle,
+            type: 'textarea',
+            title: this.i18n.setting.CustomCSS.title,
+            description: this.i18n.setting.CustomCSS.description,
+            placeholder: '任意自定义 CSS 样式代码'
         });
         this.settingUtils.load().then(() => {
-            let iconFontStyle = this.settingUtils.get('IconFont');
+            let CustomCSS = this.settingUtils.get('CustomCSS');
             this.dynamicStyle.init({
-                IconFont: iconFontStyle
+                CustomCSS: CustomCSS
             });
         });
 
