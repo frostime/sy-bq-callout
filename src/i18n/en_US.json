@@ -1,31 +1,31 @@
 {
     "name": "Savor Callout",
     "button": {
-        "error": "Abandon",
-        "warn": "Warning",
+        "error": "Error",
+        "warn": "Warn",
         "bug": "Bug",
-        "check": "Correct",
-        "light": "Intuition",
+        "check": "Check",
+        "light": "Light",
         "question": "Question",
         "wrong": "Wrong",
         "info": "Information",
-        "pen": "Record",
+        "pen": "Pen",
         "note": "Note",
-        "bell": "Notify",
+        "bell": "Bell",
         "default": "Back to default"
     },
     "setting": {
         "IconFont": {
-            "title": "Icon Font",
+            "title": "🖌️ Icon Font",
             "description": "Configure the emoji font family of Callout Icon (CSS value)"
         },
         "CustomCSS": {
-            "title": "Custom CSS",
-            "description": "Fill with any custom css"
+            "title": "🎨 Custom CSS",
+            "description": "📋 Fill with any custom css"
         },
         "CalloutOrder": {
-            "title": "Callout Display Order",
-            "description": "The display order of Callouts in the menu (Callout ID), those listed earlier will appear higher up, use ', ;' etc. to separate;<br/>Callouts not recorded here will not appear in the menu, but their styles will still take effect as normal;<br/>If left blank, the default order will be used"
+            "title": "📋 Callout Menu Item Order",
+            "description": "<ul> <li>The display order of Callouts in the menu (Callout ID), separated by ',' or ';'</li> <li>Callouts not recorded here will not appear in the menu, but their styles will still take effect as normal</li> <li>If left blank, the default order will be used</li> </ul>"
         }
     }
 }

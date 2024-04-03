@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-04-03 22:15:54
+ * @LastEditTime : 2024-04-03 22:39:42
  * @Description  : 
  */
 import {
@@ -13,7 +13,7 @@ import {
 } from "siyuan";
 import "@/index.scss";
 
-import { changelog } from "sy-plugin-changelog";
+// import { changelog } from "sy-plugin-changelog";
 
 import { setBlockAttrs } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
@@ -27,6 +27,10 @@ async function setUpAttr(blockId: BlockId, value: string) {
         // 'custom-bq-callout': value
     }
     setBlockAttrs(blockId, payload);
+}
+
+const capitalize = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 
@@ -84,11 +88,11 @@ export default class BqCalloutPlugin extends Plugin {
             this.resetSlash();
         });
 
-        changelog(this, 'i18n/CHANGELOG.md').then(ans => {
-            if (ans.Dialog) {
-                ans.Dialog.setFont('20px');
-            }
-        })
+        // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+        //     if (ans.Dialog) {
+        //         ans.Dialog.setFont('20px');
+        //     }
+        // })
     }
 
     async onunload() {
@@ -126,7 +130,7 @@ export default class BqCalloutPlugin extends Plugin {
         for (let ct of this.getCalloutList()) {
             this.protyleSlash.push({
                 filter: [`callout-${ct.id}`, `bq-${ct.id}`],
-                html: `<span class="b3-menu__label">${ct.icon}${ct.id}</span>`,
+                html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
                 id: ct.id,
                 callback: (protyle: Protyle) => {
                     protyle.insert(`> ${ct.id}\n{: custom-b="${ct.id}"}`);

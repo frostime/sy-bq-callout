@@ -3,7 +3,7 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-04-03 21:49:54
+ * @LastEditTime : 2024-04-03 22:40:56
  * @Description  : 
  */
 
@@ -80,6 +80,9 @@ export function initDefault(i18nObj: typeof I18n) {
     return DefaultCallouts;
 }
 
+const capitalize = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
 export function createCalloutButton(selectid: BlockId, callout: ICallout): HTMLButtonElement{
     let button = document.createElement("button")
@@ -88,7 +91,7 @@ export function createCalloutButton(selectid: BlockId, callout: ICallout): HTMLB
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", callout.id);
-    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${callout.id}</span>`
+    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${capitalize(callout.id)}</span>`
     return button
 }
 

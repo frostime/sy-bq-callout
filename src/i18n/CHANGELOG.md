@@ -1,8 +1,8 @@
-## Callout Plugin v0.6.0
+## Callout Plugin v0.7.0
 
-- 支持通过设置面板来配置自定义样式
+- 在设置面板中配置 callout 在菜单中的显示顺序
 
 ---
 
-- Add settings panel to configure custom style sheet.
+- Configure the display order of the callout in the menu in the settings panel.
 

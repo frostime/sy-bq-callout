@@ -1,7 +1,7 @@
 {
     "name": "Savor Callout",
     "button": {
-        "error": "禁止",
+        "error": "异常",
         "warn": "警告",
         "bug": "Bug",
         "check": "正确",
@@ -9,23 +9,23 @@
         "question": "问题",
         "wrong": "错误",
         "info": "信息",
-        "pen": "记录",
+        "pen": "笔记",
         "note": "注记",
         "bell": "提醒",
         "default": "恢复默认样式"
     },
     "setting": {
         "IconFont": {
-            "title": "Icon 字体样式",
+            "title": "🖌️ Icon 字体样式",
             "description": "配置 Callout Icon 的 emoji 字体样式 (CSS 字段)"
         },
         "CustomCSS": {
-            "title": "自定义 CSS",
+            "title": "🎨 自定义 CSS",
             "description": "填写任意自定义 CSS 样式"
         },
         "CalloutOrder": {
-            "title": "Callout 显示顺序",
-            "description": "Callout 在菜单中的显示顺序 (Callout ID), 排在前面的会显示在更上面, 使用「, ;」等分割;<br/>没有记录在这里的 Callout 不会出现在菜单中, 但是他们的样式仍然正常生效；<br/>如果全部置空，则按照默认顺序显示"
+            "title": "📋 Callout 菜单项顺序",
+            "description": "<ul> <li>Callout 在菜单中的显示顺序 (Callout ID)使用逗号(,)或分号(;) 分割</li> <li>没有记录在这里的 Callout 不会出现在菜单中, 但是他们的样式仍然正常生效</li> <li>如果全部置空，则按照默认顺序显示</li> </ul>"
         }
     }
 }
