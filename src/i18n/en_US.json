@@ -25,7 +25,7 @@
         },
         "CalloutOrder": {
             "title": "Callout Display Order",
-            "description": "The display order of Callouts in the menu (Callout ID), those listed earlier will appear higher up, use ', ;' etc. to separate;<br/>Callouts not recorded here will not appear in the menu, but their styles will still take effect as normal"
+            "description": "The display order of Callouts in the menu (Callout ID), those listed earlier will appear higher up, use ', ;' etc. to separate;<br/>Callouts not recorded here will not appear in the menu, but their styles will still take effect as normal;<br/>If left blank, the default order will be used"
         }
     }
 }

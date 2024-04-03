@@ -3,7 +3,7 @@
  * @Author       : frostime
  * @Date         : 2023-12-17 18:28:19
  * @FilePath     : /src/libs/setting-utils.ts
- * @LastEditTime : 2024-03-27 22:34:35
+ * @LastEditTime : 2024-04-03 22:12:29
  * @Description  : 
  */
 
@@ -174,7 +174,8 @@ export class SettingUtils {
                 let element = this.getElement(item.key);
                 return element;
             }
-        })
+        });
+        return itemElement;
     }
 
     getElement(key: string) {

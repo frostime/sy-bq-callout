@@ -83,12 +83,12 @@ export function initDefault(i18nObj: typeof I18n) {
 
 export function createCalloutButton(selectid: BlockId, callout: ICallout): HTMLButtonElement{
     let button = document.createElement("button")
-    let title = callout.title;
+    // let title = callout.title;
     button.className = "b3-menu__item"
     button.setAttribute("data-node-id", selectid)
     button.setAttribute("custom-attr-name", "b")
     button.setAttribute("custom-attr-value", callout.id);
-    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${title}</span>`
+    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${callout.id}</span>`
     return button
 }
 

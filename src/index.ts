@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-04-03 21:58:25
+ * @LastEditTime : 2024-04-03 22:15:54
  * @Description  : 
  */
 import {
@@ -47,17 +47,18 @@ export default class BqCalloutPlugin extends Plugin {
     private onSettingUpdatedBindThis = this.onSettingUpdated.bind(this);
     private dynamicStyle: DynamicStyle = new DynamicStyle();
 
-    DefaultCallouts: ICallout[];
-
-    CalloutOrder: Map<string, ICallout> = new Map();
+    CalloutHub: Map<string, ICallout> = new Map();
 
     async onload() {
-        this.DefaultCallouts = callout.initDefault(I18n);
+        let DefaultCallouts = callout.initDefault(I18n);
+        for (let ct of DefaultCallouts) {
+            this.CalloutHub.set(ct.id, ct);
+        }
+
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
-        this.initSlash();
 
         this.settingUtils = new SettingUtils(
-            this, SettingName, this.onSettingUpdatedBindThis, '40rem', '25rem'
+            this, SettingName, this.onSettingUpdatedBindThis, '45rem', '40rem'
         );
         this.settingUtils.addItem({
             key: 'CustomCSS',
@@ -67,18 +68,20 @@ export default class BqCalloutPlugin extends Plugin {
             description: this.i18n.setting.CustomCSS.description,
             placeholder: '任意自定义 CSS 样式代码'
         });
-        this.settingUtils.addItem({
+        let ele = this.settingUtils.addItem({
             key: 'CalloutOrder',
-            value: this.DefaultCallouts.map((v) => v.id).join(', '),
+            value: DefaultCallouts.map((v) => v.id).join(', '),
             type: 'textarea',
             title: this.i18n.setting.CalloutOrder.title,
             description: this.i18n.setting.CalloutOrder.description
         });
+        ele.style.height = '2rem';
         this.settingUtils.load().then(() => {
             let CustomCSS = this.settingUtils.get('CustomCSS');
             this.dynamicStyle.init({
                 CustomCSS: CustomCSS
             });
+            this.resetSlash();
         });
 
         changelog(this, 'i18n/CHANGELOG.md').then(ans => {
@@ -97,10 +100,30 @@ export default class BqCalloutPlugin extends Plugin {
         this.dynamicStyle.rebuild(data);
         this.dynamicStyle.updateStyleDom();
         this.settingUtils.save();
+        this.resetSlash();
     }
 
-    private initSlash() {
-        for (let ct of this.DefaultCallouts) {
+    private getCalloutList(): ICallout[] {
+        let CalloutOrder = this.settingUtils.get('CalloutOrder').trim();
+        let orderList = [];
+        if (CalloutOrder === '') {
+            orderList = Array.from(this.CalloutHub.keys());
+        } else {
+            orderList = CalloutOrder.split(/\s*[,;，；]\s*/).map((v) => v.trim());
+        }
+        let callouts = [];
+        for (let id of orderList) {
+            let callout = this.CalloutHub.get(id);
+            if (callout) {
+                callouts.push(callout);
+            }
+        }
+        return callouts;
+    }
+
+    private resetSlash() {
+        this.protyleSlash = [];
+        for (let ct of this.getCalloutList()) {
             this.protyleSlash.push({
                 filter: [`callout-${ct.id}`, `bq-${ct.id}`],
                 html: `<span class="b3-menu__label">${ct.icon}${ct.id}</span>`,
@@ -113,7 +136,7 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private blockIconEvent({ detail }: any) {
-        console.log(detail);
+        // console.log(detail);
         if (detail.blockElements.length > 1) {
             return;
         }
@@ -124,8 +147,8 @@ export default class BqCalloutPlugin extends Plugin {
 
         let menu: Menu = detail.menu;
         let submenus = [];
-        console.log(this.DefaultCallouts);
-        for (let icallout of this.DefaultCallouts) {
+
+        for (let icallout of this.getCalloutList()) {
             let btn = callout.createCalloutButton(ele.getAttribute("data-node-id"), icallout);
             btn.onclick = () => {
                 setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
