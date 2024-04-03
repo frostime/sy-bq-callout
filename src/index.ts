@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-03-27 22:52:05
+ * @LastEditTime : 2024-04-03 21:58:25
  * @Description  : 
  */
 import {
@@ -49,6 +49,8 @@ export default class BqCalloutPlugin extends Plugin {
 
     DefaultCallouts: ICallout[];
 
+    CalloutOrder: Map<string, ICallout> = new Map();
+
     async onload() {
         this.DefaultCallouts = callout.initDefault(I18n);
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
@@ -64,6 +66,13 @@ export default class BqCalloutPlugin extends Plugin {
             title: this.i18n.setting.CustomCSS.title,
             description: this.i18n.setting.CustomCSS.description,
             placeholder: '任意自定义 CSS 样式代码'
+        });
+        this.settingUtils.addItem({
+            key: 'CalloutOrder',
+            value: this.DefaultCallouts.map((v) => v.id).join(', '),
+            type: 'textarea',
+            title: this.i18n.setting.CalloutOrder.title,
+            description: this.i18n.setting.CalloutOrder.description
         });
         this.settingUtils.load().then(() => {
             let CustomCSS = this.settingUtils.get('CustomCSS');

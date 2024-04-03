@@ -3,7 +3,7 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-03-25 20:43:22
+ * @LastEditTime : 2024-04-03 21:49:54
  * @Description  : 
  */
 
@@ -16,67 +16,56 @@ const DefaultCallouts: ICallout[] = [
         id: 'info',
         icon: 'ℹ',
         title: '',
-        order: 0
     },
     {
         id: 'light',
         icon: '💡',
         title: '',
-        order: 0
     },
     {
         id: 'bell',
         icon: '🔔',
         title: '',
-        order: 0
     },
     {
         id: 'check',
         icon: '✅',
         title: '',
-        order: 0
     },
     {
         id: 'question',
         icon: '❓',
         title: '',
-        order: 0
     },
     {
         id: 'warn',
         icon: '⚠',
         title: '',
-        order: 0
     },
     {
         id: 'wrong',
         icon: '❌',
         title: '',
-        order: 0
     },
     {
         id: 'error',
         icon: '🚫',
-        title: '', //等 initDefaultCallouts() 中初始化
-        order: 0  //默认都为 0
+        title: '',
     },
     {
         id: 'bug',
         icon: '🐛',
         title: '',
-        order: 0
     },
     {
         id: 'note',
         icon: '📓',
         title: '',
-        order: 0
     },
     {
         id: 'pen',
         icon: '🖋',
         title: '',
-        order: 0
     }
 ]
 

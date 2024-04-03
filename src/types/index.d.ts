@@ -17,7 +17,7 @@ interface ICallout {
     };
 
     hide?: boolean;
-    order?: number;
+    // order?: number;
     custom?: boolean;
 }
 

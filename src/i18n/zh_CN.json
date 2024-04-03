@@ -22,6 +22,10 @@
         "CustomCSS": {
             "title": "自定义 CSS",
             "description": "填写任意自定义 CSS 样式"
+        },
+        "CalloutOrder": {
+            "title": "Callout 显示顺序",
+            "description": "Callout 在菜单中的显示顺序 (Callout ID), 排在前面的会显示在更上面, 使用「, ;」等分割;<br/>没有记录在这里的 Callout 不会出现在菜单中, 但是他们的样式仍然正常生效"
         }
     }
 }
