@@ -1,18 +1,17 @@
 /*
  * Copyright (c) 2024 by frostime. All Rights Reserved.
  * @Author       : frostime
- * @Date         : 2023-10-02 20:30:13
+ * @Date         : 2024-04-19 18:30:12
  * @FilePath     : /src/libs/index.d.ts
- * @LastEditTime : 2024-03-26 15:35:33
+ * @LastEditTime : 2024-04-30 16:39:54
  * @Description  : 
  */
-type TSettingItemType = "checkbox" | "select" | "textinput" | "textarea" | "number" | "slider" | "button" | "hint";
-interface ISettingItem {
+type TSettingItemType = "checkbox" | "select" | "textinput" | "textarea" | "number" | "slider" | "button" | "hint" | "custom";
+
+interface ISettingItemCore {
+    type: TSettingItemType;
     key: string;
     value: any;
-    type: TSettingItemType;
-    title: string;
-    description?: string;
     placeholder?: string;
     slider?: {
         min: number;
@@ -24,4 +23,21 @@ interface ISettingItem {
         label: string;
         callback: () => void;
     }
+}
+
+interface ISettingItem extends ISettingItemCore {
+    title: string;
+    description: string;
+}
+
+
+//Interface for setting-utils
+interface ISettingUtilsItem extends ISettingItem {
+    direction?: "row" | "column";
+    action?: {
+        callback: () => void;
+    }
+    createElement?: (currentVal: any) => HTMLElement;
+    getEleVal?: (ele: HTMLElement) => any;
+    setEleVal?: (ele: HTMLElement, val: any) => void;
 }

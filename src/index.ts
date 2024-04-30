@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-04-03 22:39:42
+ * @LastEditTime : 2024-04-30 18:14:35
  * @Description  : 
  */
 import {
@@ -29,7 +29,7 @@ async function setUpAttr(blockId: BlockId, value: string) {
     setBlockAttrs(blockId, payload);
 }
 
-const capitalize = (word) => {
+const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
@@ -61,25 +61,34 @@ export default class BqCalloutPlugin extends Plugin {
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 
-        this.settingUtils = new SettingUtils(
-            this, SettingName, this.onSettingUpdatedBindThis, '45rem', '40rem'
-        );
+        this.settingUtils = new SettingUtils({
+            plugin: this,
+            name: SettingName,
+            callback: this.onSettingUpdatedBindThis,
+            width: '45rem',
+            height: '40rem'
+        });
         this.settingUtils.addItem({
             key: 'CustomCSS',
             value: IconStyle,
             type: 'textarea',
+            direction: 'row',
             title: this.i18n.setting.CustomCSS.title,
             description: this.i18n.setting.CustomCSS.description,
-            placeholder: '任意自定义 CSS 样式代码'
+            placeholder: 'Custom CSS Style Code'
         });
         let ele = this.settingUtils.addItem({
             key: 'CalloutOrder',
             value: DefaultCallouts.map((v) => v.id).join(', '),
             type: 'textarea',
+            direction: 'row',
             title: this.i18n.setting.CalloutOrder.title,
             description: this.i18n.setting.CalloutOrder.description
         });
         ele.style.height = '2rem';
+        let cssTextarea: HTMLTextAreaElement = this.settingUtils.getElement('CustomCSS');
+        cssTextarea.rows = 10;
+
         this.settingUtils.load().then(() => {
             let CustomCSS = this.settingUtils.get('CustomCSS');
             this.dynamicStyle.init({
@@ -103,7 +112,6 @@ export default class BqCalloutPlugin extends Plugin {
     private onSettingUpdated(data: IStyleFields) {
         this.dynamicStyle.rebuild(data);
         this.dynamicStyle.updateStyleDom();
-        this.settingUtils.save();
         this.resetSlash();
     }
 
