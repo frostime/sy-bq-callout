@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-04-30 18:14:35
+ * @LastEditTime : 2024-04-30 18:40:13
  * @Description  : 
  */
 import {
@@ -77,15 +77,35 @@ export default class BqCalloutPlugin extends Plugin {
             description: this.i18n.setting.CustomCSS.description,
             placeholder: 'Custom CSS Style Code'
         });
-        let ele = this.settingUtils.addItem({
+        this.settingUtils.addItem({
             key: 'CalloutOrder',
             value: DefaultCallouts.map((v) => v.id).join(', '),
-            type: 'textarea',
+            type: 'custom',
             direction: 'row',
             title: this.i18n.setting.CalloutOrder.title,
-            description: this.i18n.setting.CalloutOrder.description
+            description: this.i18n.setting.CalloutOrder.description,
+            createElement: (currentVal) => {
+                let html = `
+                <input class="b3-text-field fn__flex-center fn__flex-1" value="${currentVal}" />
+                <button class="b3-button b3-button--text">Reset</button>
+                `;
+                let div = document.createElement('div');
+                div.className = 'fn__flex';
+                div.style.gap = '10px';
+                div.innerHTML = html;
+                div.querySelector('button').onclick = () => {
+                    let val = DefaultCallouts.map((v) => v.id).join(', ');
+                    div.querySelector('input').value = val;
+                };
+                return div;
+            },
+            setEleVal: (ele: HTMLDivElement, val) => {
+                ele.querySelector('input').value = val;
+            },
+            getEleVal: (ele: HTMLDivElement) => {
+                return ele.querySelector('input').value;
+            }
         });
-        ele.style.height = '2rem';
         let cssTextarea: HTMLTextAreaElement = this.settingUtils.getElement('CustomCSS');
         cssTextarea.rows = 10;
 
