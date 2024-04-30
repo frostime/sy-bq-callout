@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-04-30 18:40:13
+ * @LastEditTime : 2024-04-30 18:41:50
  * @Description  : 
  */
 import {
@@ -108,6 +108,7 @@ export default class BqCalloutPlugin extends Plugin {
         });
         let cssTextarea: HTMLTextAreaElement = this.settingUtils.getElement('CustomCSS');
         cssTextarea.rows = 10;
+        cssTextarea.spellcheck = false;
 
         this.settingUtils.load().then(() => {
             let CustomCSS = this.settingUtils.get('CustomCSS');
