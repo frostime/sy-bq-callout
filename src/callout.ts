@@ -80,7 +80,7 @@ export function initDefault(i18nObj: typeof I18n) {
     return DefaultCallouts;
 }
 
-const capitalize = (word) => {
+const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 

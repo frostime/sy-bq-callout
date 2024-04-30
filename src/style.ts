@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-03-27 22:40:26
+ * @LastEditTime : 2024-04-30 18:46:35
  * @Description  : 
  */
 
@@ -72,22 +72,6 @@ export const DarkCSSVar = `
 `;
 
 const StyleDOMId = 'snippetCSS-BqCallout';
-
-const render = (template: string, vars: Record<string, string>) => {
-    const re = /{{\s*([\w.]+)\s*}}/g;
-    return template.replace(re, (_, key) => vars[key] || '');
-}
-
-
-//cssSnippet 的模板
-const StyleTemplate: IStyleFields = {
-    IconFont: `
-.protyle-wysiwyg .bq[custom-b]::after,
-.protyle-wysiwyg .bq[custom-bq-callout]::after {
-    font-family: {{IconFont}} !important; 
-}
-`,
-}
 
 export class DynamicStyle {
     //css 样式内容
