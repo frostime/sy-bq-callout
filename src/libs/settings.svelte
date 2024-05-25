@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-05-25 19:39:58
+ LastEditTime : 2024-05-25 19:48:19
  Description  : 
 -->
 <script lang="ts">
@@ -28,22 +28,23 @@ font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
         CustomCSS: {
             title: i18n.setting.CustomCSS.title,
             description: i18n.setting.CustomCSS.description,
-            value: IconStyle
+            value: IconStyle,
         },
         CalloutOrder: {
             title: i18n.setting.CalloutOrder.title,
             description: i18n.setting.CalloutOrder.description,
-            value: ''
-        }
+            value: Array.from(plugin.CalloutHub.keys()).join(", "),
+        },
     };
 </script>
 
 <div class="config__tab-container">
-
     <div class="b3-label" data-key="CustomCSS">
         <div class="fn__block">
             {configs.CustomCSS.title}
-            <div class="b3-label__text">{@html configs.CustomCSS.description}</div>
+            <div class="b3-label__text">
+                {@html configs.CustomCSS.description}
+            </div>
             <div class="fn__hr"></div>
             <textarea
                 class="b3-text-field fn__block"
@@ -57,19 +58,31 @@ font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
     <div class="b3-label" data-key="CalloutOrder">
         <div class="fn__block">
             {configs.CalloutOrder.title}
-            <div class="b3-label__text">{@html configs.CalloutOrder.description}</div>
+            <div class="b3-label__text">
+                {@html configs.CalloutOrder.description}
+            </div>
             <div class="fn__hr"></div>
             <div class="fn__flex" style="gap: 10px;">
-                <input class="b3-text-field fn__flex-center fn__flex-1" value={configs.CalloutOrder.value} />
-                <button class="b3-button b3-button--text">Reset</button>
+                <input
+                    class="b3-text-field fn__flex-center fn__flex-1"
+                    value={configs.CalloutOrder.value}
+                />
+                <button
+                    class="b3-button b3-button--text"
+                    on:click={() => {
+                        configs.CalloutOrder.value = Array.from(
+                            plugin.CalloutHub.keys(),
+                        ).join(", ");
+                    }}>Reset</button
+                >
             </div>
         </div>
     </div>
-
 </div>
 
 <style lang="scss">
     .config__tab-container {
+        padding: 16px 32px;
         .b3-label {
             box-shadow: none !important;
             padding-bottom: 16px;
@@ -80,5 +93,4 @@ font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
             border-bottom: 1px solid var(--b3-border-color);
         }
     }
-    
 </style>

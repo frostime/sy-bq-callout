@@ -34,96 +34,104 @@
     }
 </script>
 
-{#if type === 'textarea'}
-
-<div class="b3-label" data-key="CustomCSS">
-    <div class="fn__block">
-        {title}
-        <div class="b3-label__text">{@html description}</div>
-        <div class="fn__hr"></div>
-        <textarea
-            class="b3-text-field fn__block"
-            rows="{textarea.rows}"
-            spellcheck="false"
-            bind:value="{settingValue}"
-            on:change="{changed}"
-        ></textarea>
+{#if type === "textarea"}
+    <div class="b3-label" data-key="CustomCSS">
+        <div class="fn__block">
+            {title}
+            <div class="b3-label__text">{@html description}</div>
+            <div class="fn__hr"></div>
+            <textarea
+                class="b3-text-field fn__block"
+                rows={textarea.rows}
+                spellcheck="false"
+                bind:value={settingValue}
+                on:change={changed}
+            ></textarea>
+        </div>
     </div>
-</div>
-
 {:else}
-
-<div class="fn__flex b3-label config__item">
-    <div class="fn__flex-1">
-        {title}
-        <div class="b3-label__text">
-            {@html description}
-        </div> 
-    </div>
-    <span class="fn__space" />
-    <!-- <slot /> -->
-    {#if type === "checkbox"}
-        <!-- Checkbox -->
-        <input
-            class="b3-switch fn__flex-center"
-            id={settingKey}
-            type="checkbox"
-            bind:checked={settingValue}
-            on:change={changed}
-        />
-    {:else if type === "textinput"}
-        <!-- Text Input -->
-        <input
-            class="b3-text-field fn__flex-center fn__size200"
-            id={settingKey}
-            {placeholder}
-            bind:value={settingValue}
-            on:change={changed}
-        />
-    {:else if type === "number"}
-        <input
-            class="b3-text-field fn__flex-center fn__size200"
-            id={settingKey}
-            type="number"
-            bind:value={settingValue}
-            on:change={changed}
-        />
-    {:else if type === "button"}
-        <!-- Button Input -->
-        <button
-            class="b3-button b3-button--outline fn__flex-center fn__size200"
-            id={settingKey}
-            on:click={click}
-        >
-            {button.label}
-        </button>
-    {:else if type === "select"}
-        <!-- Dropdown select -->
-        <select
-            class="b3-select fn__flex-center fn__size200"
-            id="iconPosition"
-            bind:value={settingValue}
-            on:change={changed}
-        >
-            {#each Object.entries(options) as [value, text]}
-                <option {value}>{text}</option>
-            {/each}
-        </select>
-    {:else if type == "slider"}
-        <!-- Slider -->
-        <div class="b3-tooltips b3-tooltips__n" aria-label={settingValue}>
+    <div class="fn__flex b3-label config__item">
+        <div class="fn__flex-1">
+            {title}
+            <div class="b3-label__text">
+                {@html description}
+            </div>
+        </div>
+        <span class="fn__space" />
+        <!-- <slot /> -->
+        {#if type === "checkbox"}
+            <!-- Checkbox -->
             <input
-                class="b3-slider fn__size200"
-                id="fontSize"
-                min={slider.min}
-                max={slider.max}
-                step={slider.step}
-                type="range"
+                class="b3-switch fn__flex-center"
+                id={settingKey}
+                type="checkbox"
+                bind:checked={settingValue}
+                on:change={changed}
+            />
+        {:else if type === "textinput"}
+            <!-- Text Input -->
+            <input
+                class="b3-text-field fn__flex-center fn__size200"
+                id={settingKey}
+                {placeholder}
                 bind:value={settingValue}
                 on:change={changed}
             />
-        </div>
-    {/if}
-</div>
-
+        {:else if type === "number"}
+            <input
+                class="b3-text-field fn__flex-center fn__size200"
+                id={settingKey}
+                type="number"
+                bind:value={settingValue}
+                on:change={changed}
+            />
+        {:else if type === "button"}
+            <!-- Button Input -->
+            <button
+                class="b3-button b3-button--outline fn__flex-center fn__size200"
+                id={settingKey}
+                on:click={click}
+            >
+                {button.label}
+            </button>
+        {:else if type === "select"}
+            <!-- Dropdown select -->
+            <select
+                class="b3-select fn__flex-center fn__size200"
+                id="iconPosition"
+                bind:value={settingValue}
+                on:change={changed}
+            >
+                {#each Object.entries(options) as [value, text]}
+                    <option {value}>{text}</option>
+                {/each}
+            </select>
+        {:else if type == "slider"}
+            <!-- Slider -->
+            <div class="b3-tooltips b3-tooltips__n" aria-label={settingValue}>
+                <input
+                    class="b3-slider fn__size200"
+                    id="fontSize"
+                    min={slider.min}
+                    max={slider.max}
+                    step={slider.step}
+                    type="range"
+                    bind:value={settingValue}
+                    on:change={changed}
+                />
+            </div>
+        {/if}
+    </div>
 {/if}
+
+<style>
+    .b3-label {
+        box-shadow: none !important;
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+    }
+
+    .b3-label:not(:last-child) {
+        border-bottom: 1px solid var(--b3-border-color);
+    }
+</style>
