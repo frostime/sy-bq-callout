@@ -6,6 +6,8 @@ import livereload from "rollup-plugin-livereload"
 import zipPack from "vite-plugin-zip-pack";
 import fg from 'fast-glob';
 
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w || false
 const devDistDir = "./dev"
@@ -22,6 +24,8 @@ export default defineConfig({
     },
 
     plugins: [
+
+        svelte(),
 
         viteStaticCopy({
             targets: [

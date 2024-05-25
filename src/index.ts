@@ -3,13 +3,14 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-04-30 18:41:50
+ * @LastEditTime : 2024-05-25 19:35:00
  * @Description  : 
  */
 import {
     Plugin,
     Menu,
-    Protyle
+    Protyle,
+    Dialog
 } from "siyuan";
 import "@/index.scss";
 
@@ -20,6 +21,8 @@ import * as I18n from "./i18n/zh_CN.json";
 import * as callout from "./callout";
 import { DynamicStyle } from "./style";
 import { SettingUtils } from "./libs/setting-utils";
+
+import Settings from './libs/settings.svelte';
 
 async function setUpAttr(blockId: BlockId, value: string) {
     let payload = {
@@ -128,6 +131,24 @@ export default class BqCalloutPlugin extends Plugin {
     async onunload() {
         this.dynamicStyle.removeStyleDom();
         this.eventBus.off("click-blockicon", this.blockIconEventBindThis);
+    }
+
+    openSetting(): void {
+        let dialog = new Dialog({
+            title: this.i18n.name,
+            content: `<div id="SettingPanel" style="height: 100%;"></div>`,
+            width: '45rem',
+            height: '40rem',
+            destroyCallback: () => {
+                pannel.$destroy();
+            }
+        });
+        let pannel = new Settings({
+            target: dialog.element.querySelector("#SettingPanel"),
+            props: {
+                plugin: this
+            }
+        });
     }
 
     private onSettingUpdated(data: IStyleFields) {
