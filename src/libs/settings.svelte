@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-01 20:35:43
+ LastEditTime : 2024-06-01 20:49:59
  Description  : 
 -->
 <script lang="ts">
@@ -13,6 +13,7 @@
     import SettingItemWrap from "./setting-item-wrap.svelte";
 
     import type BqCalloutPlugin from "..";
+    import CalloutItem from "./callout-item.svelte";
 
     export let plugin: BqCalloutPlugin;
 
@@ -36,6 +37,11 @@
             description: i18n.setting.CalloutOrder.description,
             value: plugin.configs.CalloutOrder,
         },
+        CustomCallout: {
+            title: "Custom Callout",
+            description: "Custom Callout Description",
+            value: [] as ICallout[],
+        }
     };
 
     $: plugin.configs.CustomCSS = configs.CustomCSS.value;
@@ -96,4 +102,61 @@
             bind:value={configs.CustomCSS.value}
         ></textarea>
     </SettingItemWrap>
+
+    <div class="b3-label" data-key="CustomCallout">
+        <div class="fn__block">
+            {configs.CustomCallout.title}
+            <div class="b3-label__text">
+                {@html configs.CustomCallout.description}
+            </div>
+            <div class="fn__hr"></div>
+            <div class="fn__flex fn__flex-column callouts-list">
+                {#each configs.CustomCallout.value as callout (callout.id)}
+                    <CalloutItem callout={callout} />
+                {/each}
+                <section class="action-add fn__flex-center">
+                    <button class="b3-button b3-button--outline fn__flex-center fn__size200">
+                        <svg><use xlink:href="#iconAdd"></use></svg>
+                        添加 Callout
+                    </button>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style lang="scss">
+    .config__tab-container {
+        padding: 16px 32px;
+        .b3-label {
+            box-shadow: none !important;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .b3-label:not(:last-child) {
+            border-bottom: 1px solid var(--b3-border-color);
+        }
+    }
+
+    .callouts-list {
+        border: 2px solid var(--b3-border-color);
+        border-radius: 10px;
+        padding: 10px;
+
+        .action-add {
+            button {
+                &:hover {
+                    background-color: var(--b3-theme-primary-lighter);
+                }
+
+                span {
+                    // height: 20px;
+                    > svg {
+                        color: var(--b3-theme-on-background);
+                    }
+                }
+            }
+        }
+    }
+</style>

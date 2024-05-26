@@ -75,6 +75,12 @@ export default class BqCalloutPlugin extends Plugin {
             EmojiFont: this.configs.EmojiFont
         });
         this.resetSlash();
+
+        // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+        //     if (ans.Dialog) {
+        //         ans.Dialog.setFont('20px');
+        //     }
+        // })
     }
 
     async onunload() {
