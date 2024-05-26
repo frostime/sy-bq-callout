@@ -4,11 +4,11 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-03-27 22:25:42
+ * @LastEditTime : 2024-05-26 17:29:24
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 
-:root {
+ :root {
     --callout-note-box-light: rgb(198, 203, 208);
     --callout-pen-box-light: rgb(235, 236, 237);
     --callout-bell-box-light: rgb(246, 225, 205);
@@ -56,8 +56,8 @@
 /*引述callout第一行样式, 用作 Callout 的标题 */
 .bq[custom-b]>.p:first-child,
 .bq[custom-b]>[data-type="NodeHeading"]:first-child,
-.bq[custom-bq-callout]>.p:first-child,
-.bq[custom-bq-callout]>[data-type="NodeHeading"]:first-child {
+.bq[custom-callout]>.p:first-child,
+.bq[custom-callout]>[data-type="NodeHeading"]:first-child {
     font-weight: 700 !important;
     font-size: 1.3em !important;
     padding: 0em 0em 0em 1.7em !important;
@@ -66,7 +66,7 @@
 
 /* 引述callout段落的内边距 */
 .protyle-wysiwyg .bq[custom-b],
-.protyle-wysiwyg .bq[custom-bq-callout] {
+.protyle-wysiwyg .bq[custom-callout] {
     padding: 4px;
     padding-left: 8px !important;
     color: var(--b3-theme-on-background);
@@ -87,14 +87,11 @@
 /* 引述callout列表的内边距 */
 
 .protyle-wysiwyg div[data-node-id][custom-b].bq,
-.protyle-wysiwyg div[data-node-id][custom-bq-callout].bq {
-    /*border: none;*/
+.protyle-wysiwyg div[data-node-id][custom-callout].bq {
     border: none !important;
     border-radius: 5px;
-    &:not([style*="color"]) {
-        background-image: none; //兼容 zhang-ligth 主题的样式
-        line-height: unset !important;
-    }
+    background-image: none; //兼容 zhang-ligth 主题的样式
+    line-height: normal !important; //保持在容器块内 icon 位置的重要样式
 }
 
 /*********** 设置背景颜色 ***********/
@@ -198,13 +195,13 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
 /*********** Before & After 伪元素 ***********/
 
 .protyle-wysiwyg div.bq[custom-b]::before,
-.protyle-wysiwyg div.bq[custom-bq-callout]::before {
+.protyle-wysiwyg div.bq[custom-callout]::before {
     content: "";
     border: none;
 }
 
 .protyle-wysiwyg .bq[custom-b]::after,
-.protyle-wysiwyg .bq[custom-bq-callout]::after {
+.protyle-wysiwyg .bq[custom-callout]::after {
     content: "";
     // font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
     position: absolute;
