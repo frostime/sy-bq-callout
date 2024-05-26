@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-05-25 19:35:00
+ * @LastEditTime : 2024-05-26 18:01:11
  * @Description  : 
  */
 import {
@@ -20,7 +20,6 @@ import { setBlockAttrs } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
 import * as callout from "./callout";
 import { DynamicStyle } from "./style";
-import { SettingUtils } from "./libs/setting-utils";
 
 import Settings from './libs/settings.svelte';
 
@@ -49,83 +48,36 @@ export default class BqCalloutPlugin extends Plugin {
 
     declare i18n: typeof I18n;
 
-    private settingUtils: SettingUtils;
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
-    private onSettingUpdatedBindThis = this.onSettingUpdated.bind(this);
     private dynamicStyle: DynamicStyle = new DynamicStyle();
 
     CalloutHub: Map<string, ICallout> = new Map();
+
+    configs = {
+        CustomCSS: IconStyle as string,
+        CalloutOrder: ''
+    };
 
     async onload() {
         let DefaultCallouts = callout.initDefault(I18n);
         for (let ct of DefaultCallouts) {
             this.CalloutHub.set(ct.id, ct);
         }
+        this.configs.CalloutOrder = Array.from(this.CalloutHub.keys()).join(', ');
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 
-        this.settingUtils = new SettingUtils({
-            plugin: this,
-            name: SettingName,
-            callback: this.onSettingUpdatedBindThis,
-            width: '45rem',
-            height: '40rem'
-        });
-        this.settingUtils.addItem({
-            key: 'CustomCSS',
-            value: IconStyle,
-            type: 'textarea',
-            direction: 'row',
-            title: this.i18n.setting.CustomCSS.title,
-            description: this.i18n.setting.CustomCSS.description,
-            placeholder: 'Custom CSS Style Code'
-        });
-        this.settingUtils.addItem({
-            key: 'CalloutOrder',
-            value: DefaultCallouts.map((v) => v.id).join(', '),
-            type: 'custom',
-            direction: 'row',
-            title: this.i18n.setting.CalloutOrder.title,
-            description: this.i18n.setting.CalloutOrder.description,
-            createElement: (currentVal) => {
-                let html = `
-                <input class="b3-text-field fn__flex-center fn__flex-1" value="${currentVal}" />
-                <button class="b3-button b3-button--text">Reset</button>
-                `;
-                let div = document.createElement('div');
-                div.className = 'fn__flex';
-                div.style.gap = '10px';
-                div.innerHTML = html;
-                div.querySelector('button').onclick = () => {
-                    let val = DefaultCallouts.map((v) => v.id).join(', ');
-                    div.querySelector('input').value = val;
-                };
-                return div;
-            },
-            setEleVal: (ele: HTMLDivElement, val) => {
-                ele.querySelector('input').value = val;
-            },
-            getEleVal: (ele: HTMLDivElement) => {
-                return ele.querySelector('input').value;
+        let configs = await this.loadData(SettingName);
+        for (let key in configs) {
+            if (key in this.configs) {
+                this.configs[key] = configs[key];
             }
-        });
-        let cssTextarea: HTMLTextAreaElement = this.settingUtils.getElement('CustomCSS');
-        cssTextarea.rows = 10;
-        cssTextarea.spellcheck = false;
+        }
 
-        this.settingUtils.load().then(() => {
-            let CustomCSS = this.settingUtils.get('CustomCSS');
-            this.dynamicStyle.init({
-                CustomCSS: CustomCSS
-            });
-            this.resetSlash();
+        this.dynamicStyle.init({
+            CustomCSS: this.configs.CustomCSS
         });
-
-        // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
-        //     if (ans.Dialog) {
-        //         ans.Dialog.setFont('20px');
-        //     }
-        // })
+        this.resetSlash();
     }
 
     async onunload() {
@@ -140,6 +92,7 @@ export default class BqCalloutPlugin extends Plugin {
             width: '45rem',
             height: '40rem',
             destroyCallback: () => {
+                this.onSettingUpdated();
                 pannel.$destroy();
             }
         });
@@ -151,14 +104,15 @@ export default class BqCalloutPlugin extends Plugin {
         });
     }
 
-    private onSettingUpdated(data: IStyleFields) {
-        this.dynamicStyle.rebuild(data);
+    private onSettingUpdated() {
+        this.dynamicStyle.rebuild(this.configs);
         this.dynamicStyle.updateStyleDom();
         this.resetSlash();
+        this.saveData(SettingName, this.configs);
     }
 
     private getCalloutList(): ICallout[] {
-        let CalloutOrder = this.settingUtils.get('CalloutOrder').trim();
+        let CalloutOrder = this.configs.CalloutOrder.trim();
         let orderList = [];
         if (CalloutOrder === '') {
             orderList = Array.from(this.CalloutHub.keys());

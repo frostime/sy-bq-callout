@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-05-25 19:48:19
+ LastEditTime : 2024-05-26 17:57:15
  Description  : 
 -->
 <script lang="ts">
@@ -19,23 +19,22 @@
 
     // const dispatch = createEventDispatcher();
 
-    const IconStyle = `.protyle-wysiwyg .bq[custom-b]::after,
-.protyle-wysiwyg .bq[custom-bq-callout]::after {
-font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
-}`;
-
     let configs = {
         CustomCSS: {
             title: i18n.setting.CustomCSS.title,
             description: i18n.setting.CustomCSS.description,
-            value: IconStyle,
+            value: plugin.configs.CustomCSS
         },
         CalloutOrder: {
             title: i18n.setting.CalloutOrder.title,
             description: i18n.setting.CalloutOrder.description,
-            value: Array.from(plugin.CalloutHub.keys()).join(", "),
+            value: plugin.configs.CalloutOrder
         },
     };
+
+    $: plugin.configs.CustomCSS = configs.CustomCSS.value;
+    $: plugin.configs.CalloutOrder = configs.CalloutOrder.value;
+
 </script>
 
 <div class="config__tab-container">
@@ -65,7 +64,7 @@ font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
             <div class="fn__flex" style="gap: 10px;">
                 <input
                     class="b3-text-field fn__flex-center fn__flex-1"
-                    value={configs.CalloutOrder.value}
+                    bind:value={configs.CalloutOrder.value}
                 />
                 <button
                     class="b3-button b3-button--text"
