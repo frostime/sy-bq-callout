@@ -3,16 +3,19 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-05-26 14:54:36
+ LastEditTime : 2024-05-26 15:07:38
  Description  : 
 -->
 <script lang="ts">
-    import { Dialog } from "siyuan";
+    import { createEventDispatcher } from "svelte";
+    import { Dialog, showMessage } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
     import "vanilla-colorful/rgba-string-color-picker.js";
 
-    let callout: ICallout = {
+    export let CreatedCallouts: string[];
+
+    export let callout: ICallout = {
         id: "Test",
         icon: "📌",
         title: "新建 Callout",
@@ -80,11 +83,25 @@
         picker.color = e.detail.value;
         callout[picker.type][picker.mode] = picker.color;
     };
+
+    const dispatch = createEventDispatcher();
+    const onCancel = () => {
+        dispatch("cancel");
+    };
+
+    const onSave = () => {
+        if (CreatedCallouts.includes(callout.id)) {
+            showMessage("Callout ID 已存在，请重新更改 ID", 4000, "error");
+            return;
+        }
+        dispatch("save", callout);
+    };
+
 </script>
 
 <sectioin class="callout-editor">
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="fn__flex" style="font-size: 1.2rem;">
+    <div class="fn__flex bordered" style="font-size: 1.2rem;">
         <div>ID:</div>
         <div class="fn__space" />
         <div
@@ -95,7 +112,7 @@
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
-    <div class="color-editor">
+    <div class="color-editor bordered">
         <div>亮色模式</div>
         <div>
             <button
@@ -114,7 +131,7 @@
             </button>
         </div>
     </div>
-    <div class="color-editor">
+    <div class="color-editor bordered">
         <div>暗色模式</div>
         <div>
             <button
@@ -134,9 +151,15 @@
         </div>
     </div>
 
-    <div class="fn__flex fn__flex-column" style="gap: 10px;">
+    <div class="fn__flex fn__flex-column bordered" style="gap: 10px;">
         <CalloutItem {callout} mode="light" />
         <CalloutItem {callout} mode="dark" />
+    </div>
+    <div class="fn__flex-1" />
+    <div class="action-btns fn__flex" style="gap: 10px;">
+        <div class="fn__flex-1" />
+        <button class="b3-button b3-button--text" on:click={onCancel}> 取消 </button>
+        <button class="b3-button b3-button--text" on:click={onSave}> 保存 </button>
     </div>
 </sectioin>
 
@@ -155,11 +178,12 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-        > div {
-            border: 2px solid var(--b3-theme-primary-light);
-            border-radius: 10px;
-            padding: 10px;
-        }
+    }
+
+    div.bordered {
+        border: 2px solid var(--b3-theme-primary-light);
+        border-radius: 10px;
+        padding: 10px;
     }
 
     .callout-icon {

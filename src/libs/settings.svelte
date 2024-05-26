@@ -46,18 +46,61 @@
         }
     };
 
-    const newCallout = () => {
+    const editCallout = (callout: ICallout) => {
+        if (!callout) return;
         let dialog = new Dialog({
-            title: '新建 Callout',
+            title: "更改 Callout",
             content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
-            width: '30rem',
-            height: '30rem',
+            width: "30rem",
+            height: "32rem",
             destroyCallback: () => {
                 pannel.$destroy();
-            }
+            },
         });
         let pannel = new CalloutEditor({
             target: dialog.element.querySelector("#CalloutEditor"),
+            props: {
+                CreatedCallouts: configs.CustomCallout.value
+                    .map((callout) => callout.id)
+                    .filter((id) => id !== callout.id),
+                callout: callout
+            },
+        });
+        pannel.$on("cancel", () => dialog.destroy());
+        pannel.$on("save", (e: CustomEvent<ICallout>) => {
+            let index = configs.CustomCallout.value.findIndex(
+                (item) => item.id === e.detail.id,
+            );
+            configs.CustomCallout.value[index] = e.detail;
+            dialog.destroy();
+        });
+    };
+
+    const newCallout = () => {
+        let dialog = new Dialog({
+            title: "新建 Callout",
+            content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
+            width: "30rem",
+            height: "32rem",
+            destroyCallback: () => {
+                pannel.$destroy();
+            },
+        });
+        let pannel = new CalloutEditor({
+            target: dialog.element.querySelector("#CalloutEditor"),
+            props: {
+                CreatedCallouts: configs.CustomCallout.value.map(
+                    (callout) => callout.id,
+                ),
+            },
+        });
+        pannel.$on("cancel", () => dialog.destroy());
+        pannel.$on("save", (e: CustomEvent<ICallout>) => {
+            configs.CustomCallout.value = [
+                ...configs.CustomCallout.value,
+                e.detail,
+            ];
+            dialog.destroy();
         });
     }
 
@@ -139,6 +182,9 @@
                             <div
                                 class="toolbar__item ariaLabel"
                                 aria-label="编辑"
+                                on:click={() => {
+                                    editCallout(callout);
+                                }}
                             >
                                 <svg><use xlink:href="#iconEdit"></use></svg>
                             </div>
