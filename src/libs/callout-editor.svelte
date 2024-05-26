@@ -3,25 +3,26 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-05-25 22:41:09
+ LastEditTime : 2024-05-26 00:50:27
  Description  : 
 -->
 <script lang="ts">
     import { Dialog } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
+    import "vanilla-colorful/rgba-string-color-picker.js";
 
     let callout: ICallout = {
         id: "Test",
         icon: "📌",
         title: "新建 Callout",
         bg: {
-            light: "rgb(221, 235, 241, .5)",
-            dark: "rgb(54, 73, 84, .3)",
+            light: "rgba(244, 223, 235, .5)",
+            dark: "rgba(83, 59, 76, .3)",
         },
         box: {
-            light: "rgb(221, 235, 241)",
-            dark: "rgb(54, 73, 84)",
+            light: "rgba(244, 223, 235)",
+            dark: "rgba(83, 59, 76",
         },
         hide: false,
         custom: true,
@@ -29,69 +30,127 @@
 
     const chooseIcon = () => {
         let dialog = new Dialog({
-            title: '选择图标',
+            title: "选择图标",
             content: `<div id="IconChooser" style="height: 100%;"></div>`,
-            width: '30rem',
-            height: '30rem',
+            width: "30rem",
+            height: "30rem",
             destroyCallback: () => {
                 pannel.$destroy();
-            }
+            },
         });
-        dialog.element.style.left = '30rem';
+        dialog.element.style.left = "30rem";
         let pannel = new IconChooser({
             target: dialog.element.querySelector("#IconChooser"),
         });
         pannel.$on("choose", (e) => {
             callout.icon = e.detail;
+            dialog.destroy();
         });
     };
 
+    let PickColor = false;
+    let picker = {
+        type: "",
+        mode: "",
+        color: "",
+        x: "",
+        y: "",
+    };
+
+    const changeColor = (
+        e: MouseEvent,
+        type: "bg" | "box",
+        mode: "light" | "dark",
+    ) => {
+        if (PickColor && picker.type === type && picker.mode === mode) {
+            PickColor = false;
+            return;
+        }
+        let ele = e.target as HTMLElement;
+        let rect = ele.getBoundingClientRect();
+        picker.x = rect.right + 5 + "px";
+        picker.y = rect.top + "px";
+        picker.color = callout[type][mode];
+        picker.type = type;
+        picker.mode = mode;
+        PickColor = true;
+    };
+
+    const handleColorChange = (e: CustomEvent) => {
+        picker.color = e.detail.value;
+        callout[picker.type][picker.mode] = picker.color;
+    };
 </script>
 
 <sectioin class="callout-editor fn__flex fn__flex-column">
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="fn__flex">
-        <div class="callout-id" contenteditable="true" bind:textContent={callout.id} />
+        <div
+            class="callout-id"
+            contenteditable="true"
+            bind:textContent={callout.id}
+        />
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
     <div class="color-editor">
         <div>亮色模式</div>
         <div>
-            <div>
-                <input type="color" id="bg-light" name="bg-light" bind:value={callout.bg.light} />
-                <label for="bg-light">背景色</label>
-            </div>
-            <div>
-                <input type="color" id="box-light" name="box-light" bind:value={callout.box.light} />
-                <label for="box-light">边框色</label>
-            </div>
+            <button
+                class="b3-button b3-button--outline fn__flex-center fn__size200"
+                style="background-color: {callout.bg.light}; color: black;"
+                on:click={(e) => changeColor(e, "bg", "light")}
+            >
+                设置背景色
+            </button>
+            <button
+                class="b3-button b3-button--outline fn__flex-center fn__size200"
+                style="background-color: {callout.box.light}; color: black;"
+                on:click={(e) => changeColor(e, "box", "light")}
+            >
+                设置边框色
+            </button>
         </div>
     </div>
     <div class="color-editor">
         <div>暗色模式</div>
         <div>
-            <div>
-                <input type="color" id="bg-dark" name="bg-dark" bind:value={callout.bg.dark} />
-                <label for="bg-dark">背景色</label>
-            </div>
-            <div>
-                <input type="color" id="box-dark" name="box-dark" bind:value={callout.box.dark} />
-                <label for="box-dark">边框色</label>
-            </div>
+            <button
+                class="b3-button b3-button--outline fn__flex-center fn__size200"
+                style="background-color: {callout.bg.dark}; color: white;"
+                on:click={(e) => changeColor(e, "bg", "dark")}
+            >
+                设置背景色
+            </button>
+            <button
+                class="b3-button b3-button--outline fn__flex-center fn__size200"
+                style="background-color: {callout.box.dark}; color: white;"
+                on:click={(e) => changeColor(e, "box", "dark")}
+            >
+                设置边框色
+            </button>
         </div>
     </div>
-    
+
     <div>
         <CalloutItem {callout} />
     </div>
 </sectioin>
 
+{#if PickColor}
+    <rgba-string-color-picker
+        color={picker.color}
+        on:color-changed={handleColorChange}
+        style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;"
+    >
+    </rgba-string-color-picker>
+{/if}
+
 <style lang="scss">
     .callout-editor {
         padding: 30px;
         gap: 15px;
-        >div {
+        > div {
             border: 2px solid var(--b3-theme-primary-light);
             border-radius: 10px;
             padding: 10px;
@@ -110,7 +169,7 @@
 
     .color-editor {
         display: flex;
-        &>div:first-child {
+        & > div:first-child {
             display: flex;
             flex: 1;
             font-size: 1.5em;
@@ -118,7 +177,7 @@
             justify-content: center;
             align-items: flex-start;
         }
-        &>div {
+        & > div {
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -126,5 +185,4 @@
             justify-content: end;
         }
     }
-
 </style>

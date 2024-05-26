@@ -28,5 +28,8 @@
     "vite": "^5.2.11",
     "vite-plugin-static-copy": "^1.0.5",
     "vite-plugin-zip-pack": "^1.2.2"
+  },
+  "dependencies": {
+    "vanilla-colorful": "^0.7.2"
   }
 }
