@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:16
  FilePath     : /src/libs/callout-item.svelte
- LastEditTime : 2024-05-25 21:24:45
+ LastEditTime : 2024-05-25 21:28:23
  Description  : 
 -->
 <script lang="ts">
@@ -11,7 +11,7 @@
 </script>
 
 <div
-    class="callout-item"
+    class="callout-item fn__flex-1"
     data-id={callout.id}
     style="--bg-light: {callout.bg.light}; --bg-dark: {callout.bg
         .dark}; --box-light: {callout.box.light}; --box-dark: {callout.box
@@ -22,18 +22,6 @@
     <div class="p">
         <div>{callout.id}</div>
     </div>
-
-    <div class="toolbar__item ariaLabel" aria-label="编辑">
-        <svg><use xlink:href="#iconEdit"></use></svg>
-    </div>
-    <span class="fn__space"/>
-    <input
-        class="b3-switch fn__flex-center"
-        data-id={callout.id}
-        type="checkbox"
-        checked={callout.hide ? true : !callout.hide}
-    />
-    <span class="fn__space"/>
 </div>
 
 <style lang="scss">
@@ -53,8 +41,6 @@
         color: var(--b3-theme-on-background);
         border: none;
         border-radius: 5px;
-
-        margin-bottom: 10px;
 
         display: flex;
         align-items: center;

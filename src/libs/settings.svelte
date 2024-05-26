@@ -112,7 +112,27 @@
             <div class="fn__hr"></div>
             <div class="fn__flex fn__flex-column callouts-list">
                 {#each configs.CustomCallout.value as callout (callout.id)}
-                    <CalloutItem callout={callout} />
+                    <div class="callout-list-item">
+                        <CalloutItem callout={callout} />
+                        <span class="fn__space"/>
+                        <div class="callout-item-action fn__flex fn__flex-center">
+                            <div class="toolbar__item ariaLabel" aria-label="编辑">
+                                <svg><use xlink:href="#iconEdit"></use></svg>
+                            </div>
+                            <span class="fn__space"/>
+                            <!-- <input
+                                class="b3-switch fn__flex-center"
+                                data-id={callout.id}
+                                type="checkbox"
+                                checked={callout.hide ? true : !callout.hide}
+                            />
+                            <span class="fn__space"/> -->
+                            <div class="toolbar__item ariaLabel" aria-label="调整顺序">
+                                <svg><use xlink:href="#iconDrag"></use></svg>
+                            </div>
+                        </div>
+                        <span class="fn__space"/>
+                    </div>
                 {/each}
                 <section class="action-add fn__flex-center">
                     <button class="b3-button b3-button--outline fn__flex-center fn__size200">
@@ -143,6 +163,20 @@
         border: 2px solid var(--b3-border-color);
         border-radius: 10px;
         padding: 10px;
+
+        .callout-list-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            // border: 1px solid var(--b3-theme-primary-lighter);
+            // border-radius: 4px;
+            padding: 5px;
+
+            .callout-item-action {
+                height: 40px;
+                // padding: 4px;
+            }
+        }
 
         .action-add {
             button {
