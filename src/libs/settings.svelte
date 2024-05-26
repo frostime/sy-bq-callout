@@ -206,20 +206,5 @@
                 // padding: 4px;
             }
         }
-
-        .action-add {
-            button {
-                &:hover {
-                    background-color: var(--b3-theme-primary-lighter);
-                }
-
-                span {
-                    // height: 20px;
-                    > svg {
-                        color: var(--b3-theme-on-background);
-                    }
-                }
-            }
-        }
     }
 </style>

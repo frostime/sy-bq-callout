@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-05-26 00:50:27
+ LastEditTime : 2024-05-26 14:54:36
  Description  : 
 -->
 <script lang="ts">
@@ -17,12 +17,12 @@
         icon: "📌",
         title: "新建 Callout",
         bg: {
-            light: "rgba(244, 223, 235, .5)",
-            dark: "rgba(83, 59, 76, .3)",
+            light: "rgba(238, 245, 248, 1)",
+            dark: "rgba(37, 43, 46, 1)",
         },
         box: {
-            light: "rgba(244, 223, 235)",
-            dark: "rgba(83, 59, 76",
+            light: "rgba(238, 245, 248, .3)",
+            dark: "rgba(37, 43, 46, .3)",
         },
         hide: false,
         custom: true,
@@ -82,9 +82,11 @@
     };
 </script>
 
-<sectioin class="callout-editor fn__flex fn__flex-column">
+<sectioin class="callout-editor">
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="fn__flex">
+    <div class="fn__flex" style="font-size: 1.2rem;">
+        <div>ID:</div>
+        <div class="fn__space" />
         <div
             class="callout-id"
             contenteditable="true"
@@ -132,8 +134,9 @@
         </div>
     </div>
 
-    <div>
-        <CalloutItem {callout} />
+    <div class="fn__flex fn__flex-column" style="gap: 10px;">
+        <CalloutItem {callout} mode="light" />
+        <CalloutItem {callout} mode="dark" />
     </div>
 </sectioin>
 
@@ -148,7 +151,9 @@
 
 <style lang="scss">
     .callout-editor {
-        padding: 30px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
         gap: 15px;
         > div {
             border: 2px solid var(--b3-theme-primary-light);
@@ -157,12 +162,8 @@
         }
     }
 
-    .callout-id {
-        font-size: 1.5rem;
-    }
-
     .callout-icon {
-        font-size: 2rem;
+        // font-size: 2rem;
         font-family: "Twitter Emoji", "Noto Color Emoji", sans-serif !important;
         cursor: pointer;
     }
