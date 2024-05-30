@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-04-30 18:46:35
+ * @LastEditTime : 2024-05-30 11:19:39
  * @Description  : 
  */
 
@@ -77,7 +77,7 @@ export class DynamicStyle {
     //css 样式内容
     private css: string;
     //css 样式片段, 合并后生成 this.css
-    private cssSnippets: IStyleFields = {
+    private cssSnippets: Record<string, string> = {
         CustomCSS: ""
     }
 
@@ -85,8 +85,8 @@ export class DynamicStyle {
         this.css = "";
     }
 
-    init(styleVar: IStyleFields) {
-        this.rebuild(styleVar);
+    init(styleVar: Record<string, string>) {
+        this.update(styleVar);
         this.updateStyleDom()
     }
 
@@ -118,31 +118,16 @@ export class DynamicStyle {
      * - 如果 val[key] 有值, 则会根据模板渲染样式
      * @param styleVar 
      */
-    rebuild(styleVar: IStyleFields) {
+    update(styleVar: Record<string, string>) {
         this.css = "";
         for (let key in styleVar) {
-            //custom css 不需要模板, 单独处理
-            if (key === 'CustomCSS') {
-                this.cssSnippets[key] = styleVar[key];
+            if (styleVar[key] === undefined) {
+                continue;
+            } else if (styleVar[key] === null || styleVar[key] === "") {
+                this.cssSnippets[key] = "";
                 continue;
             }
-
-            // 需要模板的样式, 从模板中渲染
-            // let value = styleVar?.[key];
-            // if (value === undefined) {
-            //     continue;
-            // }
-            // //清空样式
-            // if (value === "" || value === null) {
-            //     this.cssSnippets[key] = "";
-            //     continue;
-            // }
-            // //从模板中渲染样式
-            // let template = StyleTemplate[key];
-            // if (template) {
-            //     let css = render(template, { [key]: value });
-            //     this.cssSnippets[key] = css;
-            // }
+            this.cssSnippets[key] = styleVar[key];
         }
         //合并样式
         this.css = Object.values(this.cssSnippets).join("\n");

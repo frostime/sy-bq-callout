@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-05-26 18:01:11
+ * @LastEditTime : 2024-05-30 11:06:28
  * @Description  : 
  */
 import {
@@ -105,7 +105,7 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private onSettingUpdated() {
-        this.dynamicStyle.rebuild(this.configs);
+        this.dynamicStyle.update(this.configs);
         this.dynamicStyle.updateStyleDom();
         this.resetSlash();
         this.saveData(SettingName, this.configs);
@@ -137,7 +137,7 @@ export default class BqCalloutPlugin extends Plugin {
                 html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
                 id: ct.id,
                 callback: (protyle: Protyle) => {
-                    protyle.insert(`> ${ct.id}\n{: custom-b="${ct.id}"}`);
+                    protyle.insert(`>\n{: custom-b="${ct.id}"}`);
                 }
             });
         }
