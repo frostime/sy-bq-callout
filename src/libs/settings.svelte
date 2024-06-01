@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-01 21:59:58
+ LastEditTime : 2024-06-01 22:05:21
  Description  : 
 -->
 <script lang="ts">

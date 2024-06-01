@@ -48,6 +48,7 @@ export default class BqCalloutPlugin extends Plugin {
 
     CalloutHub: Map<string, ICallout> = new Map();
 
+    DefaultCallouts: ICallout[];
     configs: IConfigs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
         CustomCSS: IconStyle,
@@ -58,6 +59,7 @@ export default class BqCalloutPlugin extends Plugin {
     async onload() {
         this.dynamicStyle = new DynamicStyle(this);
         let DefaultCallouts = callout.initDefault(I18n);
+        this.DefaultCallouts = DefaultCallouts;
         for (let ct of DefaultCallouts) {
             this.CalloutHub.set(ct.id, ct);
         }
