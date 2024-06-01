@@ -15,8 +15,8 @@
         "default": "Back to default"
     },
     "setting": {
-        "IconFont": {
-            "title": "🖌️ Icon Font",
+        "EmojiFont": {
+            "title": "🇫 Callout Emoji Font",
             "description": "Configure the emoji font family of Callout Icon (CSS value)"
         },
         "CustomCSS": {

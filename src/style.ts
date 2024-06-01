@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-05-30 11:19:39
+ * @LastEditTime : 2024-06-01 20:23:36
  * @Description  : 
  */
 
@@ -72,6 +72,10 @@ export const DarkCSSVar = `
 `;
 
 const StyleDOMId = 'snippetCSS-BqCallout';
+const TemplateEmojiFont = `.protyle-wysiwyg .bq[custom-b]::after,
+.protyle-wysiwyg .bq[custom-callout]::after {
+  font-family: {{var}} !important; 
+}`;
 
 export class DynamicStyle {
     //css 样式内容
@@ -127,7 +131,13 @@ export class DynamicStyle {
                 this.cssSnippets[key] = "";
                 continue;
             }
-            this.cssSnippets[key] = styleVar[key];
+
+            let style = styleVar[key];
+            if (key === 'EmojiFont') {
+                style = TemplateEmojiFont.replace("{{var}}", style);
+            }
+
+            this.cssSnippets[key] = style;
         }
         //合并样式
         this.css = Object.values(this.cssSnippets).join("\n");

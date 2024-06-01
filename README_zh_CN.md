@@ -9,21 +9,13 @@
 
 ## Callout 图标
 
-本插件使用 emoji 图标作为 callout 的图标显示，思源默认内置的 emoji 显示效果并不佳。
+本插件使用 emoji 图标作为 callout 的图标显示。
 
-推荐在集市中下载 Emoji 插件（twitter 或 google emoji 均可）来获取更好的显示效果。
+由于思源默认内置的 emoji 显示效果并不佳，推荐在集市中下载 Emoji 插件来获取更好的显示效果。
 
-## 自定义样式
+你可以在插件的设置选项中手动配置「Callout图标字体样式」字段来设置图标样式的优先级。默认值为：
 
-用户可以在设置面板中插入自定义的 CSS 样式，默认样式为:
-
-```css
-.protyle-wysiwyg .bq[custom-b]::after,
-.protyle-wysiwyg .bq[custom-bq-callout]::after {
-  font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
-}
+```
+'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif
 ```
 
-该样式会让 Callout 优先使用 Twitter Emoji，如果用户更喜欢 google emoji，可以将 `font-family` 样式设置为 `'Noto Color Emoji', 'Twitter Emoji', sans-serif`。
-
-附注: 如果用户将 Icon 字体设置为 Google Emoji, 建议同时设置样式 `top: 0.25em`。

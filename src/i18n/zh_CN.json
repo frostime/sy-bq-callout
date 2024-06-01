@@ -15,9 +15,9 @@
         "default": "恢复默认样式"
     },
     "setting": {
-        "IconFont": {
-            "title": "🖌️ Icon 字体样式",
-            "description": "配置 Callout Icon 的 emoji 字体样式 (CSS 字段)"
+        "EmojiFont": {
+            "title": "🇫 Callout图标字体样式",
+            "description": "指定 Callout 图标的 emoji 字体样式 (CSS 字段)"
         },
         "CustomCSS": {
             "title": "🎨 自定义 CSS",

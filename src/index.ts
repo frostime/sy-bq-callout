@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-05-30 11:06:28
+ * @LastEditTime : 2024-06-01 20:33:24
  * @Description  : 
  */
 import {
@@ -37,12 +37,7 @@ const capitalize = (word: string) => {
 
 
 const SettingName = 'setting.json';
-const IconStyle = 
-`.protyle-wysiwyg .bq[custom-b]::after,
-.protyle-wysiwyg .bq[custom-bq-callout]::after {
-  font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important; 
-}
-`;
+const IconStyle = ``;
 
 export default class BqCalloutPlugin extends Plugin {
 
@@ -54,6 +49,7 @@ export default class BqCalloutPlugin extends Plugin {
     CalloutHub: Map<string, ICallout> = new Map();
 
     configs = {
+        EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
         CustomCSS: IconStyle as string,
         CalloutOrder: ''
     };
@@ -75,7 +71,8 @@ export default class BqCalloutPlugin extends Plugin {
         }
 
         this.dynamicStyle.init({
-            CustomCSS: this.configs.CustomCSS
+            CustomCSS: this.configs.CustomCSS,
+            EmojiFont: this.configs.EmojiFont
         });
         this.resetSlash();
     }
