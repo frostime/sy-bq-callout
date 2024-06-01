@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-05-26 15:07:38
+ LastEditTime : 2024-06-01 21:02:45
  Description  : 
 -->
 <script lang="ts">
@@ -16,16 +16,16 @@
     export let CreatedCallouts: string[];
 
     export let callout: ICallout = {
-        id: "Test",
+        id: "Input ID Here",
         icon: "📌",
         title: "新建 Callout",
         bg: {
             light: "rgba(238, 245, 248, 1)",
-            dark: "rgba(37, 43, 46, 1)",
+            dark: "rgba(53, 76, 75, .5)",
         },
         box: {
             light: "rgba(238, 245, 248, .3)",
-            dark: "rgba(37, 43, 46, .3)",
+            dark: "rgbaa(53, 76, 75, 1)",
         },
         hide: false,
         custom: true,

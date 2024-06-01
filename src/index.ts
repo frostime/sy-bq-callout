@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-01 20:33:24
+ * @LastEditTime : 2024-06-01 21:09:16
  * @Description  : 
  */
 import {
@@ -51,7 +51,8 @@ export default class BqCalloutPlugin extends Plugin {
     configs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
         CustomCSS: IconStyle as string,
-        CalloutOrder: ''
+        CalloutOrder: '',
+        CustomCallout: [] as ICallout[]
     };
 
     async onload() {
@@ -108,10 +109,15 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private onSettingUpdated() {
-        this.dynamicStyle.update(this.configs);
+        this.dynamicStyle.update({
+            CustomCSS: this.configs.CustomCSS,
+            EmojiFont: this.configs.EmojiFont
+        });
         this.dynamicStyle.updateStyleDom();
         this.resetSlash();
         this.saveData(SettingName, this.configs);
+        console.log('Setting Updated');
+        console.log(this.configs);
     }
 
     private getCalloutList(): ICallout[] {

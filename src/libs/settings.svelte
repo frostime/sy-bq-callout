@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-01 20:51:18
+ LastEditTime : 2024-06-01 21:10:45
  Description  : 
 -->
 <script lang="ts">
@@ -42,8 +42,8 @@
         CustomCallout: {
             title: "Custom Callout",
             description: "Custom Callout Description",
-            value: [] as ICallout[],
-        }
+            value: plugin.configs.CustomCallout as ICallout[],
+        },
     };
 
     const editCallout = (callout: ICallout) => {
@@ -63,7 +63,7 @@
                 CreatedCallouts: configs.CustomCallout.value
                     .map((callout) => callout.id)
                     .filter((id) => id !== callout.id),
-                callout: callout
+                callout: callout,
             },
         });
         pannel.$on("cancel", () => dialog.destroy());
@@ -100,14 +100,15 @@
                 ...configs.CustomCallout.value,
                 e.detail,
             ];
+            console.log(configs.CustomCallout.value);
             dialog.destroy();
         });
-    }
-
+    };
 
     $: plugin.configs.CustomCSS = configs.CustomCSS.value;
     $: plugin.configs.CalloutOrder = configs.CalloutOrder.value;
     $: plugin.configs.EmojiFont = configs.EmojiFont.value;
+    $: plugin.configs.CustomCallout = configs.CustomCallout.value;
 </script>
 
 <div class="config__tab-container">
@@ -164,76 +165,58 @@
         ></textarea>
     </SettingItemWrap>
 
-    <div class="b3-label" data-key="CustomCallout">
-        <div class="fn__block">
-            {configs.CustomCallout.title}
-            <div class="b3-label__text">
-                {@html configs.CustomCallout.description}
-            </div>
-            <div class="fn__hr"></div>
-            <div class="fn__flex fn__flex-column callouts-list">
-                {#each configs.CustomCallout.value as callout (callout.id)}
-                    <div class="callout-list-item">
-                        <CalloutItem {callout} />
-                        <span class="fn__space" />
+    <SettingItemWrap
+        title={configs.CustomCallout.title}
+        description={configs.CustomCallout.title}
+        direction="row"
+    >
+        <div class="fn__flex fn__flex-column callouts-list">
+            {#each configs.CustomCallout.value as callout (callout.id)}
+                <div class="callout-list-item">
+                    <CalloutItem {callout} />
+                    <span class="fn__space" />
+                    <div class="callout-item-action fn__flex fn__flex-center">
                         <div
-                            class="callout-item-action fn__flex fn__flex-center"
+                            class="toolbar__item ariaLabel"
+                            aria-label="编辑"
+                            on:click={() => {
+                                editCallout(callout);
+                            }}
                         >
-                            <div
-                                class="toolbar__item ariaLabel"
-                                aria-label="编辑"
-                                on:click={() => {
-                                    editCallout(callout);
-                                }}
-                            >
-                                <svg><use xlink:href="#iconEdit"></use></svg>
-                            </div>
-                            <span class="fn__space" />
-                            <!-- <input
-                                class="b3-switch fn__flex-center"
-                                data-id={callout.id}
-                                type="checkbox"
-                                checked={callout.hide ? true : !callout.hide}
-                            />
-                            <span class="fn__space"/> -->
-                            <div
-                                class="toolbar__item ariaLabel"
-                                aria-label="调整顺序"
-                            >
-                                <svg><use xlink:href="#iconDrag"></use></svg>
-                            </div>
+                            <svg><use xlink:href="#iconEdit"></use></svg>
                         </div>
                         <span class="fn__space" />
+                        <!-- <input
+                            class="b3-switch fn__flex-center"
+                            data-id={callout.id}
+                            type="checkbox"
+                            checked={callout.hide ? true : !callout.hide}
+                        />
+                        <span class="fn__space"/> -->
+                        <div
+                            class="toolbar__item ariaLabel"
+                            aria-label="调整顺序"
+                        >
+                            <svg><use xlink:href="#iconDrag"></use></svg>
+                        </div>
                     </div>
-                {/each}
-                <section class="action-add fn__flex-center">
-                    <button
-                        class="b3-button b3-button--outline fn__flex-center fn__size200"
-                        on:click={newCallout}
-                    >
-                        <svg><use xlink:href="#iconAdd"></use></svg>
-                        添加 Callout
-                    </button>
-                </section>
-            </div>
+                    <span class="fn__space" />
+                </div>
+            {/each}
+            <section class="action-add fn__flex-center">
+                <button
+                    class="b3-button b3-button--outline fn__flex-center fn__size200"
+                    on:click={newCallout}
+                >
+                    <svg><use xlink:href="#iconAdd"></use></svg>
+                    添加 Callout
+                </button>
+            </section>
         </div>
-    </div>
+    </SettingItemWrap>
 </div>
 
 <style lang="scss">
-    .config__tab-container {
-        padding: 16px 32px;
-        .b3-label {
-            box-shadow: none !important;
-            padding-bottom: 16px;
-            margin-bottom: 16px;
-        }
-
-        .b3-label:not(:last-child) {
-            border-bottom: 1px solid var(--b3-border-color);
-        }
-    }
-
     .callouts-list {
         border: 2px solid var(--b3-border-color);
         border-radius: 10px;
