@@ -31,11 +31,11 @@
             description: i18n.setting.CustomCSS.description,
             value: plugin.configs.CustomCSS,
         },
-        CalloutOrder: {
-            title: i18n.setting.CalloutOrder.title,
-            description: i18n.setting.CalloutOrder.description,
-            value: plugin.configs.CalloutOrder,
-        },
+        // CalloutOrder: {
+        //     title: i18n.setting.CalloutOrder.title,
+        //     description: i18n.setting.CalloutOrder.description,
+        //     value: plugin.configs.CalloutOrder,
+        // },
         CustomCallout: {
             title: "Custom Callout",
             description: "Custom Callout Description",
@@ -44,7 +44,7 @@
     };
 
     $: plugin.configs.CustomCSS = configs.CustomCSS.value;
-    $: plugin.configs.CalloutOrder = configs.CalloutOrder.value;
+    // $: plugin.configs.CalloutOrder = configs.CalloutOrder.value;
     $: plugin.configs.EmojiFont = configs.EmojiFont.value;
     $: plugin.configs.CustomCallout = configs.CustomCallout.value;
 
@@ -65,27 +65,6 @@
                 class="b3-button b3-button--text"
                 on:click={() => {
                     configs.EmojiFont.value = `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`;
-                }}>Reset</button
-            >
-        </div>
-    </SettingItemWrap>
-
-    <SettingItemWrap
-        title={configs.CalloutOrder.title}
-        description={configs.CalloutOrder.description}
-        direction="row"
-    >
-        <div class="fn__flex" style="gap: 10px;">
-            <input
-                class="b3-text-field fn__flex-center fn__flex-1"
-                bind:value={configs.CalloutOrder.value}
-            />
-            <button
-                class="b3-button b3-button--text"
-                on:click={() => {
-                    configs.CalloutOrder.value = Array.from(
-                        plugin.CalloutHub.keys(),
-                    ).join(", ");
                 }}>Reset</button
             >
         </div>

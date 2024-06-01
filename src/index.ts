@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-01 21:45:39
+ * @LastEditTime : 2024-06-02 00:34:24
  * @Description  : 
  */
 import {
@@ -25,8 +25,8 @@ import Settings from './libs/settings.svelte';
 
 async function setUpAttr(blockId: BlockId, value: string) {
     let payload = {
-        'custom-b': value
-        // 'custom-bq-callout': value
+        'custom-b': value,
+        'custom-callout': value
     }
     setBlockAttrs(blockId, payload);
 }
@@ -63,7 +63,7 @@ export default class BqCalloutPlugin extends Plugin {
         for (let ct of DefaultCallouts) {
             this.CalloutHub.set(ct.id, ct);
         }
-        this.configs.CalloutOrder = Array.from(this.CalloutHub.keys()).join(', ');
+        // this.configs.CalloutOrder = Array.from(this.CalloutHub.keys()).join(', ');
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 
@@ -116,27 +116,10 @@ export default class BqCalloutPlugin extends Plugin {
         console.log(this.configs);
     }
 
-    private getCalloutList(): ICallout[] {
-        let CalloutOrder = this.configs.CalloutOrder.trim();
-        let orderList = [];
-        if (CalloutOrder === '') {
-            orderList = Array.from(this.CalloutHub.keys());
-        } else {
-            orderList = CalloutOrder.split(/\s*[,;，；]\s*/).map((v) => v.trim());
-        }
-        let callouts = [];
-        for (let id of orderList) {
-            let callout = this.CalloutHub.get(id);
-            if (callout) {
-                callouts.push(callout);
-            }
-        }
-        return callouts;
-    }
-
     private resetSlash() {
         this.protyleSlash = [];
-        for (let ct of this.getCalloutList()) {
+        for (let ct of this.DefaultCallouts) {
+            if (ct?.hide) continue;
             this.protyleSlash.push({
                 filter: [`callout-${ct.id}`, `bq-${ct.id}`],
                 html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
@@ -172,7 +155,8 @@ export default class BqCalloutPlugin extends Plugin {
         let menu: Menu = detail.menu;
         let submenus = [];
 
-        for (let icallout of this.getCalloutList()) {
+        for (let icallout of this.DefaultCallouts.concat(this.configs.CustomCallout)) {
+            if (icallout.hide) continue;
             let btn = callout.createCalloutButton(ele.getAttribute("data-node-id"), icallout);
             btn.onclick = () => {
                 setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
