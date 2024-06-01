@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-01 21:09:16
+ * @LastEditTime : 2024-06-01 21:37:11
  * @Description  : 
  */
 import {
@@ -44,18 +44,19 @@ export default class BqCalloutPlugin extends Plugin {
     declare i18n: typeof I18n;
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
-    private dynamicStyle: DynamicStyle = new DynamicStyle();
+    private dynamicStyle: DynamicStyle;
 
     CalloutHub: Map<string, ICallout> = new Map();
 
-    configs = {
+    configs: IConfigs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
-        CustomCSS: IconStyle as string,
+        CustomCSS: IconStyle,
         CalloutOrder: '',
-        CustomCallout: [] as ICallout[]
+        CustomCallout: []
     };
 
     async onload() {
+        this.dynamicStyle = new DynamicStyle(this);
         let DefaultCallouts = callout.initDefault(I18n);
         for (let ct of DefaultCallouts) {
             this.CalloutHub.set(ct.id, ct);
@@ -71,10 +72,7 @@ export default class BqCalloutPlugin extends Plugin {
             }
         }
 
-        this.dynamicStyle.init({
-            CustomCSS: this.configs.CustomCSS,
-            EmojiFont: this.configs.EmojiFont
-        });
+        this.dynamicStyle.update();
         this.resetSlash();
 
         // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
@@ -109,11 +107,7 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private onSettingUpdated() {
-        this.dynamicStyle.update({
-            CustomCSS: this.configs.CustomCSS,
-            EmojiFont: this.configs.EmojiFont
-        });
-        this.dynamicStyle.updateStyleDom();
+        this.dynamicStyle.update();
         this.resetSlash();
         this.saveData(SettingName, this.configs);
         console.log('Setting Updated');
@@ -147,6 +141,16 @@ export default class BqCalloutPlugin extends Plugin {
                 id: ct.id,
                 callback: (protyle: Protyle) => {
                     protyle.insert(`>\n{: custom-b="${ct.id}"}`);
+                }
+            });
+        }
+        for (let ct of this.configs.CustomCallout) {
+            this.protyleSlash.push({
+                filter: [`callout-${ct.id}`, `bq-${ct.id}`],
+                html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
+                id: ct.id,
+                callback: (protyle: Protyle) => {
+                    protyle.insert(`>\n{: custom-callout="${ct.id}"}`);
                 }
             });
         }

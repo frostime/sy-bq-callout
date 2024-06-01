@@ -2,6 +2,13 @@
  * Copyright (c) 2023 frostime. All rights reserved.
  */
 
+interface IConfigs {
+    EmojiFont: string;
+    CustomCSS: string;
+    CalloutOrder: string;
+    CustomCallout: ICallout[];
+}
+
 interface ICallout {
     id: string;
     icon: string;

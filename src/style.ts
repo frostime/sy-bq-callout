@@ -3,9 +3,10 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-01 20:23:36
+ * @LastEditTime : 2024-06-01 21:29:29
  * @Description  : 
  */
+import type BqCalloutPlugin from ".";
 
 export const LightCSSVar = `
 /* Light */
@@ -76,21 +77,38 @@ const TemplateEmojiFont = `.protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-callout]::after {
   font-family: {{var}} !important; 
 }`;
+const customCallout = (callout: ICallout) => {
+    return `
+.protyle-wysiwyg div[data-node-id].bq[custom-callout~=${callout.id}]::after {
+    content: "${callout.icon}";
+}
+
+html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-callout~=${callout.id}] {
+    background-color: ${callout.bg.light} !important;
+    box-shadow: 0 0 0 2px ${callout.box.light} inset;
+}
+
+html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-callout~=${callout.id}] {
+    background-color: ${callout.bg.dark} !important;
+    box-shadow: 0 0 0 2px ${callout.box.dark} inset;
+}
+`;
+}
 
 export class DynamicStyle {
     //css 样式内容
     private css: string;
-    //css 样式片段, 合并后生成 this.css
-    private cssSnippets: Record<string, string> = {
-        CustomCSS: ""
-    }
+    plugin: BqCalloutPlugin;
+    private configs: IConfigs;
 
-    constructor() {
+    constructor(plugin: BqCalloutPlugin) {
         this.css = "";
+        this.plugin = plugin;
+        this.configs = plugin.configs;
     }
 
-    init(styleVar: Record<string, string>) {
-        this.update(styleVar);
+    update() {
+        this.buildStyle();
         this.updateStyleDom()
     }
 
@@ -122,25 +140,19 @@ export class DynamicStyle {
      * - 如果 val[key] 有值, 则会根据模板渲染样式
      * @param styleVar 
      */
-    update(styleVar: Record<string, string>) {
+    private buildStyle() {
         this.css = "";
-        for (let key in styleVar) {
-            if (styleVar[key] === undefined) {
-                continue;
-            } else if (styleVar[key] === null || styleVar[key] === "") {
-                this.cssSnippets[key] = "";
-                continue;
-            }
+        let styles = [];
+        styles.push(this.configs.CustomCSS);
+        styles.push(TemplateEmojiFont.replace("{{var}}", this.configs.EmojiFont));
 
-            let style = styleVar[key];
-            if (key === 'EmojiFont') {
-                style = TemplateEmojiFont.replace("{{var}}", style);
-            }
-
-            this.cssSnippets[key] = style;
-        }
         //合并样式
-        this.css = Object.values(this.cssSnippets).join("\n");
+        this.css = Object.values(styles).join("\n");
+        //合并自定义 callout 样式
+        let customCallouts = this.configs.CustomCallout ?? [];
+        customCallouts.forEach(callout => {
+            this.css += customCallout(callout);
+        })
     }
 
 }
