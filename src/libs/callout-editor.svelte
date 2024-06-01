@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-01 21:02:45
+ LastEditTime : 2024-06-01 21:54:26
  Description  : 
 -->
 <script lang="ts">
@@ -94,6 +94,10 @@
             showMessage("Callout ID 已存在，请重新更改 ID", 4000, "error");
             return;
         }
+        if (callout.id === "") {
+            showMessage("Callout ID 不能为空", 4000, "error");
+            return;
+        }
         dispatch("save", callout);
     };
 
@@ -104,11 +108,16 @@
     <div class="fn__flex bordered" style="font-size: 1.2rem;">
         <div>ID:</div>
         <div class="fn__space" />
-        <div
-            class="callout-id"
-            contenteditable="true"
-            bind:textContent={callout.id}
-        />
+        {#if callout.custom}
+            <div
+                class="callout-id"
+                contenteditable="true"
+                bind:textContent={callout.id}
+                style="border: 2px solid var(--b3-theme-primary-light);"
+            />
+        {:else}
+            <div class="callout-id">{callout.id}</div>
+        {/if}
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>

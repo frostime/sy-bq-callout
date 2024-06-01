@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-01 21:37:11
+ * @LastEditTime : 2024-06-01 21:45:39
  * @Description  : 
  */
 import {
@@ -145,6 +145,7 @@ export default class BqCalloutPlugin extends Plugin {
             });
         }
         for (let ct of this.configs.CustomCallout) {
+            if (ct?.hide) continue;
             this.protyleSlash.push({
                 filter: [`callout-${ct.id}`, `bq-${ct.id}`],
                 html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
