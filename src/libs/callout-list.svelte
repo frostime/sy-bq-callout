@@ -60,6 +60,7 @@
             target: dialog.element.querySelector("#CalloutEditor"),
             props: {
                 CreatedCallouts: callouts.map((callout) => callout.id),
+                mode: "new"
             },
         });
         pannel.$on("cancel", () => dialog.destroy());

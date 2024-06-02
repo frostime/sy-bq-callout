@@ -31,6 +31,7 @@
         hide: false,
         custom: true,
     };
+    export let mode: 'new' | 'edit' = 'edit';
 
     const DefaulCallout = JSON.parse(JSON.stringify(callout));
 
@@ -112,7 +113,7 @@
             showMessage(I18n.empty, 4000, "error");
             return;
         }
-        if (callout.id !== DefaulCallout.id) {
+        if (mode === 'edit' && callout.id !== DefaulCallout.id) {
             let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id);
             confirm("Callout ID Changed!", text,
             () => {
