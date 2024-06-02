@@ -3,13 +3,14 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-02 11:39:43
+ LastEditTime : 2024-06-02 12:03:25
  Description  : 
 -->
 <script lang="ts">
+    import { confirm } from "siyuan";
     import SettingItemWrap from "./setting-item-wrap.svelte";
     import CalloutList from "./callout-list.svelte";
-    import { DefaultCallouts } from "@/callout";
+    import { DefaultCallouts, queryCalloutBlock } from "@/callout";
 
     import type BqCalloutPlugin from "..";
 
@@ -40,17 +41,41 @@
     $: plugin.configs.CustomCallout = configs.CustomCallout.value;
 
     const onClickResetDefaultCallout = (e: MouseEvent) => {
-        console.debug(e);
         let ele = e.target as HTMLElement;
-        let div = ele.closest('.callout-list-item') as HTMLDivElement;
+        let div = ele.closest(".callout-list-item") as HTMLDivElement;
         let cid = div.dataset.cid;
-        let calloutIdx = plugin.configs.DefaultCallout.findIndex((item) => item.id === cid);
+        let calloutIdx = plugin.configs.DefaultCallout.findIndex(
+            (item) => item.id === cid,
+        );
         if (calloutIdx === -1) return;
         let defaultCallout = DefaultCallouts.find((item) => item.id === cid);
         if (!defaultCallout) return;
-        plugin.configs.DefaultCallout[calloutIdx] = JSON.parse(JSON.stringify(defaultCallout)); //深拷贝
+        plugin.configs.DefaultCallout[calloutIdx] = JSON.parse(
+            JSON.stringify(defaultCallout),
+        ); //深拷贝
     };
 
+    const onClickDeleteCallout = async (e: MouseEvent) => {
+        let ele = e.target as HTMLElement;
+        let div = ele.closest(".callout-list-item") as HTMLDivElement;
+        let cid = div.dataset.cid;
+        let calloutIdx = configs.CustomCallout.value.findIndex(
+            (item) => item.id === cid,
+        );
+        if (calloutIdx === -1) return;
+        let callout = configs.CustomCallout.value[calloutIdx];
+        let blocks = await queryCalloutBlock(callout);
+        confirm(
+            "确实删除?",
+            `Callout <b>[${callout.icon} ${callout.id}]</b> 有<b>${blocks.length}个</b>引用!`,
+            () => {
+                configs.CustomCallout.value =
+                    configs.CustomCallout.value.filter(
+                        (item) => item.id !== cid,
+                    );
+            },
+        );
+    };
 </script>
 
 <div class="config__tab-container">
@@ -74,19 +99,6 @@
     </SettingItemWrap>
 
     <SettingItemWrap
-        title={configs.CustomCSS.title}
-        description={configs.CustomCSS.description}
-        direction="row"
-    >
-        <textarea
-            class="b3-text-field fn__block"
-            rows="4"
-            spellcheck="false"
-            bind:value={configs.CustomCSS.value}
-        ></textarea>
-    </SettingItemWrap>
-
-    <SettingItemWrap
         title="默认 Callout"
         description="默认 Callout 描述"
         direction="row"
@@ -94,7 +106,7 @@
         <CalloutList callouts={plugin.configs.DefaultCallout} allowAdd={false}>
             <div
                 class="toolbar__item ariaLabel"
-                aria-label="重置"
+                aria-label="Reset"
                 on:click={onClickResetDefaultCallout}
             >
                 <svg><use xlink:href="#iconUndo"></use></svg>
@@ -107,7 +119,30 @@
         description={configs.CustomCallout.title}
         direction="row"
     >
-        <CalloutList bind:callouts={configs.CustomCallout.value} allowAdd={true}/>
+        <CalloutList
+            bind:callouts={configs.CustomCallout.value}
+            allowAdd={true}
+        >
+            <div
+                class="toolbar__item ariaLabel"
+                aria-label="Delete"
+                on:click={onClickDeleteCallout}
+            >
+                <svg><use xlink:href="#iconClose"></use></svg>
+            </div>
+        </CalloutList>
+    </SettingItemWrap>
+
+    <SettingItemWrap
+        title={configs.CustomCSS.title}
+        description={configs.CustomCSS.description}
+        direction="row"
+    >
+        <textarea
+            class="b3-text-field fn__block"
+            rows="4"
+            spellcheck="false"
+            bind:value={configs.CustomCSS.value}
+        ></textarea>
     </SettingItemWrap>
 </div>
-

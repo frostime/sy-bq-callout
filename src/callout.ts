@@ -3,11 +3,27 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-06-02 11:15:12
+ * @LastEditTime : 2024-06-02 12:02:22
  * @Description  : 
  */
+import { sql } from "./api";
 import * as I18n from "./i18n/zh_CN.json";
 let i18n: typeof I18n;
+
+
+export const queryCalloutBlock = async (callout: ICallout): Promise<Block[]> => {
+    let name = callout.custom ? 'custom-callout' : 'custom-b';
+    return sql(`
+    SELECT B.*
+    FROM blocks AS B
+    WHERE B.id IN (
+        SELECT A.block_id
+        FROM attributes AS A
+        WHERE A.name = '${name}'
+        AND A.value = '${callout.id}'
+    );
+    `);
+}
 
 
 export const DefaultCallouts: ICallout[] = [
