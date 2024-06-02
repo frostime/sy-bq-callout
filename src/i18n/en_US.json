@@ -2,7 +2,7 @@
     "name": "Savor Callout",
     "button": {
         "error": "Error",
-        "warn": "Warn",
+        "warn": "Warning",
         "bug": "Bug",
         "check": "Check",
         "light": "Light",
@@ -12,20 +12,49 @@
         "pen": "Pen",
         "note": "Note",
         "bell": "Bell",
-        "default": "Back to default"
+        "default": "Restore Default Style"
     },
     "setting": {
         "EmojiFont": {
-            "title": "🇫 Callout Emoji Font",
-            "description": "Configure the emoji font family of Callout Icon (CSS value)"
+            "title": "🇫 Callout Icon Emoji Font Style",
+            "description": "Specify the emoji font style for Callout icons (CSS field)"
         },
         "CustomCSS": {
             "title": "🎨 Custom CSS",
-            "description": "📋 Fill with any custom css"
+            "description": "Fill in any custom CSS styles"
         },
         "CalloutOrder": {
             "title": "📋 Callout Menu Item Order",
-            "description": "<ul> <li>The display order of Callouts in the menu (Callout ID), separated by ',' or ';'</li> <li>Callouts not recorded here will not appear in the menu, but their styles will still take effect as normal</li> <li>If left blank, the default order will be used</li> </ul>"
+            "description": "<ul> <li>The order in which Callouts appear in the menu (Callout ID) separated by a comma (,) or semicolon (;)</li> <li>Callouts not listed here will not appear in the menu, but their styles will still be effective</li> <li>If left blank, the default order will be used</li> </ul>"
+        },
+        "DefaultCallout": {
+            "title": "📋 Default Callout List",
+            "description": "Below is the list of built-in Callouts. You can modify the default styles here"
+        },
+        "CustomCallout": {
+            "title": "📋 Custom Callout List",
+            "description": "Below is the list of custom Callouts. You can add, modify, or delete Callouts here"
+        },
+        "Delete": {
+            "title": "🗑️ Confirm Delete Callout?",
+            "description": "Callout <b>[{0} {1}]</b> has <b>{2} references</b>!<br/>Deletion is irreversible, please proceed with caution"
         }
+    },
+    "CalloutEditor": {
+        "exists": "Callout ID already exists. Please change the ID",
+        "empty": "Callout ID cannot be empty. Please enter a new ID",
+        "changed": "⚠️ Callout ID has been changed from {0} to {1}. This may cause previous callouts to become invalid.<br/>❓ Do you want to proceed with the change?",
+        "lightMode": "🌟 Light Mode",
+        "darkMode": "🌙 Dark Mode",
+        "bgColor": "Background Color",
+        "boxShadow": "Border   Color",
+        "copyStyle": "Copy Style",
+        "copied": "Style copied",
+        "pasteStyle": "Paste Style",
+        "pasted": "Style pasted",
+        "pasteEmpty": "Paste content is empty"
+    },
+    "CalloutList": {
+        "Add": "Add Callout"
     }
 }

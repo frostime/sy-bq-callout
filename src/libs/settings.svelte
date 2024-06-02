@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-02 14:17:01
+ LastEditTime : 2024-06-02 14:42:20
  Description  : 
 -->
 <script lang="ts">
@@ -68,9 +68,12 @@
         if (calloutIdx === -1) return;
         let callout = configs.CustomCallout.value[calloutIdx];
         let blocks = await queryCalloutBlock(callout);
+        let text = i18n.setting.Delete.description
+            .replace("{0}", callout.icon)
+            .replace("{1}", callout.id)
+            .replace("{2}", blocks.length.toString());
         confirm(
-            "确实删除?",
-            `Callout <b>[${callout.icon} ${callout.id}]</b> 有<b>${blocks.length}个</b>引用!`,
+            "确实删除?", text,
             () => {
                 configs.CustomCallout.value =
                     configs.CustomCallout.value.filter(
@@ -102,8 +105,8 @@
     </SettingItemWrap>
 
     <SettingItemWrap
-        title="默认 Callout"
-        description="默认 Callout 描述"
+        title={i18n.setting.DefaultCallout.title}
+        description={i18n.setting.DefaultCallout.description}
         direction="row"
     >
         <CalloutList callouts={plugin.configs.DefaultCallout} type="Default">
@@ -118,8 +121,8 @@
     </SettingItemWrap>
 
     <SettingItemWrap
-        title={configs.CustomCallout.title}
-        description={configs.CustomCallout.title}
+        title={i18n.setting.CustomCallout.title}
+        description={i18n.setting.CustomCallout.description}
         direction="row"
     >
         <CalloutList

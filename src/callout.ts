@@ -8,7 +8,7 @@
  */
 import { sql } from "./api";
 import * as I18n from "./i18n/zh_CN.json";
-let i18n: typeof I18n;
+export let i18n: typeof I18n;
 
 export const setI18n = (i18n_: typeof I18n) => {
     i18n = i18n_;

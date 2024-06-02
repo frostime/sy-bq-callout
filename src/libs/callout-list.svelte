@@ -4,6 +4,7 @@
     import CalloutEditor from "./callout-editor.svelte";
 
     import { draggingSource } from "./store";
+    import { i18n } from "@/callout";
 
     export let callouts: ICallout[];
     export let type: string;
@@ -92,7 +93,7 @@
         if (!ele) return;
         let cid = ele.dataset.cid;
         if (src.id === cid) return;
-        console.log('Move');
+        // console.log('Move');
         let srcIndex = callouts.findIndex((item) => item.id === src.id);
         let targetIndex = callouts.findIndex((item) => item.id === cid);
         let newCallout = callouts;
@@ -129,7 +130,7 @@
                 <span class="fn__space" />
                 <div
                     class="toolbar__item ariaLabel"
-                    aria-label="编辑"
+                    aria-label="Edit"
                     on:click={() => {
                         editCallout(callout);
                     }}
@@ -148,7 +149,7 @@
             on:click={newCallout}
         >
             <svg><use xlink:href="#iconAdd"></use></svg>
-            添加 Callout
+            {i18n.CalloutList.Add}
         </button>
     </section>
     {/if}

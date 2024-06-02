@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-02 13:43:33
+ LastEditTime : 2024-06-02 14:35:24
  Description  : 
 -->
 <script lang="ts">
@@ -12,13 +12,14 @@
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
     import "vanilla-colorful/rgba-string-color-picker.js";
+    import { i18n } from "@/callout";
 
     export let CreatedCallouts: string[];
 
     export let callout: ICallout = {
         id: "Input ID Here",
         icon: "📌",
-        title: "新建 Callout",
+        title: "New Callout",
         bg: {
             light: "rgba(238, 245, 248, 1)",
             dark: "rgba(53, 76, 75, .5)",
@@ -34,10 +35,11 @@
     const DefaulCallout = JSON.parse(JSON.stringify(callout));
 
     let emojiFont = getContext("EmojiFont");
+    const I18n = i18n.CalloutEditor;
 
     const chooseIcon = () => {
         let dialog = new Dialog({
-            title: "选择图标",
+            title: "Choose Emoji Icon",
             content: `<div id="IconChooser" style="height: 100%;"></div>`,
             width: "30rem",
             height: "30rem",
@@ -95,16 +97,16 @@
 
     const onSave = () => {
         if (CreatedCallouts.includes(callout.id)) {
-            showMessage("Callout ID 已存在，请重新更改 ID", 4000, "error");
+            showMessage(I18n.exists, 4000, "error");
             return;
         }
         if (callout.id === "") {
-            showMessage("Callout ID 不能为空", 4000, "error");
+            showMessage(I18n.empty, 4000, "error");
             return;
         }
         if (callout.id !== DefaulCallout.id) {
-            confirm("Callout ID 发生变更",
-            `⚠️ Callout ID 从${DefaulCallout.id}变更为${callout.id}，这可能导致之前的callout失效。<br/>❓ 确认要修改吗？`,
+            let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id);
+            confirm("Callout ID Changed!", text,
             () => {
                 dispatch("save", callout);
             });
@@ -136,40 +138,40 @@
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
     <div class="color-editor bordered">
-        <div>亮色模式</div>
+        <div>{I18n.lightMode}</div>
         <div>
             <button
                 class="b3-button b3-button--outline fn__flex-center fn__size200"
                 style="background-color: {callout.bg.light}; color: black;"
                 on:click={(e) => changeColor(e, "bg", "light")}
             >
-                设置背景色
+                {I18n.bgColor}
             </button>
             <button
                 class="b3-button b3-button--outline fn__flex-center fn__size200"
                 style="background-color: {callout.box.light}; color: black;"
                 on:click={(e) => changeColor(e, "box", "light")}
             >
-                设置边框色
+                {I18n.boxShadow}
             </button>
         </div>
     </div>
     <div class="color-editor bordered">
-        <div>暗色模式</div>
+        <div>{I18n.darkMode}</div>
         <div>
             <button
                 class="b3-button b3-button--outline fn__flex-center fn__size200"
                 style="background-color: {callout.bg.dark}; color: white;"
                 on:click={(e) => changeColor(e, "bg", "dark")}
             >
-                设置背景色
+                {I18n.bgColor}
             </button>
             <button
                 class="b3-button b3-button--outline fn__flex-center fn__size200"
                 style="background-color: {callout.box.dark}; color: white;"
                 on:click={(e) => changeColor(e, "box", "dark")}
             >
-                设置边框色
+                {I18n.boxShadow}
             </button>
         </div>
     </div>
@@ -186,11 +188,11 @@
                 navigator.clipboard
                     .writeText(JSON.stringify(callout))
                     .then(() => {
-                        showMessage("样式已复制到剪贴板", 3000);
+                        showMessage(I18n.copied, 3000);
                     });
             }}
         >
-            复制样式
+            {I18n.copyStyle}
         </button>
         <button
             class="b3-button b3-button--text"
@@ -204,7 +206,7 @@
                         !data.bg ||
                         !data.box
                     ) {
-                        showMessage("剪贴板中没有样式数据", 3000, "error");
+                        showMessage(I18n.pasteEmpty, 3000, "error");
                         return;
                     }
                     let { icon, bg, box } = data;
@@ -213,18 +215,18 @@
                         callout.bg = bg;
                         callout.box = box;
                     }
-                    showMessage("样式已粘贴", 3000);
+                    showMessage(I18n.pasted, 3000);
                 });
             }}
         >
-            粘贴样式
+            {I18n.pasteStyle}
         </button>
         <div class="fn__flex-1" />
         <button class="b3-button b3-button--text" on:click={onCancel}>
-            取消
+            Cancel
         </button>
         <button class="b3-button b3-button--text" on:click={onSave}>
-            保存
+            Save
         </button>
     </div>
 </sectioin>
