@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-02 00:34:24
+ * @LastEditTime : 2024-06-02 11:51:19
  * @Description  : 
  */
 import {
@@ -46,24 +46,16 @@ export default class BqCalloutPlugin extends Plugin {
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
     private dynamicStyle: DynamicStyle;
 
-    CalloutHub: Map<string, ICallout> = new Map();
-
-    DefaultCallouts: ICallout[];
     configs: IConfigs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
         CustomCSS: IconStyle,
         CalloutOrder: '',
+        DefaultCallout: [],
         CustomCallout: []
     };
 
     async onload() {
         this.dynamicStyle = new DynamicStyle(this);
-        let DefaultCallouts = callout.initDefault(I18n);
-        this.DefaultCallouts = DefaultCallouts;
-        for (let ct of DefaultCallouts) {
-            this.CalloutHub.set(ct.id, ct);
-        }
-        // this.configs.CalloutOrder = Array.from(this.CalloutHub.keys()).join(', ');
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 
@@ -72,6 +64,10 @@ export default class BqCalloutPlugin extends Plugin {
             if (key in this.configs) {
                 this.configs[key] = configs[key];
             }
+        }
+        if (this.configs.DefaultCallout.length === 0) {
+            //deep copy
+            this.configs.DefaultCallout = JSON.parse(JSON.stringify(callout.DefaultCallouts));
         }
 
         this.dynamicStyle.update();
@@ -118,7 +114,7 @@ export default class BqCalloutPlugin extends Plugin {
 
     private resetSlash() {
         this.protyleSlash = [];
-        for (let ct of this.DefaultCallouts) {
+        for (let ct of this.configs.DefaultCallout) {
             if (ct?.hide) continue;
             this.protyleSlash.push({
                 filter: [`callout-${ct.id}`, `bq-${ct.id}`],
@@ -143,7 +139,7 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private blockIconEvent({ detail }: any) {
-        // console.log(detail);
+        console.log(detail);
         if (detail.blockElements.length > 1) {
             return;
         }
@@ -155,7 +151,7 @@ export default class BqCalloutPlugin extends Plugin {
         let menu: Menu = detail.menu;
         let submenus = [];
 
-        for (let icallout of this.DefaultCallouts.concat(this.configs.CustomCallout)) {
+        for (let icallout of this.configs.DefaultCallout.concat(this.configs.CustomCallout)) {
             if (icallout.hide) continue;
             let btn = callout.createCalloutButton(ele.getAttribute("data-node-id"), icallout);
             btn.onclick = () => {

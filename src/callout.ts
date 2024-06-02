@@ -10,7 +10,7 @@ import * as I18n from "./i18n/zh_CN.json";
 let i18n: typeof I18n;
 
 
-const DefaultCallouts: ICallout[] = [
+export const DefaultCallouts: ICallout[] = [
     {
         id: 'info',
         icon: 'ℹ',
@@ -156,16 +156,6 @@ const DefaultCallouts: ICallout[] = [
     }
 ]
 
-export function initDefault(i18nObj: typeof I18n) {
-    i18n = i18nObj;
-    for (let i = 0; i < DefaultCallouts.length; i++) {
-        let callout = DefaultCallouts[i]
-        if (i18n.button[callout.id]) {
-            callout.title = i18n.button[callout.id] || callout.id;
-        }
-    }
-    return DefaultCallouts;
-}
 
 const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);

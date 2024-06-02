@@ -3,22 +3,19 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-02 11:14:21
+ LastEditTime : 2024-06-02 11:39:43
  Description  : 
 -->
 <script lang="ts">
-    // import { getContext } from "svelte";
     import SettingItemWrap from "./setting-item-wrap.svelte";
     import CalloutList from "./callout-list.svelte";
+    import { DefaultCallouts } from "@/callout";
 
     import type BqCalloutPlugin from "..";
 
     export let plugin: BqCalloutPlugin;
 
     let i18n = plugin.i18n;
-    // let DefaultCallouts: ICallout[] = getContext("DefaultCallouts");
-
-    // const dispatch = createEventDispatcher();
 
     let configs = {
         EmojiFont: {
@@ -41,6 +38,18 @@
     $: plugin.configs.CustomCSS = configs.CustomCSS.value;
     $: plugin.configs.EmojiFont = configs.EmojiFont.value;
     $: plugin.configs.CustomCallout = configs.CustomCallout.value;
+
+    const onClickResetDefaultCallout = (e: MouseEvent) => {
+        console.debug(e);
+        let ele = e.target as HTMLElement;
+        let div = ele.closest('.callout-list-item') as HTMLDivElement;
+        let cid = div.dataset.cid;
+        let calloutIdx = plugin.configs.DefaultCallout.findIndex((item) => item.id === cid);
+        if (calloutIdx === -1) return;
+        let defaultCallout = DefaultCallouts.find((item) => item.id === cid);
+        if (!defaultCallout) return;
+        plugin.configs.DefaultCallout[calloutIdx] = JSON.parse(JSON.stringify(defaultCallout)); //深拷贝
+    };
 
 </script>
 
@@ -82,19 +91,11 @@
         description="默认 Callout 描述"
         direction="row"
     >
-        <CalloutList callouts={plugin.DefaultCallouts} allowAdd={false}>
+        <CalloutList callouts={plugin.configs.DefaultCallout} allowAdd={false}>
             <div
                 class="toolbar__item ariaLabel"
                 aria-label="重置"
-                on:click={(e) => {
-                    console.debug(e);
-                    // let ele = e.target; //HTMLElement
-                    // //@ts-ignore
-                    // let div = ele.closet('.callout-list-item');
-                    // let cid = div.dataset.cid;
-                    // let calloutIdx = plugin.DefaultCallouts.findIndex((item) => item.id === cid);
-                    // plugin.DefaultCallouts[calloutIdx] = DefaultCallouts.find((item) => item.id === cid);
-                }}
+                on:click={onClickResetDefaultCallout}
             >
                 <svg><use xlink:href="#iconUndo"></use></svg>
             </div>

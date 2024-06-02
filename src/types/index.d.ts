@@ -6,6 +6,7 @@ interface IConfigs {
     EmojiFont: string;
     CustomCSS: string;
     CalloutOrder: string;
+    DefaultCallout: ICallout[];
     CustomCallout: ICallout[];
 }
 

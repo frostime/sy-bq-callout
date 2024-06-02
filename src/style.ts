@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-02 11:24:48
+ * @LastEditTime : 2024-06-02 11:27:35
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -86,13 +86,6 @@ export class DynamicStyle {
         style?.remove();
     }
 
-    /**
-     * 根据样式变量重建样式
-     * - 如果 val[key] 为 undefined, 则不会对样式进行修改
-     * - 如果 val[key] 为 null 或者 "", 则会清空样式
-     * - 如果 val[key] 有值, 则会根据模板渲染样式
-     * @param styleVar 
-     */
     private buildStyle() {
         this.css = "";
         let styles = [];
@@ -107,7 +100,7 @@ export class DynamicStyle {
             this.css += customCallout(callout);
         })
         //修改默认 callout 样式
-        this.plugin.DefaultCallouts.forEach(callout => {
+        this.plugin.configs.DefaultCallout.forEach(callout => {
             this.css += defaultDbCallout(callout);
         });
     }
