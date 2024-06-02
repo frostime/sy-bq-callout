@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-02 11:27:35
+ * @LastEditTime : 2024-06-02 13:06:33
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -32,16 +32,16 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-b~=${call
 }
 const customCallout = (callout: ICallout) => {
     return `
-.protyle-wysiwyg div[data-node-id].bq[custom-callout~=${callout.id}]::after {
+.protyle-wysiwyg div[data-node-id].bq[custom-callout="${callout.id}"]::after {
     content: "${callout.icon}";
 }
 
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-callout~=${callout.id}] {
+html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-callout="${callout.id}"] {
     background-color: ${callout.bg.light} !important;
     box-shadow: 0 0 0 2px ${callout.box.light} inset;
 }
 
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-callout~=${callout.id}] {
+html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-callout="${callout.id}"] {
     background-color: ${callout.bg.dark} !important;
     box-shadow: 0 0 0 2px ${callout.box.dark} inset;
 }

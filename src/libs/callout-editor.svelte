@@ -3,11 +3,11 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-01 21:54:26
+ LastEditTime : 2024-06-02 13:11:37
  Description  : 
 -->
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, getContext } from "svelte";
     import { Dialog, showMessage } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
@@ -30,6 +30,8 @@
         hide: false,
         custom: true,
     };
+
+    let emojiFont = getContext('EmojiFont');
 
     const chooseIcon = () => {
         let dialog = new Dialog({
@@ -109,14 +111,13 @@
         <div>ID:</div>
         <div class="fn__space" />
         {#if callout.custom}
-            <div
-                class="callout-id"
-                contenteditable="true"
-                bind:textContent={callout.id}
-                style="border: 2px solid var(--b3-theme-primary-light);"
+            <input
+                class="b3-text-field fn__flex-center"
+                style="width: 100px; flex: shrink;"
+                bind:value={callout.id}
             />
         {:else}
-            <div class="callout-id">{callout.id}</div>
+            <div class="callout-id" style="font-family: ${emojiFont} !important;">{callout.id}</div>
         {/if}
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
@@ -197,7 +198,6 @@
 
     .callout-icon {
         // font-size: 2rem;
-        font-family: "Twitter Emoji", "Noto Color Emoji", sans-serif !important;
         cursor: pointer;
     }
 

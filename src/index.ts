@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-02 12:10:52
+ * @LastEditTime : 2024-06-02 13:03:19
  * @Description  : 
  */
 import {
@@ -22,14 +22,6 @@ import * as callout from "./callout";
 import { DynamicStyle } from "./style";
 
 import Settings from './libs/settings.svelte';
-
-async function setUpAttr(blockId: BlockId, value: string) {
-    let payload = {
-        'custom-b': value,
-        'custom-callout': value
-    }
-    setBlockAttrs(blockId, payload);
-}
 
 const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -54,6 +46,7 @@ export default class BqCalloutPlugin extends Plugin {
     };
 
     async onload() {
+        callout.setI18n(this.i18n);
         this.dynamicStyle = new DynamicStyle(this);
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
@@ -149,12 +142,18 @@ export default class BqCalloutPlugin extends Plugin {
 
         let menu: Menu = detail.menu;
         let submenus = [];
-
-        for (let icallout of this.configs.DefaultCallout.concat(this.configs.CustomCallout)) {
+        const allCallout = this.configs.DefaultCallout.concat(this.configs.CustomCallout).filter((item) => !item.hide);
+        for (let icallout of allCallout) {
             if (icallout.hide) continue;
             let btn = callout.createCalloutButton(ele.getAttribute("data-node-id"), icallout);
             btn.onclick = () => {
-                setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
+                let payload = {
+                    'custom-callout': '',
+                    'custom-b': ''
+                };
+                let key = icallout.custom ? 'custom-callout' : 'custom-b';
+                payload[key] = icallout.id;
+                setBlockAttrs(ele.getAttribute("data-node-id"), payload);
             }
             submenus.push({
                 element: btn,
@@ -166,7 +165,10 @@ export default class BqCalloutPlugin extends Plugin {
 
         let btn = callout.createRestoreButton(ele.getAttribute("data-node-id"));
         btn.onclick = () => {
-            setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
+            setBlockAttrs(ele.getAttribute("data-node-id"), {
+                'custom-callout': '',
+                'custom-b': ''
+            });
         }
         submenus.push({
             element: btn
