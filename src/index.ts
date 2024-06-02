@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-01 20:33:24
+ * @LastEditTime : 2024-06-02 15:13:00
  * @Description  : 
  */
 import {
@@ -14,7 +14,7 @@ import {
 } from "siyuan";
 import "@/index.scss";
 
-// import { changelog } from "sy-plugin-changelog";
+import { changelog } from "sy-plugin-changelog";
 
 import { setBlockAttrs } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
@@ -23,43 +23,31 @@ import { DynamicStyle } from "./style";
 
 import Settings from './libs/settings.svelte';
 
-async function setUpAttr(blockId: BlockId, value: string) {
-    let payload = {
-        'custom-b': value
-        // 'custom-bq-callout': value
-    }
-    setBlockAttrs(blockId, payload);
-}
-
 const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 
 const SettingName = 'setting.json';
-const IconStyle = ``;
 
 export default class BqCalloutPlugin extends Plugin {
 
     declare i18n: typeof I18n;
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
-    private dynamicStyle: DynamicStyle = new DynamicStyle();
+    private dynamicStyle: DynamicStyle;
 
-    CalloutHub: Map<string, ICallout> = new Map();
-
-    configs = {
+    configs: IConfigs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
-        CustomCSS: IconStyle as string,
-        CalloutOrder: ''
+        CustomCSS: '',
+        CalloutOrder: '',
+        DefaultCallout: [],
+        CustomCallout: []
     };
 
     async onload() {
-        let DefaultCallouts = callout.initDefault(I18n);
-        for (let ct of DefaultCallouts) {
-            this.CalloutHub.set(ct.id, ct);
-        }
-        this.configs.CalloutOrder = Array.from(this.CalloutHub.keys()).join(', ');
+        callout.setI18n(this.i18n);
+        this.dynamicStyle = new DynamicStyle(this);
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 
@@ -69,12 +57,19 @@ export default class BqCalloutPlugin extends Plugin {
                 this.configs[key] = configs[key];
             }
         }
+        if (this.configs.DefaultCallout.length === 0) {
+            //deep copy
+            this.configs.DefaultCallout = JSON.parse(JSON.stringify(callout.DefaultCallouts));
+        }
 
-        this.dynamicStyle.init({
-            CustomCSS: this.configs.CustomCSS,
-            EmojiFont: this.configs.EmojiFont
-        });
+        this.dynamicStyle.update();
         this.resetSlash();
+
+        changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+            if (ans.Dialog) {
+                ans.Dialog.setFont('20px');
+            }
+        })
     }
 
     async onunload() {
@@ -102,33 +97,17 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private onSettingUpdated() {
-        this.dynamicStyle.update(this.configs);
-        this.dynamicStyle.updateStyleDom();
+        this.dynamicStyle.update();
         this.resetSlash();
         this.saveData(SettingName, this.configs);
-    }
-
-    private getCalloutList(): ICallout[] {
-        let CalloutOrder = this.configs.CalloutOrder.trim();
-        let orderList = [];
-        if (CalloutOrder === '') {
-            orderList = Array.from(this.CalloutHub.keys());
-        } else {
-            orderList = CalloutOrder.split(/\s*[,;，；]\s*/).map((v) => v.trim());
-        }
-        let callouts = [];
-        for (let id of orderList) {
-            let callout = this.CalloutHub.get(id);
-            if (callout) {
-                callouts.push(callout);
-            }
-        }
-        return callouts;
+        console.log('Setting Updated');
+        console.log(this.configs);
     }
 
     private resetSlash() {
         this.protyleSlash = [];
-        for (let ct of this.getCalloutList()) {
+        for (let ct of this.configs.DefaultCallout) {
+            if (ct?.hide) continue;
             this.protyleSlash.push({
                 filter: [`callout-${ct.id}`, `bq-${ct.id}`],
                 html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
@@ -138,10 +117,21 @@ export default class BqCalloutPlugin extends Plugin {
                 }
             });
         }
+        for (let ct of this.configs.CustomCallout) {
+            if (ct?.hide) continue;
+            this.protyleSlash.push({
+                filter: [`callout-${ct.id}`, `bq-${ct.id}`],
+                html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
+                id: ct.id,
+                callback: (protyle: Protyle) => {
+                    protyle.insert(`>\n{: custom-callout="${ct.id}"}`);
+                }
+            });
+        }
     }
 
     private blockIconEvent({ detail }: any) {
-        // console.log(detail);
+        console.log(detail);
         if (detail.blockElements.length > 1) {
             return;
         }
@@ -152,11 +142,18 @@ export default class BqCalloutPlugin extends Plugin {
 
         let menu: Menu = detail.menu;
         let submenus = [];
-
-        for (let icallout of this.getCalloutList()) {
+        const allCallout = this.configs.DefaultCallout.concat(this.configs.CustomCallout).filter((item) => !item.hide);
+        for (let icallout of allCallout) {
+            if (icallout.hide) continue;
             let btn = callout.createCalloutButton(ele.getAttribute("data-node-id"), icallout);
             btn.onclick = () => {
-                setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
+                let payload = {
+                    'custom-callout': '',
+                    'custom-b': ''
+                };
+                let key = icallout.custom ? 'custom-callout' : 'custom-b';
+                payload[key] = icallout.id;
+                setBlockAttrs(ele.getAttribute("data-node-id"), payload);
             }
             submenus.push({
                 element: btn,
@@ -168,7 +165,10 @@ export default class BqCalloutPlugin extends Plugin {
 
         let btn = callout.createRestoreButton(ele.getAttribute("data-node-id"));
         btn.onclick = () => {
-            setUpAttr(ele.getAttribute("data-node-id"), btn.getAttribute("custom-attr-value"));
+            setBlockAttrs(ele.getAttribute("data-node-id"), {
+                'custom-callout': '',
+                'custom-b': ''
+            });
         }
         submenus.push({
             element: btn

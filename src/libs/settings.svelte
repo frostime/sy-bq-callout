@@ -3,14 +3,15 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-01 20:35:43
+ LastEditTime : 2024-06-02 14:42:20
  Description  : 
 -->
 <script lang="ts">
-    // import { createEventDispatcher } from "svelte";
-    // import SettingItem from "./setting-item.svelte";
-    // import * as callout from "@/callout";
+    import { setContext } from "svelte";
+    import { confirm } from "siyuan";
     import SettingItemWrap from "./setting-item-wrap.svelte";
+    import CalloutList from "./callout-list.svelte";
+    import { DefaultCallouts, queryCalloutBlock } from "@/callout";
 
     import type BqCalloutPlugin from "..";
 
@@ -18,7 +19,7 @@
 
     let i18n = plugin.i18n;
 
-    // const dispatch = createEventDispatcher();
+    setContext('EmojiFont', plugin.configs.EmojiFont);
 
     let configs = {
         EmojiFont: {
@@ -31,16 +32,56 @@
             description: i18n.setting.CustomCSS.description,
             value: plugin.configs.CustomCSS,
         },
-        CalloutOrder: {
-            title: i18n.setting.CalloutOrder.title,
-            description: i18n.setting.CalloutOrder.description,
-            value: plugin.configs.CalloutOrder,
+        CustomCallout: {
+            title: "Custom Callout",
+            description: "Custom Callout Description",
+            value: plugin.configs.CustomCallout as ICallout[],
         },
     };
 
     $: plugin.configs.CustomCSS = configs.CustomCSS.value;
-    $: plugin.configs.CalloutOrder = configs.CalloutOrder.value;
     $: plugin.configs.EmojiFont = configs.EmojiFont.value;
+    $: plugin.configs.CustomCallout = configs.CustomCallout.value;
+
+    const onClickResetDefaultCallout = (e: MouseEvent) => {
+        let ele = e.target as HTMLElement;
+        let div = ele.closest(".callout-list-item") as HTMLDivElement;
+        let cid = div.dataset.cid;
+        let calloutIdx = plugin.configs.DefaultCallout.findIndex(
+            (item) => item.id === cid,
+        );
+        if (calloutIdx === -1) return;
+        let defaultCallout = DefaultCallouts.find((item) => item.id === cid);
+        if (!defaultCallout) return;
+        plugin.configs.DefaultCallout[calloutIdx] = JSON.parse(
+            JSON.stringify(defaultCallout),
+        ); //深拷贝
+    };
+
+    const onClickDeleteCallout = async (e: MouseEvent) => {
+        let ele = e.target as HTMLElement;
+        let div = ele.closest(".callout-list-item") as HTMLDivElement;
+        let cid = div.dataset.cid;
+        let calloutIdx = configs.CustomCallout.value.findIndex(
+            (item) => item.id === cid,
+        );
+        if (calloutIdx === -1) return;
+        let callout = configs.CustomCallout.value[calloutIdx];
+        let blocks = await queryCalloutBlock(callout);
+        let text = i18n.setting.Delete.description
+            .replace("{0}", callout.icon)
+            .replace("{1}", callout.id)
+            .replace("{2}", blocks.length.toString());
+        confirm(
+            "确实删除?", text,
+            () => {
+                configs.CustomCallout.value =
+                    configs.CustomCallout.value.filter(
+                        (item) => item.id !== cid,
+                    );
+            },
+        );
+    };
 </script>
 
 <div class="config__tab-container">
@@ -64,24 +105,38 @@
     </SettingItemWrap>
 
     <SettingItemWrap
-        title={configs.CalloutOrder.title}
-        description={configs.CalloutOrder.description}
+        title={i18n.setting.DefaultCallout.title}
+        description={i18n.setting.DefaultCallout.description}
         direction="row"
     >
-        <div class="fn__flex" style="gap: 10px;">
-            <input
-                class="b3-text-field fn__flex-center fn__flex-1"
-                bind:value={configs.CalloutOrder.value}
-            />
-            <button
-                class="b3-button b3-button--text"
-                on:click={() => {
-                    configs.CalloutOrder.value = Array.from(
-                        plugin.CalloutHub.keys(),
-                    ).join(", ");
-                }}>Reset</button
+        <CalloutList callouts={plugin.configs.DefaultCallout} type="Default">
+            <div
+                class="toolbar__item ariaLabel"
+                aria-label="Reset"
+                on:click={onClickResetDefaultCallout}
             >
-        </div>
+                <svg><use xlink:href="#iconUndo"></use></svg>
+            </div>
+        </CalloutList>
+    </SettingItemWrap>
+
+    <SettingItemWrap
+        title={i18n.setting.CustomCallout.title}
+        description={i18n.setting.CustomCallout.description}
+        direction="row"
+    >
+        <CalloutList
+            bind:callouts={configs.CustomCallout.value}
+            type="Custom"
+        >
+            <div
+                class="toolbar__item ariaLabel"
+                aria-label="Delete"
+                on:click={onClickDeleteCallout}
+            >
+                <svg><use xlink:href="#iconClose"></use></svg>
+            </div>
+        </CalloutList>
     </SettingItemWrap>
 
     <SettingItemWrap

@@ -26,6 +26,35 @@
         "CalloutOrder": {
             "title": "📋 Callout 菜单项顺序",
             "description": "<ul> <li>Callout 在菜单中的显示顺序 (Callout ID)使用逗号(,)或分号(;) 分割</li> <li>没有记录在这里的 Callout 不会出现在菜单中, 但是他们的样式仍然正常生效</li> <li>如果全部置空，则按照默认顺序显示</li> </ul>"
+        },
+        "DefaultCallout": {
+            "title": "📋 默认 Callout 列表",
+            "description": "以下为内置的 Callout 列表，可以在这里修改默认样式"
+        },
+        "CustomCallout": {
+            "title": "📋 自定义 Callout 列表",
+            "description": "以下为自定义 Callout 列表，可以在这里添加、修改、删除 Callout"
+        },
+        "Delete": {
+            "title": "🗑️ 确认删除 Callout?",
+            "description": "Callout <b>[{0} {1}]</b> 有<b>{2}个</b>引用!<br/>删除后无法恢复，请谨慎操作"
         }
+    },
+    "CalloutEditor": {
+        "exists": "Callout ID 已存在，请重新更改 ID",
+        "empty": "Callout ID 不能为空，请重新输入",
+        "changed": "⚠️ Callout ID 从{0}变更为{1}，这可能导致之前的callout失效。<br/>❓ 确认要修改吗？",
+        "lightMode": "🌟 亮色模式",
+        "darkMode": "🌙 暗色模式",
+        "bgColor": "背景颜色",
+        "boxShadow": "边框颜色",
+        "copyStyle": "复制样式",
+        "copied": "样式已复制",
+        "pasteStyle": "粘贴样式",
+        "pasted": "样式已粘贴",
+        "pasteEmpty": "粘贴内容为空"
+    },
+    "CalloutList": {
+        "Add": "添加 Callout"
     }
 }

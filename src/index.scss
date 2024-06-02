@@ -4,53 +4,9 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-06-01 20:27:10
+ * @LastEditTime : 2024-06-02 11:24:54
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
-
- :root {
-    --callout-note-box-light: rgb(198, 203, 208);
-    --callout-pen-box-light: rgb(235, 236, 237);
-    --callout-bell-box-light: rgb(246, 225, 205);
-    --callout-light-box-light: rgb(250, 235, 221);
-    --callout-warn-box-light: rgb(251, 243, 219);
-    --callout-check-box-light: rgba(221, 237, 226);
-    --callout-info-box-light: rgb(221, 235, 241);
-    --callout-bug-box-light: rgb(234, 228, 242);
-    --callout-question-box-light: rgb(244, 223, 235);
-    --callout-error-box-light: rgb(251, 228, 228);
-    --callout-note-bg-light: rgb(198, 203, 208, .5);
-    --callout-pen-bg-light: rgb(235, 236, 237, .5);
-    --callout-bell-bg-light: rgb(246, 225, 205, .5);
-    --callout-light-bg-light: rgb(250, 235, 221, .5);
-    --callout-warn-bg-light: rgb(251, 243, 219, .5);
-    --callout-check-bg-light: rgba(221, 237, 226, .5);
-    --callout-info-bg-light: rgb(221, 235, 241, .5);
-    --callout-bug-bg-light: rgb(234, 228, 242, .5);
-    --callout-question-bg-light: rgb(244, 223, 235, .5);
-    --callout-error-bg-light: rgb(251, 228, 228, .5);
-
-    --callout-note-box-dark: rgb(35, 38, 40);
-    --callout-pen-box-dark: rgb(69, 75, 78);
-    --callout-bell-box-dark: rgb(89, 74, 58);
-    --callout-light-box-dark: rgb(89, 79, 59);
-    --callout-warn-box-dark: rgb(89, 86, 59);
-    --callout-check-box-dark: rgba(53, 76, 75);
-    --callout-info-box-dark: rgb(54, 73, 84);
-    --callout-bug-box-dark: rgb(68, 63, 87);
-    --callout-question-box-dark: rgb(83, 59, 76);
-    --callout-error-box-dark: rgb(89, 65, 65);
-    --callout-note-bg-dark: rgb(35, 38, 40, .3);
-    --callout-pen-bg-dark: rgb(69, 75, 78, .3);
-    --callout-bell-bg-dark: rgb(89, 74, 58, .3);
-    --callout-light-bg-dark: rgb(89, 79, 59, .3);
-    --callout-warn-bg-dark: rgb(89, 86, 59, .3);
-    --callout-check-bg-dark: rgba(53, 76, 75, .3);
-    --callout-info-bg-dark: rgb(54, 73, 84, .3);
-    --callout-bug-bg-dark: rgb(68, 63, 87, .3);
-    --callout-question-bg-dark: rgb(83, 59, 76, .3);
-    --callout-error-bg-dark: rgb(89, 65, 65, .3);
-}
 
 /*列表里代码块对齐*/
 /*引述callout第一行样式, 用作 Callout 的标题 */
@@ -94,103 +50,6 @@
     line-height: normal !important; //保持在容器块内 icon 位置的重要样式
 }
 
-/*********** 设置背景颜色 ***********/
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq {
-    &[custom-b~=error] {
-        background-color: var(--callout-error-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-error-box-light) inset;
-    }
-    &[custom-b~=warn] {
-        background-color: var(--callout-warn-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-warn-box-light) inset;
-    }
-    &[custom-b~=bug] {
-        background-color: var(--callout-bug-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-bug-box-light) inset;
-    }
-    &[custom-b~=check] {
-        background-color: var(--callout-check-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-check-box-light) inset;
-    }
-    &[custom-b~=light] {
-        background-color: var(--callout-light-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-light-box-light) inset;
-    }
-    &[custom-b~=question] {
-        background-color: var(--callout-question-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-question-box-light) inset;
-    }
-    &[custom-b~=wrong] {
-        background-color: var(--callout-error-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-error-box-light) inset;
-    }
-    &[custom-b~=info] {
-        background-color: var(--callout-info-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-info-box-light) inset;
-    }
-    &[custom-b~=pen] {
-        background-color: var(--callout-pen-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-pen-box-light) inset;
-    }
-    &[custom-b~=note] {
-        background-color: var(--callout-note-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-note-box-light) inset;
-    }
-    &[custom-b~=bell] {
-        background-color: var(--callout-bell-bg-light) !important;
-        box-shadow: 0 0 0 2px var(--callout-bell-box-light) inset;
-    }
-
-}
-
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
-    &[custom-b~=error] {
-        background-color: var(--callout-error-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-error-box-dark) inset;
-    }
-    &[custom-b~=warn] {
-        background-color: var(--callout-warn-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-warn-box-dark) inset;
-    }
-    &[custom-b~=bug] {
-        background-color: var(--callout-bug-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-bug-box-dark) inset;
-    }
-    &[custom-b~=check] {
-        background-color: var(--callout-check-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-check-box-dark) inset;
-    }
-    &[custom-b~=light] {
-        background-color: var(--callout-light-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-light-box-dark) inset;
-    }
-    &[custom-b~=question] {
-        background-color: var(--callout-question-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-question-box-dark) inset;
-    }
-    &[custom-b~=wrong] {
-        background-color: var(--callout-error-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-error-box-dark) inset;
-    }
-    &[custom-b~=info] {
-        background-color: var(--callout-info-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-info-box-dark) inset;
-    }
-    &[custom-b~=pen] {
-        background-color: var(--callout-pen-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-pen-box-dark) inset;
-    }
-    &[custom-b~=note] {
-        background-color: var(--callout-note-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-note-box-dark) inset;
-    }
-    &[custom-b~=bell] {
-        background-color: var(--callout-bell-bg-dark) !important;
-        box-shadow: 0 0 0 2px var(--callout-bell-box-dark) inset;
-    }
-
-}
-
 
 /*********** Before & After 伪元素 ***********/
 
@@ -211,45 +70,4 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq {
     font-size: 1.4em;
     border: none;
     transform: none;
-}
-
-
-/*********** Icon ***********/
-
-.protyle-wysiwyg div[data-node-id].bq {
-    &[custom-b~=error]::after {
-        content: "🚫"
-    }
-    &[custom-b~=warn]::after {
-        content: "⚠"
-    }
-    &[custom-b~=bug]::after {
-        content: "🐛";
-    }
-    &[custom-b~=check]::after {
-        content: "✅";
-    }
-    &[custom-b~=light]::after {
-        content: "💡";
-    }
-    &[custom-b~=question]::after {
-        content: "❓";
-    }
-    &[custom-b~=wrong]::after {
-        content: "❌";
-    }
-    &[custom-b~=info]::after {
-        content: "ℹ";
-    }
-    &[custom-b~=pen]::after {
-        content: "🖋";
-    }
-    &[custom-b~=note]::after {
-        content: "📓";
-    }
-    &[custom-b~=bell]::after {
-        // content: "🔔";
-        content: "🔔";
-    }
-
 }
