@@ -3,19 +3,27 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:16
  FilePath     : /src/libs/callout-item.svelte
- LastEditTime : 2024-06-02 12:16:07
+ LastEditTime : 2024-06-02 14:18:30
  Description  : 
 -->
 <script lang="ts">
     import { getContext } from "svelte";
+    import { draggingSource } from "./store";
     export let callout: ICallout;
     export let mode: 'auto' | 'light' | 'dark' = 'auto';
+    export let type = 'Default';
 
     let emojiFont = getContext('EmojiFont');
 
     const onDragStart = (e: DragEvent) => {
         e.dataTransfer.setData('json/callout', JSON.stringify(callout));
+        draggingSource.set(type);
     };
+
+    const onDragEnd = () => {
+        draggingSource.set(null);
+    };
+
 </script>
 
 <div
@@ -23,6 +31,7 @@
     data-id={callout.id}
     draggable="true"
     on:dragstart={onDragStart}
+    on:dragend={onDragEnd}
     style="--bg-light: {callout.bg.light}; --bg-dark: {callout.bg.dark}; --box-light: {callout.box.light}; --box-dark: {callout.box
         .dark}; --emoji-font: {emojiFont};"
 >

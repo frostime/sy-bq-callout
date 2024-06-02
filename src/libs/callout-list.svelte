@@ -3,8 +3,11 @@
     import CalloutItem from "./callout-item.svelte";
     import CalloutEditor from "./callout-editor.svelte";
 
+    import { draggingSource } from "./store";
+
     export let callouts: ICallout[];
-    export let allowAdd: boolean = true;
+    export let type: string;
+    let allowAdd: boolean = type === "Custom";
 
     const editCallout = (callout: ICallout) => {
         if (!callout) return;
@@ -69,12 +72,17 @@
         e.preventDefault();
         let type = e.dataTransfer.types[0];
         if (type !== 'json/callout') return;
+        if ($draggingSource !== type) return;
         e.dataTransfer.dropEffect = "move";
     };
 
     const onDrop = (e: DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
+        if (e.dataTransfer.types[0] !== 'json/callout') return;
+        if ($draggingSource !== type) {
+            return;
+        }
         let jsonstr = e.dataTransfer.getData("json/callout");
         e.dataTransfer.clearData();
 
@@ -104,7 +112,7 @@
             on:dragover={onDragOver}
             on:drop={onDrop}
         >
-            <CalloutItem {callout} />
+            <CalloutItem {callout} {type}/>
             <span class="fn__space" />
             <div class="callout-item-action fn__flex fn__flex-center">
                 <input

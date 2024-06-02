@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-02 12:15:14
+ LastEditTime : 2024-06-02 14:17:01
  Description  : 
 -->
 <script lang="ts">
@@ -106,7 +106,7 @@
         description="默认 Callout 描述"
         direction="row"
     >
-        <CalloutList callouts={plugin.configs.DefaultCallout} allowAdd={false}>
+        <CalloutList callouts={plugin.configs.DefaultCallout} type="Default">
             <div
                 class="toolbar__item ariaLabel"
                 aria-label="Reset"
@@ -124,7 +124,7 @@
     >
         <CalloutList
             bind:callouts={configs.CustomCallout.value}
-            allowAdd={true}
+            type="Custom"
         >
             <div
                 class="toolbar__item ariaLabel"
