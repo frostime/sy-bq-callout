@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-02 13:06:33
+ * @LastEditTime : 2024-06-02 13:23:03
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -14,23 +14,39 @@ const TemplateEmojiFont = `.protyle-wysiwyg .bq[custom-b]::after,
   font-family: {{var}} !important; 
 }`;
 const defaultDbCallout = (callout: ICallout) => {
+    const hightlight = `
+    html[data-theme-mode="light"] .bq[custom-b="${callout.id}"]>[data-node-id]:first-child {
+        background-color: ${callout.box.light};
+    }
+    
+    html[data-theme-mode="dark"] .bq[custom-b="${callout.id}"]>[data-node-id]:first-child {
+        background-color: ${callout.box.dark};
+    }`;
     return `
-.protyle-wysiwyg div[data-node-id].bq[custom-b~=${callout.id}]::after {
+.protyle-wysiwyg div[data-node-id].bq[custom-b="${callout.id}"]::after {
     content: "${callout.icon}";
 }
 
-html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-b~=${callout.id}] {
+html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-b="${callout.id}"] {
     background-color: ${callout.bg.light} !important;
     box-shadow: 0 0 0 2px ${callout.box.light} inset;
 }
 
-html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-b~=${callout.id}] {
+html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-b="${callout.id}"] {
     background-color: ${callout.bg.dark} !important;
     box-shadow: 0 0 0 2px ${callout.box.dark} inset;
 }
 `;
 }
 const customCallout = (callout: ICallout) => {
+    const hightlight = `
+    html[data-theme-mode="light"] .bq[custom-callout="${callout.id}"]>[data-node-id]:first-child {
+        background-color: ${callout.box.light};
+    }
+    
+    html[data-theme-mode="dark"] .bq[custom-callout="${callout.id}"]>[data-node-id]:first-child {
+        background-color: ${callout.box.dark};
+    }`;
     return `
 .protyle-wysiwyg div[data-node-id].bq[custom-callout="${callout.id}"]::after {
     content: "${callout.icon}";

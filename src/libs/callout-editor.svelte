@@ -3,12 +3,12 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-02 13:31:01
+ LastEditTime : 2024-06-02 13:43:33
  Description  : 
 -->
 <script lang="ts">
     import { createEventDispatcher, getContext } from "svelte";
-    import { Dialog, showMessage } from "siyuan";
+    import { Dialog, showMessage, confirm } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
     import "vanilla-colorful/rgba-string-color-picker.js";
@@ -102,7 +102,15 @@
             showMessage("Callout ID 不能为空", 4000, "error");
             return;
         }
-        dispatch("save", callout);
+        if (callout.id !== DefaulCallout.id) {
+            confirm("Callout ID 发生变更",
+            `⚠️ Callout ID 从${DefaulCallout.id}变更为${callout.id}，这可能导致之前的callout失效。<br/>❓ 确认要修改吗？`,
+            () => {
+                dispatch("save", callout);
+            });
+        } else {
+            dispatch("save", callout);
+        }
     };
 </script>
 
@@ -172,29 +180,43 @@
     </div>
     <div class="fn__flex-1" />
     <div class="action-btns fn__flex" style="gap: 10px;">
-        <button class="b3-button b3-button--text" on:click={() => {
-            navigator.clipboard.writeText(JSON.stringify(callout)).then(() => {
-                showMessage("样式已复制到剪贴板", 4000);
-            });
-        }}>
+        <button
+            class="b3-button b3-button--text"
+            on:click={() => {
+                navigator.clipboard
+                    .writeText(JSON.stringify(callout))
+                    .then(() => {
+                        showMessage("样式已复制到剪贴板", 3000);
+                    });
+            }}
+        >
             复制样式
         </button>
-        <button class="b3-button b3-button--text" on:click={() => {
-            navigator.clipboard.readText().then((text) => {
-                let data = JSON.parse(text);
-                if (!data || !data.id || !data.icon || !data.bg || !data.box) {
-                    showMessage("剪贴板中没有样式数据", 4000, "error");
-                    return;
-                }
-                let { icon, bg, box } = data;
-                if (icon) callout.icon = icon;
-                if (bg.light && bg.dark && box.light && box.dark) {
-                    callout.bg = bg;
-                    callout.box = box;
-                }
-
-            });
-        }}>
+        <button
+            class="b3-button b3-button--text"
+            on:click={() => {
+                navigator.clipboard.readText().then((text) => {
+                    let data = JSON.parse(text);
+                    if (
+                        !data ||
+                        !data.id ||
+                        !data.icon ||
+                        !data.bg ||
+                        !data.box
+                    ) {
+                        showMessage("剪贴板中没有样式数据", 3000, "error");
+                        return;
+                    }
+                    let { icon, bg, box } = data;
+                    if (icon) callout.icon = icon;
+                    if (bg.light && bg.dark && box.light && box.dark) {
+                        callout.bg = bg;
+                        callout.box = box;
+                    }
+                    showMessage("样式已粘贴", 3000);
+                });
+            }}
+        >
             粘贴样式
         </button>
         <div class="fn__flex-1" />
