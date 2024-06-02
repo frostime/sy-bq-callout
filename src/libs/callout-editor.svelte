@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-02 15:38:02
+ LastEditTime : 2024-06-02 15:49:52
  Description  : 
 -->
 <script lang="ts">
@@ -246,7 +246,7 @@
         style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;"
     >
     </rgba-string-color-picker> -->
-    <div  class="fn__flex" style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;">
+    <div class="fn__flex color-picker" style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;">
         <ColorPicker
             textInputModes={["rgb"]}
             isAlpha={true}
@@ -258,6 +258,14 @@
 {/if}
 
 <style lang="scss">
+    .color-picker {
+        --cp-bg-color: var(--b3-theme-surface);
+        --cp-border-color: var(--b3-theme-primary-light);
+        --cp-text-color: var(--b3-theme-on-surface);
+        --cp-input-color: var(--b3-theme-background);
+        --cp-button-hover-color: var(--b3-theme-primary-light);
+    }
+
     .callout-editor {
         padding: 15px;
         display: flex;
