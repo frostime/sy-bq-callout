@@ -26,7 +26,13 @@
                 callout: callout,
             },
         });
-        pannel.$on("cancel", () => dialog.destroy());
+        pannel.$on("cancel", (e: CustomEvent<ICallout>) => {
+            let index = callouts.findIndex(
+                (item) => item.id === e.detail.id,
+            );
+            callouts[index] = e.detail;
+            dialog.destroy();
+        });
         pannel.$on("save", (e: CustomEvent<ICallout>) => {
             let index = callouts.findIndex(
                 (item) => item.id === e.detail.id,

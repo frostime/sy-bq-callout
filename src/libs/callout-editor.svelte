@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-02 13:11:37
+ LastEditTime : 2024-06-02 13:31:01
  Description  : 
 -->
 <script lang="ts">
@@ -31,7 +31,9 @@
         custom: true,
     };
 
-    let emojiFont = getContext('EmojiFont');
+    const DefaulCallout = JSON.parse(JSON.stringify(callout));
+
+    let emojiFont = getContext("EmojiFont");
 
     const chooseIcon = () => {
         let dialog = new Dialog({
@@ -88,7 +90,7 @@
 
     const dispatch = createEventDispatcher();
     const onCancel = () => {
-        dispatch("cancel");
+        dispatch("cancel", DefaulCallout);
     };
 
     const onSave = () => {
@@ -102,22 +104,25 @@
         }
         dispatch("save", callout);
     };
-
 </script>
 
 <sectioin class="callout-editor">
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="fn__flex bordered" style="font-size: 1.2rem;">
+    <div class="fn__flex" style="font-size: 1.2rem;">
         <div>ID:</div>
         <div class="fn__space" />
         {#if callout.custom}
             <input
-                class="b3-text-field fn__flex-center"
-                style="width: 100px; flex: shrink;"
+                class="b3-text-field fn__flex-center fn__size200"
                 bind:value={callout.id}
             />
         {:else}
-            <div class="callout-id" style="font-family: ${emojiFont} !important;">{callout.id}</div>
+            <div
+                class="callout-id"
+                style="font-family: ${emojiFont} !important;"
+            >
+                {callout.id}
+            </div>
         {/if}
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
@@ -167,9 +172,38 @@
     </div>
     <div class="fn__flex-1" />
     <div class="action-btns fn__flex" style="gap: 10px;">
+        <button class="b3-button b3-button--text" on:click={() => {
+            navigator.clipboard.writeText(JSON.stringify(callout)).then(() => {
+                showMessage("样式已复制到剪贴板", 4000);
+            });
+        }}>
+            复制样式
+        </button>
+        <button class="b3-button b3-button--text" on:click={() => {
+            navigator.clipboard.readText().then((text) => {
+                let data = JSON.parse(text);
+                if (!data || !data.id || !data.icon || !data.bg || !data.box) {
+                    showMessage("剪贴板中没有样式数据", 4000, "error");
+                    return;
+                }
+                let { icon, bg, box } = data;
+                if (icon) callout.icon = icon;
+                if (bg.light && bg.dark && box.light && box.dark) {
+                    callout.bg = bg;
+                    callout.box = box;
+                }
+
+            });
+        }}>
+            粘贴样式
+        </button>
         <div class="fn__flex-1" />
-        <button class="b3-button b3-button--text" on:click={onCancel}> 取消 </button>
-        <button class="b3-button b3-button--text" on:click={onSave}> 保存 </button>
+        <button class="b3-button b3-button--text" on:click={onCancel}>
+            取消
+        </button>
+        <button class="b3-button b3-button--text" on:click={onSave}>
+            保存
+        </button>
     </div>
 </sectioin>
 
