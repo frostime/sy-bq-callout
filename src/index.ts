@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-02 13:03:19
+ * @LastEditTime : 2024-06-02 15:13:00
  * @Description  : 
  */
 import {
@@ -14,7 +14,7 @@ import {
 } from "siyuan";
 import "@/index.scss";
 
-// import { changelog } from "sy-plugin-changelog";
+import { changelog } from "sy-plugin-changelog";
 
 import { setBlockAttrs } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
@@ -65,11 +65,11 @@ export default class BqCalloutPlugin extends Plugin {
         this.dynamicStyle.update();
         this.resetSlash();
 
-        // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
-        //     if (ans.Dialog) {
-        //         ans.Dialog.setFont('20px');
-        //     }
-        // })
+        changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+            if (ans.Dialog) {
+                ans.Dialog.setFont('20px');
+            }
+        })
     }
 
     async onunload() {

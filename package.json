@@ -30,6 +30,7 @@
     "vite-plugin-zip-pack": "^1.2.2"
   },
   "dependencies": {
+    "sy-plugin-changelog": "^0.0.7",
     "vanilla-colorful": "^0.7.2"
   }
 }
