@@ -3,12 +3,11 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-01 22:05:21
+ LastEditTime : 2024-06-02 11:14:21
  Description  : 
 -->
 <script lang="ts">
-    // import SettingItem from "./setting-item.svelte";
-    // import * as callout from "@/callout";
+    // import { getContext } from "svelte";
     import SettingItemWrap from "./setting-item-wrap.svelte";
     import CalloutList from "./callout-list.svelte";
 
@@ -17,6 +16,7 @@
     export let plugin: BqCalloutPlugin;
 
     let i18n = plugin.i18n;
+    // let DefaultCallouts: ICallout[] = getContext("DefaultCallouts");
 
     // const dispatch = createEventDispatcher();
 
@@ -31,11 +31,6 @@
             description: i18n.setting.CustomCSS.description,
             value: plugin.configs.CustomCSS,
         },
-        // CalloutOrder: {
-        //     title: i18n.setting.CalloutOrder.title,
-        //     description: i18n.setting.CalloutOrder.description,
-        //     value: plugin.configs.CalloutOrder,
-        // },
         CustomCallout: {
             title: "Custom Callout",
             description: "Custom Callout Description",
@@ -44,7 +39,6 @@
     };
 
     $: plugin.configs.CustomCSS = configs.CustomCSS.value;
-    // $: plugin.configs.CalloutOrder = configs.CalloutOrder.value;
     $: plugin.configs.EmojiFont = configs.EmojiFont.value;
     $: plugin.configs.CustomCallout = configs.CustomCallout.value;
 
@@ -84,11 +78,35 @@
     </SettingItemWrap>
 
     <SettingItemWrap
+        title="默认 Callout"
+        description="默认 Callout 描述"
+        direction="row"
+    >
+        <CalloutList callouts={plugin.DefaultCallouts} allowAdd={false}>
+            <div
+                class="toolbar__item ariaLabel"
+                aria-label="重置"
+                on:click={(e) => {
+                    console.debug(e);
+                    // let ele = e.target; //HTMLElement
+                    // //@ts-ignore
+                    // let div = ele.closet('.callout-list-item');
+                    // let cid = div.dataset.cid;
+                    // let calloutIdx = plugin.DefaultCallouts.findIndex((item) => item.id === cid);
+                    // plugin.DefaultCallouts[calloutIdx] = DefaultCallouts.find((item) => item.id === cid);
+                }}
+            >
+                <svg><use xlink:href="#iconUndo"></use></svg>
+            </div>
+        </CalloutList>
+    </SettingItemWrap>
+
+    <SettingItemWrap
         title={configs.CustomCallout.title}
         description={configs.CustomCallout.title}
         direction="row"
     >
-        <CalloutList bind:CalloutList={configs.CustomCallout.value}/>
+        <CalloutList bind:callouts={configs.CustomCallout.value} allowAdd={true}/>
     </SettingItemWrap>
 </div>
 

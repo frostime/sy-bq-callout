@@ -3,7 +3,8 @@
     import CalloutItem from "./callout-item.svelte";
     import CalloutEditor from "./callout-editor.svelte";
 
-    export let CalloutList: ICallout[];
+    export let callouts: ICallout[];
+    export let allowAdd: boolean = true;
 
     const editCallout = (callout: ICallout) => {
         if (!callout) return;
@@ -19,7 +20,7 @@
         let pannel = new CalloutEditor({
             target: dialog.element.querySelector("#CalloutEditor"),
             props: {
-                CreatedCallouts: CalloutList.map(
+                CreatedCallouts: callouts.map(
                     (callout) => callout.id,
                 ).filter((id) => id !== callout.id),
                 callout: callout,
@@ -27,10 +28,10 @@
         });
         pannel.$on("cancel", () => dialog.destroy());
         pannel.$on("save", (e: CustomEvent<ICallout>) => {
-            let index = CalloutList.findIndex(
+            let index = callouts.findIndex(
                 (item) => item.id === e.detail.id,
             );
-            CalloutList[index] = e.detail;
+            callouts[index] = e.detail;
             dialog.destroy();
         });
     };
@@ -48,12 +49,12 @@
         let pannel = new CalloutEditor({
             target: dialog.element.querySelector("#CalloutEditor"),
             props: {
-                CreatedCallouts: CalloutList.map((callout) => callout.id),
+                CreatedCallouts: callouts.map((callout) => callout.id),
             },
         });
         pannel.$on("cancel", () => dialog.destroy());
         pannel.$on("save", (e: CustomEvent<ICallout>) => {
-            CalloutList = [...CalloutList, e.detail];
+            callouts = [...callouts, e.detail];
             dialog.destroy();
         });
     };
@@ -69,6 +70,8 @@
         e.preventDefault();
         e.stopPropagation();
         let jsonstr = e.dataTransfer.getData("json/callout");
+        e.dataTransfer.clearData();
+
         let src: ICallout = JSON.parse(jsonstr);
         let target = e.target as HTMLElement;
         let ele = target.closest('.callout-list-item') as HTMLElement;
@@ -76,18 +79,18 @@
         let cid = ele.dataset.cid;
         if (src.id === cid) return;
         console.log('Move');
-        let srcIndex = CalloutList.findIndex((item) => item.id === src.id);
-        let targetIndex = CalloutList.findIndex((item) => item.id === cid);
-        let newCallout = CalloutList;
+        let srcIndex = callouts.findIndex((item) => item.id === src.id);
+        let targetIndex = callouts.findIndex((item) => item.id === cid);
+        let newCallout = callouts;
         newCallout.splice(srcIndex, 1);
         newCallout.splice(targetIndex, 0, src);
-        CalloutList = newCallout;
+        callouts = newCallout;
     };
 
 </script>
 
 <section class="fn__flex fn__flex-column callouts-list">
-    {#each CalloutList as callout, i (callout.id)}
+    {#each callouts as callout, i (callout.id)}
         <div
             class="callout-list-item"
             data-index={i}
@@ -106,7 +109,7 @@
                     on:change={(e) => {
                         let target = e.target; //HTMLInputElement
                         //@ts-ignore
-                        CalloutList[i].hide = !target.checked;
+                        callouts[i].hide = !target.checked;
                     }}
                 />
                 <span class="fn__space" />
@@ -121,8 +124,10 @@
                 </div>
             </div>
             <span class="fn__space" />
+            <slot />
         </div>
     {/each}
+    {#if allowAdd}
     <section class="action-add fn__flex-center">
         <button
             class="b3-button b3-button--outline fn__flex-center fn__size200"
@@ -132,6 +137,7 @@
             添加 Callout
         </button>
     </section>
+    {/if}
 </section>
 
 <style lang="scss">

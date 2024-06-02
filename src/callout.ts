@@ -3,10 +3,9 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-06-02 00:03:32
+ * @LastEditTime : 2024-06-02 11:15:12
  * @Description  : 
  */
-import { setContext } from "svelte";
 import * as I18n from "./i18n/zh_CN.json";
 let i18n: typeof I18n;
 
@@ -165,7 +164,6 @@ export function initDefault(i18nObj: typeof I18n) {
             callout.title = i18n.button[callout.id] || callout.id;
         }
     }
-    setContext("DefaultCallouts", DefaultCallouts);
     return DefaultCallouts;
 }
 
