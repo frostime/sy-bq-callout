@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-02 11:51:19
+ * @LastEditTime : 2024-06-02 12:10:52
  * @Description  : 
  */
 import {
@@ -37,7 +37,6 @@ const capitalize = (word: string) => {
 
 
 const SettingName = 'setting.json';
-const IconStyle = ``;
 
 export default class BqCalloutPlugin extends Plugin {
 
@@ -48,7 +47,7 @@ export default class BqCalloutPlugin extends Plugin {
 
     configs: IConfigs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
-        CustomCSS: IconStyle,
+        CustomCSS: '',
         CalloutOrder: '',
         DefaultCallout: [],
         CustomCallout: []

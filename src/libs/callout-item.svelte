@@ -3,12 +3,15 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:16
  FilePath     : /src/libs/callout-item.svelte
- LastEditTime : 2024-06-01 22:24:18
+ LastEditTime : 2024-06-02 12:16:07
  Description  : 
 -->
 <script lang="ts">
+    import { getContext } from "svelte";
     export let callout: ICallout;
     export let mode: 'auto' | 'light' | 'dark' = 'auto';
+
+    let emojiFont = getContext('EmojiFont');
 
     const onDragStart = (e: DragEvent) => {
         e.dataTransfer.setData('json/callout', JSON.stringify(callout));
@@ -21,7 +24,7 @@
     draggable="true"
     on:dragstart={onDragStart}
     style="--bg-light: {callout.bg.light}; --bg-dark: {callout.bg.dark}; --box-light: {callout.box.light}; --box-dark: {callout.box
-        .dark};"
+        .dark}; --emoji-font: {emojiFont};"
 >
     <div class="icon">{callout.icon}</div>
     <span class="fn__space"/>
@@ -74,7 +77,7 @@
     }
 
     .callout-item > .icon {
-        font-family: "Twitter Emoji", "Noto Color Emoji", sans-serif !important;
+        font-family: var(--emoji-font) !important;
         margin-left: 10px;
         font-size: 1.4em;
         border: none;

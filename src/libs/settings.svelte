@@ -3,10 +3,11 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-02 12:03:25
+ LastEditTime : 2024-06-02 12:15:14
  Description  : 
 -->
 <script lang="ts">
+    import { setContext } from "svelte";
     import { confirm } from "siyuan";
     import SettingItemWrap from "./setting-item-wrap.svelte";
     import CalloutList from "./callout-list.svelte";
@@ -17,6 +18,8 @@
     export let plugin: BqCalloutPlugin;
 
     let i18n = plugin.i18n;
+
+    setContext('EmojiFont', plugin.configs.EmojiFont);
 
     let configs = {
         EmojiFont: {
