@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-02 14:35:24
+ LastEditTime : 2024-06-02 15:38:02
  Description  : 
 -->
 <script lang="ts">
@@ -11,7 +11,7 @@
     import { Dialog, showMessage, confirm } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
-    import "vanilla-colorful/rgba-string-color-picker.js";
+    import ColorPicker from 'svelte-awesome-color-picker';
     import { i18n } from "@/callout";
 
     export let CreatedCallouts: string[];
@@ -61,7 +61,12 @@
     let picker = {
         type: "",
         mode: "",
-        color: "",
+        color: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 1,
+        },
         x: "",
         y: "",
     };
@@ -79,15 +84,18 @@
         let rect = ele.getBoundingClientRect();
         picker.x = rect.right + 5 + "px";
         picker.y = rect.top + "px";
-        picker.color = callout[type][mode];
+        let colorStr = callout[type][mode].replace('rgba(', '').replace(')', '');
+        let [r, g, b, a] = colorStr.split(',').map(Number);
+        picker.color = { r, g, b, a };
         picker.type = type;
         picker.mode = mode;
         PickColor = true;
     };
 
-    const handleColorChange = (e: CustomEvent) => {
-        picker.color = e.detail.value;
-        callout[picker.type][picker.mode] = picker.color;
+    const handleColorChange = () => {
+        // picker.color = e.detail.value;
+        let rgba = `rgba(${picker.color.r}, ${picker.color.g}, ${picker.color.b}, ${picker.color.a})`;
+        callout[picker.type][picker.mode] = rgba;
     };
 
     const dispatch = createEventDispatcher();
@@ -232,12 +240,21 @@
 </sectioin>
 
 {#if PickColor}
-    <rgba-string-color-picker
+    <!-- <rgba-string-color-picker
         color={picker.color}
         on:color-changed={handleColorChange}
         style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;"
     >
-    </rgba-string-color-picker>
+    </rgba-string-color-picker> -->
+    <div  class="fn__flex" style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;">
+        <ColorPicker
+            textInputModes={["rgb"]}
+            isAlpha={true}
+            isDialog={false}
+            bind:rgb={picker.color}
+            on:input={handleColorChange}
+        />
+    </div>
 {/if}
 
 <style lang="scss">
