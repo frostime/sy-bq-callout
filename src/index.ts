@@ -3,23 +3,24 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-02 15:13:00
+ * @LastEditTime : 2024-06-04 15:00:28
  * @Description  : 
  */
 import {
     Plugin,
     Menu,
     Protyle,
+    showMessage,
     Dialog
 } from "siyuan";
 import "@/index.scss";
 
 // import { changelog } from "sy-plugin-changelog";
 
-import { setBlockAttrs } from "./api"
+import { setBlockAttrs, getFile } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
 import * as callout from "./callout";
-import { DynamicStyle } from "./style";
+import { DynamicStyle, StyleDOMId } from "./style";
 
 import Settings from './libs/settings.svelte';
 
@@ -29,6 +30,31 @@ const capitalize = (word: string) => {
 
 
 const SettingName = 'setting.json';
+
+async function exportStyle() {
+    let indexCss: string = await getFile(`/data/plugins/sy-bq-callout/index.css`);
+    if (!indexCss) {
+        indexCss = "";
+        showMessage('index.css not found', 4000, 'error');
+    }
+    const startMark = `/* Callout Style Start */`;
+    const endMark = `/* Callout Style End */`;
+    //获取 start 和 end 之间的内容
+    const start = indexCss.indexOf(startMark);
+    const end = indexCss.indexOf(endMark);
+    indexCss = indexCss.substring(start + startMark.length, end).trim();
+
+    let styleDom = document.getElementById(StyleDOMId);
+    const styles = indexCss + '\n\n' + (styleDom ? styleDom.innerHTML : '');
+    //download
+    const blob = new Blob([styles], { type: 'text/css' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'callout-style.css';
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
 export default class BqCalloutPlugin extends Plugin {
 
@@ -48,6 +74,9 @@ export default class BqCalloutPlugin extends Plugin {
     async onload() {
         callout.setI18n(this.i18n);
         this.dynamicStyle = new DynamicStyle(this);
+        if (process.env.DEV_MODE === 'true') {
+            globalThis.exportStyle = exportStyle;
+        }
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 

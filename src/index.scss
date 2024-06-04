@@ -4,9 +4,10 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-06-02 11:24:54
+ * @LastEditTime : 2024-06-04 14:58:49
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
+/* Callout Style Start */
 
 /*列表里代码块对齐*/
 /*引述callout第一行样式, 用作 Callout 的标题 */
@@ -71,3 +72,6 @@
     border: none;
     transform: none;
 }
+
+
+/* Callout Style End */

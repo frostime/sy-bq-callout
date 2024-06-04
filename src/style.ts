@@ -8,7 +8,7 @@
  */
 import type BqCalloutPlugin from ".";
 
-const StyleDOMId = 'snippetCSS-BqCallout';
+export const StyleDOMId = 'snippetCSS-BqCallout';
 const TemplateEmojiFont = `.protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-callout]::after {
   font-family: {{var}} !important; 
