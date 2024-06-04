@@ -3,17 +3,28 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-06-02 12:56:28
+ * @LastEditTime : 2024-06-04 17:02:02
  * @Description  : 
  */
 import { sql } from "./api";
 import * as I18n from "./i18n/zh_CN.json";
-export let i18n: typeof I18n;
+import  type BqCalloutPlugin from "./index";
 
-export const setI18n = (i18n_: typeof I18n) => {
-    i18n = i18n_;
+export let i18n: typeof I18n;
+export let plugin: BqCalloutPlugin;
+
+export const setUp = (plugin_: BqCalloutPlugin) => {
+    i18n = plugin_.i18n;
+    plugin = plugin_;
 }
 
+export const calloutName = (callout: ICallout) => {
+    let name = callout.id;
+    if (callout.custom !== true && i18n.button?.[callout.id]) {
+        name = i18n.button[callout.id];
+    }
+    return capitalize(name);
+}
 
 export const queryCalloutBlock = async (callout: ICallout): Promise<Block[]> => {
     let name = callout.custom ? 'custom-callout' : 'custom-b';
@@ -189,7 +200,7 @@ export function createCalloutButton(selectid: BlockId, callout: ICallout): HTMLB
     let name = callout.custom ? 'callout' : 'b';
     button.setAttribute("custom-attr-name", name)
     button.setAttribute("custom-attr-value", callout.id);
-    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${capitalize(callout.id)}</span>`
+    button.innerHTML = `<span class="b3-menu__label">${callout.icon}${calloutName(callout)}</span>`
     return button
 }
 

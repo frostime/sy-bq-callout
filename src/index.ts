@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-04 15:00:28
+ * @LastEditTime : 2024-06-04 17:05:28
  * @Description  : 
  */
 import {
@@ -23,10 +23,6 @@ import * as callout from "./callout";
 import { DynamicStyle, StyleDOMId } from "./style";
 
 import Settings from './libs/settings.svelte';
-
-const capitalize = (word: string) => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-}
 
 
 const SettingName = 'setting.json';
@@ -72,7 +68,7 @@ export default class BqCalloutPlugin extends Plugin {
     };
 
     async onload() {
-        callout.setI18n(this.i18n);
+        callout.setUp(this);
         this.dynamicStyle = new DynamicStyle(this);
         if (process.env.DEV_MODE === 'true') {
             globalThis.exportStyle = exportStyle;
@@ -138,8 +134,8 @@ export default class BqCalloutPlugin extends Plugin {
         for (let ct of this.configs.DefaultCallout) {
             if (ct?.hide) continue;
             this.protyleSlash.push({
-                filter: [`callout-${ct.id}`, `bq-${ct.id}`],
-                html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
+                filter: [`callout-${ct.id}`, `bq-${ct.id}`, callout.calloutName(ct)],
+                html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}</span>`,
                 id: ct.id,
                 callback: (protyle: Protyle) => {
                     protyle.insert(`>\n{: custom-b="${ct.id}"}`);
@@ -149,8 +145,8 @@ export default class BqCalloutPlugin extends Plugin {
         for (let ct of this.configs.CustomCallout) {
             if (ct?.hide) continue;
             this.protyleSlash.push({
-                filter: [`callout-${ct.id}`, `bq-${ct.id}`],
-                html: `<span class="b3-menu__label">${ct.icon}${capitalize(ct.id)}</span>`,
+                filter: [`callout-${ct.id}`, `bq-${ct.id}`, callout.calloutName(ct)],
+                html: `<span class="b3-menu__label">${ct.icon}${ct.id}</span>`,
                 id: ct.id,
                 callback: (protyle: Protyle) => {
                     protyle.insert(`>\n{: custom-callout="${ct.id}"}`);
