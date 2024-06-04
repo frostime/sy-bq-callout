@@ -56,5 +56,13 @@
     },
     "CalloutList": {
         "Add": "添加 Callout"
-    }
+    },
+    "reset": "重置",
+    "edit": "编辑",
+    "delete": "删除",
+    "cancel": "取消",
+    "save": "保存",
+    "idchanged": "Callout ID 发生了更改",
+    "editcallout": "编辑 Callout",
+    "newcallout": "新建 Callout"
 }

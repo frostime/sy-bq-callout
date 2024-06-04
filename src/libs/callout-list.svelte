@@ -13,7 +13,7 @@
     const editCallout = (callout: ICallout) => {
         if (!callout) return;
         let dialog = new Dialog({
-            title: "Edit Callout",
+            title: i18n.editcallout,
             content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
             width: "30rem",
             height: "32rem",
@@ -48,7 +48,7 @@
 
     const newCallout = () => {
         let dialog = new Dialog({
-            title: "New Callout",
+            title: i18n.newcallout,
             content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
             width: "30rem",
             height: "32rem",
@@ -131,7 +131,7 @@
                 <span class="fn__space" />
                 <div
                     class="toolbar__item ariaLabel"
-                    aria-label="Edit"
+                    aria-label={i18n.edit}
                     on:click={() => {
                         editCallout(callout);
                     }}

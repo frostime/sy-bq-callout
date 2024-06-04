@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-02 14:42:20
+ LastEditTime : 2024-06-04 14:33:53
  Description  : 
 -->
 <script lang="ts">
@@ -99,7 +99,7 @@
                 class="b3-button b3-button--text"
                 on:click={() => {
                     configs.EmojiFont.value = `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`;
-                }}>Reset</button
+                }}>{i18n.reset}</button
             >
         </div>
     </SettingItemWrap>
@@ -112,7 +112,7 @@
         <CalloutList callouts={plugin.configs.DefaultCallout} type="Default">
             <div
                 class="toolbar__item ariaLabel"
-                aria-label="Reset"
+                aria-label={i18n.reset}
                 on:click={onClickResetDefaultCallout}
             >
                 <svg><use xlink:href="#iconUndo"></use></svg>
@@ -131,7 +131,7 @@
         >
             <div
                 class="toolbar__item ariaLabel"
-                aria-label="Delete"
+                aria-label={i18n.delete}
                 on:click={onClickDeleteCallout}
             >
                 <svg><use xlink:href="#iconClose"></use></svg>

@@ -14,7 +14,7 @@ import {
 } from "siyuan";
 import "@/index.scss";
 
-import { changelog } from "sy-plugin-changelog";
+// import { changelog } from "sy-plugin-changelog";
 
 import { setBlockAttrs } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
@@ -65,11 +65,11 @@ export default class BqCalloutPlugin extends Plugin {
         this.dynamicStyle.update();
         this.resetSlash();
 
-        changelog(this, 'i18n/CHANGELOG.md').then(ans => {
-            if (ans.Dialog) {
-                ans.Dialog.setFont('20px');
-            }
-        })
+        // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+        //     if (ans.Dialog) {
+        //         ans.Dialog.setFont('20px');
+        //     }
+        // });
     }
 
     async onunload() {
@@ -100,8 +100,8 @@ export default class BqCalloutPlugin extends Plugin {
         this.dynamicStyle.update();
         this.resetSlash();
         this.saveData(SettingName, this.configs);
-        console.log('Setting Updated');
-        console.log(this.configs);
+        console.debug('Setting Updated');
+        console.debug(this.configs);
     }
 
     private resetSlash() {

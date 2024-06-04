@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-02 15:49:52
+ LastEditTime : 2024-06-04 14:30:29
  Description  : 
 -->
 <script lang="ts">
@@ -232,10 +232,10 @@
         </button>
         <div class="fn__flex-1" />
         <button class="b3-button b3-button--text" on:click={onCancel}>
-            Cancel
+            {i18n.cancel}
         </button>
         <button class="b3-button b3-button--text" on:click={onSave}>
-            Save
+            {i18n.save}
         </button>
     </div>
 </sectioin>

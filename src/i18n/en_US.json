@@ -56,5 +56,13 @@
     },
     "CalloutList": {
         "Add": "Add Callout"
-    }
+    },
+    "reset": "Reset",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "idchanged": "Callout ID been changed",
+    "editcallout": "Edit Callout",
+    "newcallout": "New Callout"
 }
