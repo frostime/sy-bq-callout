@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-06-29 19:18:31
+ * @LastEditTime : 2024-06-29 19:30:02
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
@@ -13,21 +13,21 @@
     --callout-default-icon-left: 0.1em;
     --callout-default-icon-font-size: 1.4em;
     --callout-default-fc-font-size: 1.3em;
-    --callout-default-fc-padding: 0em 0em 0em 1.7em;
+    --callout-default-fc-padding: 1.7em;
     --callout-default-fc-font-weight: 700;
 
     --callout-big-icon-top: 0.35em;
     --callout-big-icon-left: 0.1em;
     --callout-big-icon-font-size: 1.4em;
     --callout-big-fc-font-size: 1.3em;
-    --callout-big-fc-padding: 0em 0em 0em 1.7em;
+    --callout-big-fc-padding: 1.7em;
     --callout-big-fc-font-weight: 700;
 
     --callout-small-icon-top: 0.45em;
     --callout-small-icon-left: 0.1em;
     --callout-small-icon-font-size: 1em;
     --callout-small-fc-font-size: 1em;
-    --callout-small-fc-padding: 0em 0em 0em 2.2em;
+    --callout-small-fc-padding: 2.2em;
     --callout-small-fc-font-weight: inherit;
 }
 
@@ -40,7 +40,7 @@
     >[data-type="NodeHeading"]:first-child {
         font-weight: var(--callout-default-fc-font-weight);
         font-size: var(--callout-default-fc-font-size) !important;
-        padding: var(--callout-default-fc-padding) !important;
+        padding: 0 0 0 var(--callout-default-fc-padding) !important;
     }
 }
 
@@ -51,7 +51,7 @@
     >[data-type="NodeHeading"]:first-child {
         font-weight: var(--callout-big-fc-font-weight);
         font-size: var(--callout-big-fc-font-size) !important;
-        padding: var(--callout-big-fc-padding) !important;
+        padding: 0 0 0 var(--callout-big-fc-padding) !important;
     }
 }
 
@@ -62,7 +62,7 @@
     >[data-type="NodeHeading"]:first-child {
         font-weight: var(--callout-small-fc-font-weight);
         font-size: var(--callout-small-fc-font-size) !important;
-        padding: var(--callout-small-fc-padding) !important;
+        padding: 0 0 0 var(--callout-small-fc-padding) !important;
     }
 }
 
