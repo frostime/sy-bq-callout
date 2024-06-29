@@ -51,8 +51,8 @@
         }
     },
     "mode": {
-        "big": "[大] 标题模式",
-        "small": "[小] 段落模式"
+        "big": "标题模式",
+        "small": "段落模式"
     },
     "CalloutEditor": {
         "exists": "Callout ID 已存在，请重新更改 ID",

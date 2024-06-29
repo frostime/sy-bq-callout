@@ -51,8 +51,8 @@
         }
     },
     "mode": {
-        "big": "[B] Title mode",
-        "small": "[S] Paragraph mode"
+        "big": "Title mode",
+        "small": "Paragraph mode"
     },
     "CalloutEditor": {
         "exists": "Callout ID already exists. Please change the ID",

@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-29 20:20:32
+ * @LastEditTime : 2024-06-29 20:44:52
  * @Description  : 
  */
 import {
@@ -191,6 +191,23 @@ export default class BqCalloutPlugin extends Plugin {
         }
         submenus.push({
             type: 'separator'
+        });
+
+        submenus.push({
+            element: callout.createCalloutButton("", {id: this.i18n.mode.big, icon: '🇧'}),
+            click: () => {
+                setBlockAttrs(ele.getAttribute("data-node-id"), {
+                    'custom-callout-mode': 'big',
+                });
+            }
+        });
+        submenus.push({
+            element: callout.createCalloutButton("", {id: this.i18n.mode.small, icon: '🇸'}),
+            click: () => {
+                setBlockAttrs(ele.getAttribute("data-node-id"), {
+                    'custom-callout-mode': 'small',
+                });
+            }
         });
 
         let btn = callout.createRestoreButton(ele.getAttribute("data-node-id"));
