@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-29 19:32:12
+ * @LastEditTime : 2024-06-29 20:07:59
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -178,6 +178,10 @@ export class DynamicStyle {
 
         //设置全局 callout 模式
         this.css += toggleVarsByMode(this.plugin.configs.DefaultMode);
+
+        //设置动态 css 变量
+        document.documentElement.style.setProperty('--callout-big-icon-top', this.configs.VarIconTop.Big);
+        document.documentElement.style.setProperty('--callout-small-icon-top', this.configs.VarIconTop.Small);
     }
 
 }

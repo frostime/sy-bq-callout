@@ -42,6 +42,12 @@
         "Delete": {
             "title": "🗑️ 确认删除 Callout?",
             "description": "Callout <b>[{0} {1}]</b> 有<b>{2}个</b>引用!<br/>删除后无法恢复，请谨慎操作"
+        },
+        "IconTop": {
+            "title": "⬆️ Callout 图标垂直偏移量",
+            "description": "如果你觉得 Callout 图标和文字没有对齐，可以更改以下变量（数值越大越靠下）",
+            "big": "标题模式",
+            "small": "段落模式"
         }
     },
     "mode": {

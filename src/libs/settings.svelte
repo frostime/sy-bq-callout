@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-29 19:40:30
+ LastEditTime : 2024-06-29 20:11:26
  Description  : 
 -->
 <script lang="ts">
@@ -152,6 +152,23 @@
                 <svg><use xlink:href="#iconClose"></use></svg>
             </div>
         </CalloutList>
+    </SettingItemWrap>
+
+    <SettingItemWrap
+        title={i18n.setting.IconTop.title}
+        description={i18n.setting.IconTop.description}
+        direction="column"
+    >
+        <div class="fn__flex fn__flex-column" style="gap: 2px;">
+            <div class="fn__flex fn__flex-1" style="gap: 2px; align-items: center;">
+                <span>{i18n.setting.IconTop.big}</span>
+                <input class="b3-text-field" bind:value={plugin.configs.VarIconTop.Big}/>
+            </div>
+            <div class="fn__flex  fn__flex-1" style="gap: 2px; align-items: center;">
+                <span>{i18n.setting.IconTop.small}</span>
+                <input class="b3-text-field" bind:value={plugin.configs.VarIconTop.Small}/>
+            </div>
+        </div>
     </SettingItemWrap>
 
     <SettingItemWrap

@@ -42,6 +42,12 @@
         "Delete": {
             "title": "🗑️ Confirm Delete Callout?",
             "description": "Callout <b>[{0} {1}]</b> has <b>{2} references</b>!<br/>Deletion is irreversible, please proceed with caution"
+        },
+        "IconTop": {
+            "title": "⬆️ Callout Icon Vertical Offset",
+            "description": "If you find that the Callout icon and text are not aligned, you can change the following variable (Larger the value, lower the icon)",
+            "big": "Title Mode",
+            "small": "Para  Mode"
         }
     },
     "mode": {

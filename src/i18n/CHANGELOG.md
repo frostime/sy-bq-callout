@@ -1,17 +1,14 @@
-## Callout Plugin v1.0.0 - 🌟 New Features and Improvements
+## Callout Plugin v1.1.0
 
-> 💡 重大更新！
-
-- **🔄 重构设置面板**: 设置面板已经重新组织和优化，以提供更好的使用体验。
-- **🎨 自定义 Callout 配置**: 用户现在可以自定义自己的 callout 配置。
-- **🌟 增强用户交互**: 增加了多种用户友好的交互功能。
+- 🌟 **两种展示模式:** 目前可以在 Callout 中设置两种默认的展示模式：
+  - 标题模式：首行加粗大字
+  - 段落模式：首行样式和普通段落一致
+- 🌟 **设置图标偏移量:** 可以在设置中更改图标的垂直偏移量，以解决在部分主题下图标和文本不对齐的问题
 
 ---
 
-> 💡 Major Update!
-
-- **🔄 Refactored Settings Panel**: The settings panel has been restructured for better organization and usability.
-- **🎨 Custom Callout Configuration**: Users can now customize their own callout configurations.
-- **🌟 Enhanced User Interaction**: A variety of user-friendly interactive features have been added.
-
+- 🌟 **Two Display Modes:** Currently, you can set two default display modes in Callout:
+  - Title Mode: The first line is bold and large
+  - Paragraph Mode: The first line style is consistent with a regular paragraph
+- 🌟 **Set Icon Offset:** You can change the vertical offset of the icon in the settings to solve the problem of icon and text not aligning in some themes.
 
