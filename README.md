@@ -24,6 +24,30 @@ You can manually configure the "Callout Icon Font Style" field in the plugin set
 
 ![](asset/emoji-font.png)
 
+
+## 🔋 Two Modes for Callout Display
+
+The plugin supports two modes for Callout display:
+
+1. Title Mode (Big Mode)
+
+    In this mode, the first line of the Callout is displayed in bold and large text as a title.
+
+    ![](asset/big-mode.png)
+2. Paragraph Mode (Small Mode)
+
+    In this mode, the first line of the Callout is displayed as a regular paragraph.
+
+    ![](asset/small-mode.png)
+
+You can select the default display mode in the plugin settings. In the future, it may be possible to configure the default display mode for individual Callout blocks separately.
+
+You can add the following block attributes to a specific Callout block to force the corresponding Callout block to be displayed in large/small text mode.
+
+* `callout-mode="big"`: Specify display in Title Mode (Large Text)
+* `callout-mode="small"`: Paragraph Mode (Small Text)
+
+
 ## ✨ Custom Callout
 
 There are two types of callouts in this plugin:

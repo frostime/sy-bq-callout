@@ -15,6 +15,10 @@
         "default": "Restore Default Style"
     },
     "setting": {
+        "DefaultMode": {
+            "title": "🔋 Default Callout Mode",
+            "description": "The default display mode for Callout: Title mode (big text) or Paragraph mode (small text)"
+        },
         "EmojiFont": {
             "title": "🇫 Callout Icon Emoji Font Style",
             "description": "Specify the emoji font style for Callout icons (CSS field)"
@@ -39,6 +43,10 @@
             "title": "🗑️ Confirm Delete Callout?",
             "description": "Callout <b>[{0} {1}]</b> has <b>{2} references</b>!<br/>Deletion is irreversible, please proceed with caution"
         }
+    },
+    "mode": {
+        "big": "[B] Title mode",
+        "small": "[S] Paragraph mode"
     },
     "CalloutEditor": {
         "exists": "Callout ID already exists. Please change the ID",

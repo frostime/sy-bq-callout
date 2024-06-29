@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-28 22:50:49
+ LastEditTime : 2024-06-29 19:40:30
  Description  : 
 -->
 <script lang="ts">
@@ -86,8 +86,8 @@
 
 <div class="config__tab-container">
     <SettingItemWrap
-        title="Callout 模式"
-        description="Big Small 模式"
+        title={plugin.i18n.setting.DefaultMode.title}
+        description={plugin.i18n.setting.DefaultMode.description}
         direction="column"
     >
         <select
@@ -95,8 +95,8 @@
             id="iconPosition"
             bind:value={plugin.configs.DefaultMode}
         >
-            <option value="big">Big</option>
-            <option value="small">Small</option>
+            <option value="big">{plugin.i18n.mode.big}</option>
+            <option value="small">{plugin.i18n.mode.small}</option>
         </select>
     </SettingItemWrap>
 
