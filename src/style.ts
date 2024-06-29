@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-02 13:23:03
+ * @LastEditTime : 2024-06-29 20:07:59
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -64,6 +64,62 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-callout="
 `;
 }
 
+
+/**
+ * #TODO 未来加入单个设置
+ * 指定特定类别的 Callout 的模式；通过插入特定规则的 css 实现
+ * 优先级大于全局默认；但是小于设定特殊 callout-type 属性
+ * @param calloutId 
+ * @param mode 
+ * @returns 
+ */
+const specificCalloutDefaultMode = (calloutId: string, mode: 'big' | 'small') => `
+.bq[custom-b="${calloutId}"]:not([custom-callout-mode]),
+.bq[custom-callout="${calloutId}"]:not([custom-callout-mode]) {
+
+    & >.p:first-child,
+    & >[data-type="NodeHeading"]:first-child {
+        font-weight: var(--callout-${mode}-fc-font-weight);
+        font-size: var(--callout-${mode}-fc-font-size) !important;
+        padding: 0 0 0 var(--callout-${mode}-fc-padding) !important;
+    }
+}
+.protyle-wysiwyg {
+    & .bq[custom-b="${calloutId}"]:not([custom-callout-mode])::after,
+    & .bq[custom-callout="${calloutId}"]:not([custom-callout-mode])::after {
+        top: var(--callout-${mode}-icon-top);
+        left: var(--callout-${mode}-icon-left);
+        font-size: var(--callout-${mode}-icon-font-size);
+    }
+}
+`;
+
+/**
+ * 设置全局默认的 Callout 显示模式；通过更改 default css 变量来实现
+ * @param mode big 模式或者 small 模式
+ * @returns 返回 root 变量定义
+ */
+const toggleVarsByMode = (mode: 'big' | 'small') => {
+    const StyleVars = [
+        'icon-top',
+        'icon-left',
+        'icon-font-size',
+        'fc-font-size',
+        'fc-padding',
+        "fc-font-weight"
+    ];
+    let css = '';
+    for (let v of StyleVars) {
+        css += `\t--callout-default-${v}: var(--callout-${mode}-${v});\n`
+    }
+
+    return `
+    :root {
+    ${css}
+    }
+    `;
+}
+
 export class DynamicStyle {
     //css 样式内容
     private css: string;
@@ -119,6 +175,13 @@ export class DynamicStyle {
         this.plugin.configs.DefaultCallout.forEach(callout => {
             this.css += defaultDbCallout(callout);
         });
+
+        //设置全局 callout 模式
+        this.css += toggleVarsByMode(this.plugin.configs.DefaultMode);
+
+        //设置动态 css 变量
+        document.documentElement.style.setProperty('--callout-big-icon-top', this.configs.VarIconTop.Big);
+        document.documentElement.style.setProperty('--callout-small-icon-top', this.configs.VarIconTop.Small);
     }
 
 }

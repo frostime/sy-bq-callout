@@ -8,6 +8,11 @@ interface IConfigs {
     CalloutOrder: string;
     DefaultCallout: ICallout[];
     CustomCallout: ICallout[];
+    DefaultMode: 'big' | 'small';
+    VarIconTop: {
+        Big: string;
+        Small: string;
+    }
 }
 
 interface ICallout {

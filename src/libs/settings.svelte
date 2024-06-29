@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-04 14:33:53
+ LastEditTime : 2024-06-29 20:11:26
  Description  : 
 -->
 <script lang="ts">
@@ -86,6 +86,21 @@
 
 <div class="config__tab-container">
     <SettingItemWrap
+        title={plugin.i18n.setting.DefaultMode.title}
+        description={plugin.i18n.setting.DefaultMode.description}
+        direction="column"
+    >
+        <select
+            class="b3-select fn__flex-center fn__size200"
+            id="iconPosition"
+            bind:value={plugin.configs.DefaultMode}
+        >
+            <option value="big">{plugin.i18n.mode.big}</option>
+            <option value="small">{plugin.i18n.mode.small}</option>
+        </select>
+    </SettingItemWrap>
+
+    <SettingItemWrap
         title={configs.EmojiFont.title}
         description={configs.EmojiFont.description}
         direction="row"
@@ -137,6 +152,23 @@
                 <svg><use xlink:href="#iconClose"></use></svg>
             </div>
         </CalloutList>
+    </SettingItemWrap>
+
+    <SettingItemWrap
+        title={i18n.setting.IconTop.title}
+        description={i18n.setting.IconTop.description}
+        direction="column"
+    >
+        <div class="fn__flex fn__flex-column" style="gap: 2px;">
+            <div class="fn__flex fn__flex-1" style="gap: 2px; align-items: center;">
+                <span>{i18n.setting.IconTop.big}</span>
+                <input class="b3-text-field" bind:value={plugin.configs.VarIconTop.Big}/>
+            </div>
+            <div class="fn__flex  fn__flex-1" style="gap: 2px; align-items: center;">
+                <span>{i18n.setting.IconTop.small}</span>
+                <input class="b3-text-field" bind:value={plugin.configs.VarIconTop.Small}/>
+            </div>
+        </div>
     </SettingItemWrap>
 
     <SettingItemWrap

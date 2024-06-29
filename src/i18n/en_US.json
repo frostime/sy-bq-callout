@@ -15,6 +15,10 @@
         "default": "Restore Default Style"
     },
     "setting": {
+        "DefaultMode": {
+            "title": "🔋 Default Callout Mode",
+            "description": "The default display mode for Callout: Title mode (big text) or Paragraph mode (small text)"
+        },
         "EmojiFont": {
             "title": "🇫 Callout Icon Emoji Font Style",
             "description": "Specify the emoji font style for Callout icons (CSS field)"
@@ -38,7 +42,17 @@
         "Delete": {
             "title": "🗑️ Confirm Delete Callout?",
             "description": "Callout <b>[{0} {1}]</b> has <b>{2} references</b>!<br/>Deletion is irreversible, please proceed with caution"
+        },
+        "IconTop": {
+            "title": "⬆️ Callout Icon Vertical Offset",
+            "description": "If you find that the Callout icon and text are not aligned, you can change the following variable (Larger the value, lower the icon)",
+            "big": "Title Mode",
+            "small": "Para  Mode"
         }
+    },
+    "mode": {
+        "big": "[B] Title mode",
+        "small": "[S] Paragraph mode"
     },
     "CalloutEditor": {
         "exists": "Callout ID already exists. Please change the ID",

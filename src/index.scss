@@ -4,20 +4,66 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-06-04 14:58:49
+ * @LastEditTime : 2024-06-29 20:15:49
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
+:root {
+    --callout-default-icon-top: 0.35em;
+    --callout-default-icon-left: 0.1em;
+    --callout-default-icon-font-size: 1.4em;
+    --callout-default-fc-font-size: 1.3em;
+    --callout-default-fc-padding: 1.7em;
+    --callout-default-fc-font-weight: 700;
+
+    --callout-big-icon-top: 0.35em;
+    --callout-big-icon-left: 0.1em;
+    --callout-big-icon-font-size: 1.4em;
+    --callout-big-fc-font-size: 1.3em;
+    --callout-big-fc-padding: 1.7em;
+    --callout-big-fc-font-weight: 700;
+
+    --callout-small-icon-top: 0.45em;
+    --callout-small-icon-left: 0.2em;
+    --callout-small-icon-font-size: 1em;
+    --callout-small-fc-font-size: 1em;
+    --callout-small-fc-padding: 2.2em;
+    --callout-small-fc-font-weight: inherit;
+}
 
 /*列表里代码块对齐*/
 /*引述callout第一行样式, 用作 Callout 的标题 */
-.bq[custom-b]>.p:first-child,
-.bq[custom-b]>[data-type="NodeHeading"]:first-child,
-.bq[custom-callout]>.p:first-child,
-.bq[custom-callout]>[data-type="NodeHeading"]:first-child {
-    font-weight: 700 !important;
-    font-size: 1.3em !important;
-    padding: 0em 0em 0em 1.7em !important;
+.bq[custom-b]:not([custom-callout-mode]),
+.bq[custom-callout]:not([custom-callout-mode]) {
+
+    >.p:first-child,
+    >[data-type="NodeHeading"]:first-child {
+        font-weight: var(--callout-default-fc-font-weight);
+        font-size: var(--callout-default-fc-font-size) !important;
+        padding: 0 0 0 var(--callout-default-fc-padding) !important;
+    }
+}
+
+.bq[custom-b][custom-callout-mode="big"],
+.bq[custom-callout][custom-callout-mode="big"] {
+
+    >.p:first-child,
+    >[data-type="NodeHeading"]:first-child {
+        font-weight: var(--callout-big-fc-font-weight);
+        font-size: var(--callout-big-fc-font-size) !important;
+        padding: 0 0 0 var(--callout-big-fc-padding) !important;
+    }
+}
+
+.bq[custom-b][custom-callout-mode="small"],
+.bq[custom-callout][custom-callout-mode="small"] {
+
+    >.p:first-child,
+    >[data-type="NodeHeading"]:first-child {
+        font-weight: var(--callout-small-fc-font-weight);
+        font-size: var(--callout-small-fc-font-size) !important;
+        padding: 0 0 0 var(--callout-small-fc-padding) !important;
+    }
 }
 
 
@@ -34,6 +80,7 @@
 
     .list {
         padding-left: 1.6em !important;
+
         .p {
             padding-left: 0em !important;
         }
@@ -63,15 +110,38 @@
 .protyle-wysiwyg .bq[custom-b]::after,
 .protyle-wysiwyg .bq[custom-callout]::after {
     content: "";
-    // font-family: 'Twitter Emoji', 'Noto Color Emoji', sans-serif !important;
     position: absolute;
-    top: 0.35em;
-    left: 0.1em;
-    margin-left: 10px;
-    font-size: 1.4em;
     border: none;
     transform: none;
+    margin-left: 10px;
 }
 
+.protyle-wysiwyg {
+    .bq[custom-b]:not([custom-callout-mode])::after,
+    .bq[custom-callout]:not([custom-callout-mode])::after {
+        top: var(--callout-default-icon-top);
+        left: var(--callout-default-icon-left);
+        font-size: var(--callout-default-icon-font-size);
+    }
+}
+
+
+.protyle-wysiwyg {
+    .bq[custom-b][custom-callout-mode="big"]::after,
+    .bq[custom-callout][custom-callout-mode="big"]::after {
+        top: var(--callout-big-icon-top);
+        left: var(--callout-big-icon-left);
+        font-size: var(--callout-big-icon-font-size);
+    }
+}
+
+.protyle-wysiwyg {
+    .bq[custom-b][custom-callout-mode="small"]::after,
+    .bq[custom-callout][custom-callout-mode="small"]::after {
+        top: var(--callout-small-icon-top);
+        left: var(--callout-small-icon-left);
+        font-size: var(--callout-small-icon-font-size);
+    }
+}
 
 /* Callout Style End */

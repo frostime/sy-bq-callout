@@ -23,6 +23,28 @@
 
 ![](asset/emoji-font.png)
 
+## 🔋 Callout 两种展示默认
+
+插件支持两种 Callout 展示模式：
+
+1. 标题模式（大字模式）
+
+    在这个模式下，Callout 中第一行会以加粗、大字的标题形式展示。
+
+    ![](asset/big-mode.png)
+2. 段落模式（小字模式）
+
+    在这个模式下，Callout 中的第一行和普通段落无异。
+
+    ![](asset/small-mode.png)
+
+可以在插件设置中选择默认的展示模式。后续可能会支持对单个 Callout 独立配置默认的显示模式。
+
+可以为特定的 Callout 块添加以下的块属性（这里省略了 custom- 前缀）来强制让对应的 Callout 块按照大/小字模式来展示。
+
+* `callout-mode="big"`：指定展示为标题模式（大字模式）
+* `callout-mode="small"`：段落模式（小字模式）
+
 ## ✨ 自定义 Callout
 
 本插件中的 callout 分类两大类：
