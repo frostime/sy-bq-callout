@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-04 17:05:28
+ * @LastEditTime : 2024-06-28 22:42:28
  * @Description  : 
  */
 import {
@@ -64,7 +64,8 @@ export default class BqCalloutPlugin extends Plugin {
         CustomCSS: '',
         CalloutOrder: '',
         DefaultCallout: [],
-        CustomCallout: []
+        CustomCallout: [],
+        DefaultMode: 'big'
     };
 
     async onload() {

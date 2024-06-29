@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-02 13:23:03
+ * @LastEditTime : 2024-06-28 22:54:05
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -64,6 +64,27 @@ html[data-theme-mode="dark"] .protyle-wysiwyg [data-node-id].bq[custom-callout="
 `;
 }
 
+const toggleVarsByMode = (mode: 'big' | 'small') => {
+    const StyleVars = [
+        'icon-top',
+        'icon-left',
+        'icon-font-size',
+        'fc-font-size',
+        'fc-padding',
+        "fc-font-weight"
+    ];
+    let css = '';
+    for (let v of StyleVars) {
+        css += `--callout-default-${v}: var(--callout-${mode}-${v});\n`
+    }
+
+    return `
+    :root {
+        ${css}
+    }
+    `;
+}
+
 export class DynamicStyle {
     //css 样式内容
     private css: string;
@@ -119,6 +140,8 @@ export class DynamicStyle {
         this.plugin.configs.DefaultCallout.forEach(callout => {
             this.css += defaultDbCallout(callout);
         });
+
+        this.css += toggleVarsByMode(this.plugin.configs.DefaultMode);
     }
 
 }

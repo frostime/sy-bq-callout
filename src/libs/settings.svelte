@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-04 14:33:53
+ LastEditTime : 2024-06-28 22:50:49
  Description  : 
 -->
 <script lang="ts">
@@ -85,6 +85,21 @@
 </script>
 
 <div class="config__tab-container">
+    <SettingItemWrap
+        title="Callout 模式"
+        description="Big Small 模式"
+        direction="column"
+    >
+        <select
+            class="b3-select fn__flex-center fn__size200"
+            id="iconPosition"
+            bind:value={plugin.configs.DefaultMode}
+        >
+            <option value="big">Big</option>
+            <option value="small">Small</option>
+        </select>
+    </SettingItemWrap>
+
     <SettingItemWrap
         title={configs.EmojiFont.title}
         description={configs.EmojiFont.description}
