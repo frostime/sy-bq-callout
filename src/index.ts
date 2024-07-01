@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-06-29 20:44:52
+ * @LastEditTime : 2024-07-01 14:24:35
  * @Description  : 
  */
 import {
@@ -15,7 +15,7 @@ import {
 } from "siyuan";
 import "@/index.scss";
 
-import { changelog } from "sy-plugin-changelog";
+// import { changelog } from "sy-plugin-changelog";
 
 import { setBlockAttrs, getFile } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
@@ -95,11 +95,11 @@ export default class BqCalloutPlugin extends Plugin {
         this.dynamicStyle.update();
         this.resetSlash();
 
-        changelog(this, 'i18n/CHANGELOG.md').then(ans => {
-            if (ans.Dialog) {
-                ans.Dialog.setFont('20px');
-            }
-        });
+        // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
+        //     if (ans.Dialog) {
+        //         ans.Dialog.setFont('20px');
+        //     }
+        // });
     }
 
     async onunload() {
@@ -111,8 +111,8 @@ export default class BqCalloutPlugin extends Plugin {
         let dialog = new Dialog({
             title: this.i18n.name,
             content: `<div id="SettingPanel" style="height: 100%;"></div>`,
-            width: '45rem',
-            height: '40rem',
+            width: '800px',
+            height: '720px',
             destroyCallback: () => {
                 this.onSettingUpdated();
                 pannel.$destroy();
@@ -194,7 +194,7 @@ export default class BqCalloutPlugin extends Plugin {
         });
 
         submenus.push({
-            element: callout.createCalloutButton("", {id: this.i18n.mode.big, icon: '🇧'}),
+            element: callout.createCalloutButton("", {id: this.i18n.mode.big, icon: '🇹'}),
             click: () => {
                 setBlockAttrs(ele.getAttribute("data-node-id"), {
                     'custom-callout-mode': 'big',
@@ -202,7 +202,7 @@ export default class BqCalloutPlugin extends Plugin {
             }
         });
         submenus.push({
-            element: callout.createCalloutButton("", {id: this.i18n.mode.small, icon: '🇸'}),
+            element: callout.createCalloutButton("", {id: this.i18n.mode.small, icon: '🇵'}),
             click: () => {
                 setBlockAttrs(ele.getAttribute("data-node-id"), {
                     'custom-callout-mode': 'small',

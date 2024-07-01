@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-06-29 20:07:59
+ * @LastEditTime : 2024-07-01 14:12:56
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -79,7 +79,7 @@ const specificCalloutDefaultMode = (calloutId: string, mode: 'big' | 'small') =>
 
     & >.p:first-child,
     & >[data-type="NodeHeading"]:first-child {
-        font-weight: var(--callout-${mode}-fc-font-weight);
+        font-weight: var(--callout-${mode}-fc-font-weight) !important;
         font-size: var(--callout-${mode}-fc-font-size) !important;
         padding: 0 0 0 var(--callout-${mode}-fc-padding) !important;
     }

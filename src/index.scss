@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-06-29 20:15:49
+ * @LastEditTime : 2024-07-01 14:12:42
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
@@ -38,7 +38,7 @@
 
     >.p:first-child,
     >[data-type="NodeHeading"]:first-child {
-        font-weight: var(--callout-default-fc-font-weight);
+        font-weight: var(--callout-default-fc-font-weight) !important;
         font-size: var(--callout-default-fc-font-size) !important;
         padding: 0 0 0 var(--callout-default-fc-padding) !important;
     }
@@ -49,7 +49,7 @@
 
     >.p:first-child,
     >[data-type="NodeHeading"]:first-child {
-        font-weight: var(--callout-big-fc-font-weight);
+        font-weight: var(--callout-big-fc-font-weight) !important;
         font-size: var(--callout-big-fc-font-size) !important;
         padding: 0 0 0 var(--callout-big-fc-padding) !important;
     }
@@ -60,7 +60,7 @@
 
     >.p:first-child,
     >[data-type="NodeHeading"]:first-child {
-        font-weight: var(--callout-small-fc-font-weight);
+        font-weight: var(--callout-small-fc-font-weight) !important;
         font-size: var(--callout-small-fc-font-size) !important;
         padding: 0 0 0 var(--callout-small-fc-padding) !important;
     }
