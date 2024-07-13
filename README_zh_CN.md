@@ -1,4 +1,6 @@
-搬运自 Savor 主题，实现简单的 callout 样式
+搬运自 Savor 主题，实现简单的 callout 样式。
+
+> 如果下图中图片无法加载，你也可以选择到[线上文档](https://flowus.cn/share/e1961b24-8bf9-4d2f-9ca4-794d81824524?code=80RAFK)中查看
 
 ## 基础用法
 
