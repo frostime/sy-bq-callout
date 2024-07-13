@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-07-13 19:37:26
+ LastEditTime : 2024-07-13 19:49:43
  Description  : 
 -->
 <script lang="ts">
@@ -170,8 +170,8 @@
         </div>
         <span class="fn__space" />
         <div class="fn__flex fn__flex-column" style="gap: 5px;">
-            <div class="fn__flex" style="gap: 2px;">
-                <span>{i18n.mode.big}</span>
+            <div class="fn__flex" style="gap: 5px;">
+                <span style="flex: 1;">{i18n.mode.big}</span>
                 <input
                     class="b3-switch fn__flex-center"
                     data-id={callout.id}
@@ -179,8 +179,8 @@
                     bind:checked={slash.big}
                 />
             </div>
-            <div class="fn__flex" style="gap: 2px;">
-                <span>{i18n.mode.small}</span>
+            <div class="fn__flex" style="gap: 5px;">
+                <span style="flex: 1;">{i18n.mode.small}</span>
                 <input
                     class="b3-switch fn__flex-center"
                     data-id={callout.id}

@@ -52,7 +52,7 @@
     },
     "mode": {
         "big": "Title mode",
-        "small": "Paragraph mode"
+        "small": "Para mode"
     },
     "CalloutEditor": {
         "exists": "Callout ID already exists. Please change the ID",

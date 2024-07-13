@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-07-13 19:32:38
+ * @LastEditTime : 2024-07-13 19:51:14
  * @Description  : 
  */
 import {
@@ -141,7 +141,7 @@ export default class BqCalloutPlugin extends Plugin {
         ) => {
             let modeName = mode ? this.i18n.mode[mode] : "";
             let filterSuffix = mode ? `-${mode}` : "";
-            let modenameSuffix = mode ? `-${modeName}` : "";
+            let modenameSuffix = mode ? ` | ${modeName}` : "";
 
             this.protyleSlash.push({
                 filter: [
