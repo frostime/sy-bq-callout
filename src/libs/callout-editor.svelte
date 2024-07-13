@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-07-13 18:58:38
+ LastEditTime : 2024-07-13 19:02:07
  Description  : 
 -->
 <script lang="ts">
@@ -161,9 +161,9 @@
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
 
-    <div class="item-wrap fn__flex b3-label config__item" style="padding: 5px;">
+    <div class="item-wrap fn__flex b3-label config__item" style="padding: 0px;">
         <div class="fn__flex-1">
-            <span>✒️ / 命令</span>
+            <span style="font-weight: bold;">✒️ / 命令</span>
             <div class="b3-label__text">
                 如果选中，则可以在 / 命令中插入指定模式的 Callout
             </div>

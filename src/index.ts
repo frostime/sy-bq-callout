@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-07-01 14:24:35
+ * @LastEditTime : 2024-07-13 19:26:00
  * @Description  : 
  */
 import {
@@ -135,28 +135,45 @@ export default class BqCalloutPlugin extends Plugin {
     }
 
     private resetSlash() {
-        this.protyleSlash = [];
-        for (let ct of this.configs.DefaultCallout) {
-            if (ct?.hide) continue;
+
+        const addSlash = (
+            ct: ICallout, calloutAttr: 'b' | 'callout', mode?: 'big' | 'small'
+        ) => {
+            let filterSuffix = mode ? `-${mode}` : "";
+
             this.protyleSlash.push({
-                filter: [`callout-${ct.id}`, `bq-${ct.id}`, callout.calloutName(ct)],
-                html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}</span>`,
-                id: ct.id,
+                filter: [
+                    `callout-${ct.id}${filterSuffix}`,
+                    `bq-${ct.id}${filterSuffix}`,
+                    callout.calloutName(ct) + filterSuffix
+                ],
+                html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}${filterSuffix}</span>`,
+                id: ct.id + filterSuffix,
                 callback: (protyle: Protyle) => {
-                    protyle.insert(`>\n{: custom-b="${ct.id}"}`);
+                    console.log('Insert', ct.id, mode);
+                    let toInsert = "";
+                    if (mode === undefined) {
+                        toInsert = `>\n{: custom-${calloutAttr}="${ct.id}" }`;
+                    } else {
+                        toInsert = `>\n{: custom-${calloutAttr}="${ct.id}" custom-callout-mode="${mode}" }`;
+                    }
+                    protyle.insert(toInsert);
                 }
             });
         }
+
+        this.protyleSlash = [];
+        for (let ct of this.configs.DefaultCallout) {
+            if (ct?.hide) continue;
+            addSlash(ct, 'b');
+            if (ct.slash?.big) addSlash(ct, 'b', 'big');
+            if (ct.slash?.small) addSlash(ct, 'b', 'small');
+        }
         for (let ct of this.configs.CustomCallout) {
             if (ct?.hide) continue;
-            this.protyleSlash.push({
-                filter: [`callout-${ct.id}`, `bq-${ct.id}`, callout.calloutName(ct)],
-                html: `<span class="b3-menu__label">${ct.icon}${ct.id}</span>`,
-                id: ct.id,
-                callback: (protyle: Protyle) => {
-                    protyle.insert(`>\n{: custom-callout="${ct.id}"}`);
-                }
-            });
+            addSlash(ct, 'callout');
+            if (ct.slash?.big) addSlash(ct, 'callout', 'big');
+            if (ct.slash?.small) addSlash(ct, 'callout', 'small');
         }
     }
 
