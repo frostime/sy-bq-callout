@@ -15,8 +15,8 @@
         let dialog = new Dialog({
             title: i18n.editcallout,
             content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
-            width: "30rem",
-            height: "32rem",
+            width: "32rem",
+            height: "35rem",
             destroyCallback: () => {
                 pannel.$destroy();
             },

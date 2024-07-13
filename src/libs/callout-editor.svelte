@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-06-04 14:30:29
+ LastEditTime : 2024-07-13 18:58:38
  Description  : 
 -->
 <script lang="ts">
@@ -30,6 +30,10 @@
         },
         hide: false,
         custom: true,
+        slash: {
+            big: false,
+            small: false
+        }
     };
     export let mode: 'new' | 'edit' = 'edit';
 
@@ -104,6 +108,11 @@
         dispatch("cancel", DefaulCallout);
     };
 
+    const slash = {
+        big: callout.slash?.big ?? false,
+        small: callout.slash?.small ?? false
+    }
+
     const onSave = () => {
         if (CreatedCallouts.includes(callout.id)) {
             showMessage(I18n.exists, 4000, "error");
@@ -113,6 +122,11 @@
             showMessage(I18n.empty, 4000, "error");
             return;
         }
+
+        if (slash.big || slash.small) {
+            callout.slash = slash;
+        }
+
         if (mode === 'edit' && callout.id !== DefaulCallout.id) {
             let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id);
             confirm("Callout ID Changed!", text,
@@ -146,6 +160,37 @@
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
+
+    <div class="item-wrap fn__flex b3-label config__item" style="padding: 5px;">
+        <div class="fn__flex-1">
+            <span>✒️ / 命令</span>
+            <div class="b3-label__text">
+                如果选中，则可以在 / 命令中插入指定模式的 Callout
+            </div>
+        </div>
+        <span class="fn__space" />
+        <div class="fn__flex fn__flex-column" style="gap: 5px;">
+            <div class="fn__flex" style="gap: 2px;">
+                <span>标题模式</span>
+                <input
+                    class="b3-switch fn__flex-center"
+                    data-id={callout.id}
+                    type="checkbox"
+                    bind:checked={slash.big}
+                />
+            </div>
+            <div class="fn__flex" style="gap: 2px;">
+                <span>段落模式</span>
+                <input
+                    class="b3-switch fn__flex-center"
+                    data-id={callout.id}
+                    type="checkbox"
+                    bind:checked={slash.small}
+                />
+            </div>
+        </div>
+    </div>
+
     <div class="color-editor bordered">
         <div>{I18n.lightMode}</div>
         <div>
@@ -189,6 +234,7 @@
         <CalloutItem {callout} mode="light" />
         <CalloutItem {callout} mode="dark" />
     </div>
+
     <div class="fn__flex-1" />
     <div class="action-btns fn__flex" style="gap: 10px;">
         <button
