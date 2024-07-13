@@ -40,12 +40,35 @@ The plugin supports two modes for Callout display:
 
     ![](asset/small-mode.png)
 
-You can select the default display mode in the plugin settings. In the future, it may be possible to configure the default display mode for individual Callout blocks separately.
+### Global default display mode
+
+You can select the default display mode in the plugin settings.
+
+This setting will apply to all callouts except those designated with block attributes for display mode.
+
+### Block level display mode
 
 You can add the following block attributes to a specific Callout block to force the corresponding Callout block to be displayed in large/small text mode.
 
 * `callout-mode="big"`: Specify display in Title Mode (Large Text)
 * `callout-mode="small"`: Paragraph Mode (Small Text)
+
+
+In this plugin, two ways are offered to create callout with block level mode.
+
+1. Specify a mode in block menu
+
+    ![](asset/mode-menu.png)
+
+2. Insert callout in `/` commands menu
+
+    1. Turn to checked in callout config panel `/`
+
+        ![](asset/mode-slash-set.png)
+
+    2. Then you can use the correspondent `/` command in editor
+
+        ![](asset/mode-slash-insert.png)
 
 
 ## ✨ Custom Callout

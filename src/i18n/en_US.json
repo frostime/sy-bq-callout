@@ -52,7 +52,7 @@
     },
     "mode": {
         "big": "Title mode",
-        "small": "Paragraph mode"
+        "small": "Para mode"
     },
     "CalloutEditor": {
         "exists": "Callout ID already exists. Please change the ID",
@@ -66,7 +66,11 @@
         "copied": "Style copied",
         "pasteStyle": "Paste Style",
         "pasted": "Style pasted",
-        "pasteEmpty": "Paste content is empty"
+        "pasteEmpty": "Paste content is empty",
+        "slashCommand": {
+            "title": "✒️ / Command",
+            "desc": "If set，you can insert the callout with this mode in `/` menu"
+        }
     },
     "CalloutList": {
         "Add": "Add Callout"

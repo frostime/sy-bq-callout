@@ -32,6 +32,10 @@ interface ICallout {
     hide?: boolean;
     // order?: number;
     custom?: boolean;
+    slash?: {
+        big?: boolean;
+        small?: boolean;
+    }
 }
 
 /**
