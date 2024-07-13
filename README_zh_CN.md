@@ -38,12 +38,35 @@
 
     ![](asset/small-mode.png)
 
-可以在插件设置中选择默认的展示模式。后续可能会支持对单个 Callout 独立配置默认的显示模式。
+### 全局默认展示模式
+
+可以在插件设置中选择默认的展示模式。
+
+该设置会对所有**没有设置了块级模式**的 Callout 生效。
+
+### 快级展示模式
 
 可以为特定的 Callout 块添加以下的块属性（这里省略了 custom- 前缀）来强制让对应的 Callout 块按照大/小字模式来展示。
 
 * `callout-mode="big"`：指定展示为标题模式（大字模式）
 * `callout-mode="small"`：段落模式（小字模式）
+
+在插件中，提供了两种更加简单地方法来创建具有块级展示模式的 Callout:
+
+1. 在 Menu 菜单当中设置
+
+    ![](asset/mode-menu.png)
+
+2. 在 `/` 命令菜单当中新建
+
+    1. 在 callout 的设置面板中，开启特定模式的 `/`
+
+        ![](asset/mode-slash-set.png)
+
+    2. 在编辑器中，可以在 `/` 命令中插入特定模式的 callout
+
+        ![](asset/mode-slash-insert.png)
+
 
 ## ✨ 自定义 Callout
 
