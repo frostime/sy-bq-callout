@@ -66,7 +66,11 @@
         "copied": "样式已复制",
         "pasteStyle": "粘贴样式",
         "pasted": "样式已粘贴",
-        "pasteEmpty": "粘贴内容为空"
+        "pasteEmpty": "粘贴内容为空",
+        "slashCommand": {
+            "title": "✒️ / 命令",
+            "desc": "如果模式被选中，则可以在 / 命令中插入指定模式的 Callout"
+        }
     },
     "CalloutList": {
         "Add": "添加 Callout"

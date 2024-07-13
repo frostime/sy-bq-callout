@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-07-13 19:02:07
+ LastEditTime : 2024-07-13 19:37:26
  Description  : 
 -->
 <script lang="ts">
@@ -163,15 +163,15 @@
 
     <div class="item-wrap fn__flex b3-label config__item" style="padding: 0px;">
         <div class="fn__flex-1">
-            <span style="font-weight: bold;">✒️ / 命令</span>
+            <span style="font-weight: bold;">{I18n.slashCommand.title}</span>
             <div class="b3-label__text">
-                如果选中，则可以在 / 命令中插入指定模式的 Callout
+                {I18n.slashCommand.desc}
             </div>
         </div>
         <span class="fn__space" />
         <div class="fn__flex fn__flex-column" style="gap: 5px;">
             <div class="fn__flex" style="gap: 2px;">
-                <span>标题模式</span>
+                <span>{i18n.mode.big}</span>
                 <input
                     class="b3-switch fn__flex-center"
                     data-id={callout.id}
@@ -180,7 +180,7 @@
                 />
             </div>
             <div class="fn__flex" style="gap: 2px;">
-                <span>段落模式</span>
+                <span>{i18n.mode.small}</span>
                 <input
                     class="b3-switch fn__flex-center"
                     data-id={callout.id}

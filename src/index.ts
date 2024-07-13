@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-07-13 19:26:00
+ * @LastEditTime : 2024-07-13 19:32:38
  * @Description  : 
  */
 import {
@@ -139,7 +139,9 @@ export default class BqCalloutPlugin extends Plugin {
         const addSlash = (
             ct: ICallout, calloutAttr: 'b' | 'callout', mode?: 'big' | 'small'
         ) => {
+            let modeName = mode ? this.i18n.mode[mode] : "";
             let filterSuffix = mode ? `-${mode}` : "";
+            let modenameSuffix = mode ? `-${modeName}` : "";
 
             this.protyleSlash.push({
                 filter: [
@@ -147,7 +149,7 @@ export default class BqCalloutPlugin extends Plugin {
                     `bq-${ct.id}${filterSuffix}`,
                     callout.calloutName(ct) + filterSuffix
                 ],
-                html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}${filterSuffix}</span>`,
+                html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}${modenameSuffix}</span>`,
                 id: ct.id + filterSuffix,
                 callback: (protyle: Protyle) => {
                     console.log('Insert', ct.id, mode);
