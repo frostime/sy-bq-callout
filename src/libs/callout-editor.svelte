@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-07-13 19:49:43
+ LastEditTime : 2024-07-19 13:55:49
  Description  : 
 -->
 <script lang="ts">
@@ -12,7 +12,9 @@
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
     import ColorPicker from 'svelte-awesome-color-picker';
-    import { i18n } from "@/callout";
+    import { i18n, queryCalloutBlock } from "@/callout";
+    import { writable } from "svelte/store";
+    import { debounce } from "./utils";
 
     export let CreatedCallouts: string[];
 
@@ -36,6 +38,18 @@
         }
     };
     export let mode: 'new' | 'edit' = 'edit';
+
+    let count = writable("?");
+    const queryCount = async (id: string, custom: boolean) => {
+        let blocks = await queryCalloutBlock(id, custom);
+        if (blocks.length >= 999) {
+            count.set('999+')
+        } else {
+            count.set(`${blocks.length}`);
+        }
+    }
+    const queryCountDebounce = debounce(queryCount, 1000);
+    $: queryCountDebounce(callout.id, callout.custom);
 
     const DefaulCallout = JSON.parse(JSON.stringify(callout));
 
@@ -141,7 +155,7 @@
 
 <sectioin class="callout-editor">
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="fn__flex" style="font-size: 1.2rem;">
+    <div class="fn__flex" style="font-size: 1.2rem; align-items: center;">
         <div>ID:</div>
         <div class="fn__space" />
         {#if callout.custom}
@@ -157,6 +171,7 @@
                 {callout.id}
             </div>
         {/if}
+        <span class="counter">{$count}</span>
         <div class="fn__flex-1" />
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>

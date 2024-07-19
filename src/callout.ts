@@ -3,7 +3,7 @@
  * @Author       : frostime
  * @Date         : 2023-12-30 22:53:34
  * @FilePath     : /src/callout.ts
- * @LastEditTime : 2024-06-04 17:02:02
+ * @LastEditTime : 2024-07-19 13:50:10
  * @Description  : 
  */
 import { sql } from "./api";
@@ -26,8 +26,8 @@ export const calloutName = (callout: ICallout) => {
     return capitalize(name);
 }
 
-export const queryCalloutBlock = async (callout: ICallout): Promise<Block[]> => {
-    let name = callout.custom ? 'custom-callout' : 'custom-b';
+export const queryCalloutBlock = async (id: string, custom: boolean): Promise<Block[]> => {
+    let name = custom ? 'custom-callout' : 'custom-b';
     return sql(`
     SELECT B.*
     FROM blocks AS B
@@ -35,8 +35,8 @@ export const queryCalloutBlock = async (callout: ICallout): Promise<Block[]> => 
         SELECT A.block_id
         FROM attributes AS A
         WHERE A.name = '${name}'
-        AND A.value = '${callout.id}'
-    );
+        AND A.value = '${id}'
+    ) limit 999;
     `);
 }
 

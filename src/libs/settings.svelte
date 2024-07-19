@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 18:50:36
  FilePath     : /src/libs/settings.svelte
- LastEditTime : 2024-06-29 20:11:26
+ LastEditTime : 2024-07-19 13:51:22
  Description  : 
 -->
 <script lang="ts">
@@ -67,7 +67,7 @@
         );
         if (calloutIdx === -1) return;
         let callout = configs.CustomCallout.value[calloutIdx];
-        let blocks = await queryCalloutBlock(callout);
+        let blocks = await queryCalloutBlock(callout.id, callout.custom);
         let text = i18n.setting.Delete.description
             .replace("{0}", callout.icon)
             .replace("{1}", callout.id)
