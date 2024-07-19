@@ -4,11 +4,13 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-07-01 14:12:42
+ * @LastEditTime : 2024-07-19 14:09:25
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
 :root {
+    // Styles applied as default
+    // Styles applied as default
     --callout-default-icon-top: 0.35em;
     --callout-default-icon-left: 0.1em;
     --callout-default-icon-font-size: 1.4em;
@@ -16,6 +18,7 @@
     --callout-default-fc-padding: 1.7em;
     --callout-default-fc-font-weight: 700;
 
+    //Style applied for big mode callout
     --callout-big-icon-top: 0.35em;
     --callout-big-icon-left: 0.1em;
     --callout-big-icon-font-size: 1.4em;
@@ -23,12 +26,51 @@
     --callout-big-fc-padding: 1.7em;
     --callout-big-fc-font-weight: 700;
 
+    //Style applied for small mode callout
     --callout-small-icon-top: 0.45em;
     --callout-small-icon-left: 0.2em;
     --callout-small-icon-font-size: 1em;
     --callout-small-fc-font-size: 1em;
     --callout-small-fc-padding: 2.2em;
     --callout-small-fc-font-weight: inherit;
+
+    //Style applied for folded callout
+    --callout-fold-height: 34px;
+    --callout-fold-icon-top: 10px;
+    --callout-fold-font-size: 20px;
+    --callout-fold-icon: "⤴";
+}
+
+
+/*Folded callout style*/
+.protyle-wysiwyg [data-node-id][fold="1"].bq {
+    &[custom-b], &[custom-callout] {
+        opacity: 1;
+        height: var(--callout-fold-height) !important;
+
+        &>div[data-node-id]:first-child {
+            font-size: var(--callout-fold-font-size) !important;
+        }
+        &>div[data-node-id]:not(:first-child) {
+            display: none;
+        }
+
+        &::after {
+            top: var(--callout-fold-icon-top);
+            font-size: var(--callout-fold-font-size);
+        }
+        &::before {
+            content: var(--callout-fold-icon);
+            position: absolute;
+            border: none;
+            transform: none;
+            opacity: 0.25;
+            margin-right: 10px;
+            top: var(--callout-fold-icon-top);
+            right: var(--callout-default-icon-left);
+            font-size: var(--callout-fold-font-size);
+        }
+    }
 }
 
 /*列表里代码块对齐*/
