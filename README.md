@@ -14,7 +14,7 @@ Ported from the Savor theme, this plugin implements simple callout styles.
 
 This plugin uses emoji icons as the callout icon.
 
-Since the default emoji display in SiYuan is not satisfactory, it is recommended to download the Emoji plugin from the marketplace for better display.
+Since the default emoji display in SiYuan is not satisfactory, **it is recommended to download the Emoji plugin from the marketplace for better display**. (Twitter Emoji, Google Emoji, Open Emoji etc.)
 
 You can manually configure the "Callout Icon Font Style" field in the plugin settings to set the priority of the icon style. The default value is:
 
@@ -25,7 +25,7 @@ You can manually configure the "Callout Icon Font Style" field in the plugin set
 ![](asset/emoji-font.png)
 
 
-## 🔋 Two Modes for Callout Display
+## 🔋 Two Display Modes for Callout
 
 The plugin supports two modes for Callout display:
 
@@ -122,7 +122,23 @@ The configuration of custom icons is similar to Default Callout, with the follow
 4. Copy & Paste Callout style
 
 
-## 🎨 Custom CSS Snippets
+## 🎨 Other topics about style
+
+### Custom CSS Snippets
 
 If you have advanced customization needs for Callout styles, you can add custom CSS snippets to the plugin settings.
 Essentially, this is no different from using code snippets in SiYuan.
+
+### Collapsed Callout
+
+When a Callout block is collapsed, only the first line of content is displayed; meanwhile, there's an icon on the right indicating that the block is collapsed.
+
+![Collapsed View](asset/folded.png)
+
+You can customize the collapsible icon (emoji) to your preference using CSS variables, for example:
+
+```css
+:root {
+  --callout-fold-icon: "🙂";
+}
+```

@@ -15,7 +15,7 @@
 
 本插件使用 emoji 图标作为 callout 的图标显示。
 
-由于思源默认内置的 emoji 显示效果并不佳，推荐在集市中下载 Emoji 插件来获取更好的显示效果。
+由于思源默认内置的 emoji 显示效果并不佳，**推荐在集市中下载 Emoji 插件来获取更好的显示效果**。（包括 Twitter Emoji, Google Emoji, Open Emoji 等）
 
 你可以在插件的设置选项中手动配置「Callout图标字体样式」字段来设置图标样式的优先级。默认值为：
 
@@ -25,7 +25,7 @@
 
 ![](asset/emoji-font.png)
 
-## 🔋 Callout 两种展示默认
+## 🔋 Callout 两种展示模式
 
 插件支持两种 Callout 展示模式：
 
@@ -120,8 +120,23 @@
    2. 内部背景色和外部边框色
 4. Copy & Paste Callout 样式
 
-## 🎨 自定义 CSS 片段
+## 🎨 其他样式相关
+
+### 自定义 CSS 片段
 
 如果你对 Callout 的样式有更高级的定制需求，可以在插件的设置中添加自定义的 CSS 片段。
 本质上和使用思源的代码片段没有什么区别。
 
+### 折叠样式
+
+当 Callout 块被折叠时，只有第一行内容会被显示；同时右侧会有一个图标用来标明该块被折叠。
+
+![](asset/folded.png)
+
+你可以通过 css 变量的方式来配置你自己喜好的折叠图标（emoji），例如：
+
+```css
+:root {
+  --callout-fold-icon: "🙂";
+}
+```
