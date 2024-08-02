@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 22:15:03
  * @FilePath     : /src/style.ts
- * @LastEditTime : 2024-07-01 14:12:56
+ * @LastEditTime : 2024-08-02 18:37:22
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
@@ -24,7 +24,7 @@ const defaultDbCallout = (callout: ICallout) => {
     }`;
     return `
 .protyle-wysiwyg div[data-node-id].bq[custom-b="${callout.id}"]::after {
-    content: "${callout.icon}";
+    content: "${callout.icon}" !important;
 }
 
 html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-b="${callout.id}"] {
@@ -49,7 +49,7 @@ const customCallout = (callout: ICallout) => {
     }`;
     return `
 .protyle-wysiwyg div[data-node-id].bq[custom-callout="${callout.id}"]::after {
-    content: "${callout.icon}";
+    content: "${callout.icon}" !important;
 }
 
 html[data-theme-mode="light"] .protyle-wysiwyg [data-node-id].bq[custom-callout="${callout.id}"] {

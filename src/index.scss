@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-07-19 14:09:25
+ * @LastEditTime : 2024-08-02 18:46:13
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
@@ -45,14 +45,20 @@
 /*Folded callout style*/
 .protyle-wysiwyg [data-node-id][fold="1"].bq {
     &[custom-b], &[custom-callout] {
-        opacity: 1;
+        opacity: 1 !important;
         height: var(--callout-fold-height) !important;
 
         &>div[data-node-id]:first-child {
+            display: block;
             font-size: var(--callout-fold-font-size) !important;
-        }
-        &>div[data-node-id]:not(:first-child) {
-            display: none;
+            // 有些主题会擅自显示一个“blockquote”
+            &::before, &::after {
+                display: none;
+            }
+
+            & > * {
+                display: initial;
+            }
         }
 
         &::after {
@@ -60,6 +66,7 @@
             font-size: var(--callout-fold-font-size);
         }
         &::before {
+            display: inline-block;
             content: var(--callout-fold-icon);
             position: absolute;
             border: none;
@@ -117,7 +124,7 @@
     color: var(--b3-theme-on-background);
 
     .p {
-        padding-left: 2.2em;
+        padding-left: 2.2em !important;
     }
 
     .list {
@@ -147,6 +154,7 @@
 .protyle-wysiwyg div.bq[custom-callout]::before {
     content: "";
     border: none;
+    display: none;
 }
 
 .protyle-wysiwyg .bq[custom-b]::after,
