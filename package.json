@@ -9,8 +9,11 @@
   "license": "MIT",
   "scripts": {
     "make-link": "node --no-warnings ./scripts/make_dev_link.js",
+    "make-link-win": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/elevate.ps1 -scriptPath ./scripts/make_dev_link.js",
     "dev": "vite build --watch",
-    "build": "vite build"
+    "build": "vite build",
+    "update-version": "node --no-warnings ./scripts/update_version.js",
+    "make-install": "vite build && node --no-warnings ./scripts/make_install.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.1.0",
