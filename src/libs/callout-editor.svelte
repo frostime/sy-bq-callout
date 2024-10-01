@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-10-01 16:24:30
+ LastEditTime : 2024-10-01 16:37:00
  Description  : 
 -->
 <script lang="ts">
@@ -146,9 +146,7 @@
             return;
         }
 
-        if (slash.big || slash.small) {
-            callout.slash = slash;
-        }
+        callout.slash = slash;
 
         if (mode === 'edit' && callout.id !== DefaulCallout.id) {
             let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id).replace("{2}", `${DefaultCalloutRefCnt}`);
