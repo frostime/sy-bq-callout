@@ -57,7 +57,7 @@
     "CalloutEditor": {
         "exists": "Callout ID already exists. Please change the ID",
         "empty": "Callout ID cannot be empty. Please enter a new ID",
-        "changed": "⚠️ Callout ID has been changed from {0} to {1}. This may cause previous callouts to become invalid.<br/>❓ Do you want to proceed with the change?",
+        "changed": "⚠️ Callout ID has been changed from {0} to {1}. The previous callout ({2} references) will become invalid.<br/>❓ Do you want to proceed with the change?",
         "lightMode": "🌟 Light Mode",
         "darkMode": "🌙 Dark Mode",
         "bgColor": "Background Color",

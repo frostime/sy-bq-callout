@@ -57,7 +57,7 @@
     "CalloutEditor": {
         "exists": "Callout ID 已存在，请重新更改 ID",
         "empty": "Callout ID 不能为空，请重新输入",
-        "changed": "⚠️ Callout ID 从{0}变更为{1}，这可能导致之前的callout失效。<br/>❓ 确认要修改吗？",
+        "changed": "⚠️ Callout ID 从{0}变更为{1}，原 Callout ({2}个引用) 将失效。<br/>❓ 确认要修改吗？",
         "lightMode": "🌟 亮色模式",
         "darkMode": "🌙 暗色模式",
         "bgColor": "背景颜色",

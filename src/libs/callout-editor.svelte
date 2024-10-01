@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-07-19 13:55:49
+ LastEditTime : 2024-10-01 16:24:30
  Description  : 
 -->
 <script lang="ts">
@@ -42,16 +42,24 @@
     let count = writable("?");
     const queryCount = async (id: string, custom: boolean) => {
         let blocks = await queryCalloutBlock(id, custom);
-        if (blocks.length >= 999) {
+        return blocks.length;
+    }
+    const queryCountDebounce = debounce(async (id: string, custom: boolean) => {
+        let cnt = await queryCount(id, custom);
+        if (cnt >= 999) {
             count.set('999+')
         } else {
-            count.set(`${blocks.length}`);
+            count.set(`${cnt}`);
         }
-    }
-    const queryCountDebounce = debounce(queryCount, 1000);
+
+        if (id === DefaulCallout.id) {
+            DefaultCalloutRefCnt = cnt;
+        }
+    }, 1000);
     $: queryCountDebounce(callout.id, callout.custom);
 
     const DefaulCallout = JSON.parse(JSON.stringify(callout));
+    let DefaultCalloutRefCnt = 0;
 
     let emojiFont = getContext("EmojiFont");
     const I18n = i18n.CalloutEditor;
@@ -119,6 +127,7 @@
 
     const dispatch = createEventDispatcher();
     const onCancel = () => {
+        callout.id = DefaulCallout.id;
         dispatch("cancel", DefaulCallout);
     };
 
@@ -142,10 +151,14 @@
         }
 
         if (mode === 'edit' && callout.id !== DefaulCallout.id) {
-            let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id);
+            let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id).replace("{2}", `${DefaultCalloutRefCnt}`);
             confirm("Callout ID Changed!", text,
             () => {
                 dispatch("save", callout);
+            },
+            () => {
+                callout.id = DefaulCallout.id;
+                return;
             });
         } else {
             dispatch("save", callout);
