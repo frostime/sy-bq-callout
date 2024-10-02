@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-10-02 22:29:15
+ * @LastEditTime : 2024-10-02 23:42:22
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
@@ -89,7 +89,7 @@
 html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
     &.protyle-wysiwyg--hl, &.protyle-wysiwyg--select {
         background-color: var(--b3-theme-primary-lightest) !important;
-        border: 2px solid var(--b3-theme-primary-light) !important;
+        // border: 2px solid var(--b3-theme-primary-light) !important;
     }
 }
 
