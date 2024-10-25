@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-10-02 23:42:22
+ * @LastEditTime : 2024-10-25 17:53:05
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
@@ -136,16 +136,34 @@ html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
     padding-left: 8px !important;
     color: var(--b3-theme-on-background);
 
-    .p {
-        padding-left: 2.2em !important;
-    }
+    // > [data-node-id].p {
+    //     margin-left: unset !important;
+    //     padding-left: 2.2rem !important;
+    // }
 
-    .list {
-        padding-left: 1.6em !important;
+    // > .list {
+    //     padding-left: 1.6em !important;
 
-        .p {
-            padding-left: 0em !important;
+    //     // .p {
+    //     //     padding-left: 0em !important;
+    //     // }
+    // }
+
+    > [data-node-id]:not(:first-child) {
+        margin-left: 2.2em !important;
+        padding-left: 0px !important;
+
+        &[data-type="NodeList"] {
+            margin-left: 2.0em !important;
         }
+
+        &[data-type="NodeHeading"] {
+            // 不太好解决啊, 上面的都用了 em，这里很难完美对齐, 后面有空看看怎么办
+            // margin-left: 2.2rem !important;
+            margin-left: var(--callout-big-fc-padding) !important;
+            font-size: var(--callout-big-fc-font-size) !important;
+        }
+
     }
 
 }
