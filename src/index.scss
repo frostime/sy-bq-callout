@@ -4,7 +4,7 @@
  * @Source       : https://github.com/royc01/notion-theme
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.scss
- * @LastEditTime : 2024-10-25 17:53:05
+ * @LastEditTime : 2024-12-30 12:35:35
  * @Description  : 迁移自 Savor 主题的 callout 功能
  */
 /* Callout Style Start */
@@ -37,7 +37,7 @@
     //Style applied for folded callout
     --callout-fold-height: 34px;
     --callout-fold-icon-top: 10px;
-    --callout-fold-font-size: 20px;
+    --callout-fold-font-size: 19px;
     --callout-fold-icon: "⤴";
 }
 
@@ -76,6 +76,9 @@
             top: var(--callout-fold-icon-top);
             right: var(--callout-default-icon-left);
             font-size: var(--callout-fold-font-size);
+            left: unset !important; // 覆盖思源默认样式
+            bottom: unset !important;
+            width: unset !important;
         }
     }
 }

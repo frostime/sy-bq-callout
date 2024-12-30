@@ -124,18 +124,60 @@ The configuration of custom icons is similar to Default Callout, with the follow
 
 ## 🎨 Other topics about style
 
-### Custom CSS Snippets
+# Custom CSS Snippets
 
-If you have advanced customization needs for Callout styles, you can add custom CSS snippets to the plugin settings.
-Essentially, this is no different from using code snippets in SiYuan.
+If you have advanced customization needs for Callout styles, you can add custom CSS snippets to the plugin settings. Essentially, this is no different from using code snippets in SiYuan.
 
-### Collapsed Callout
+The Callout block is fundamentally a SiYuan quote block, but it sets special block attributes and configures corresponding CSS styles.
 
-When a Callout block is collapsed, only the first line of content is displayed; meanwhile, there's an icon on the right indicating that the block is collapsed.
+Due to historical reasons, there are two different block attributes for Callout blocks: `custom-b` and `custom-callout`. The former inherits the callout style from the Savor theme, while the latter is a custom callout style.
+
+- The default Callout block attribute selector is `.protyle-wysiwyg [data-node-id][custom-b="<CALLOUT_ID>"].bq`
+- The custom Callout block attribute selector is `.protyle-wysiwyg [data-node-id][custom-callout="<CALLOUT_ID>"].bq`
+
+### CSS Variables
+
+The Callout plugin configures a large number of CSS variables. If you have higher customization needs, you can modify them in the code snippets.
+
+```scss
+:root {
+    // Styles applied as default
+    --callout-default-icon-top: 0.35em;
+    --callout-default-icon-left: 0.1em;
+    --callout-default-icon-font-size: 1.4em;
+    --callout-default-fc-font-size: 1.3em;
+    --callout-default-fc-padding: 1.7em;
+    --callout-default-fc-font-weight: 700;
+
+    // Style applied for big mode callout
+    --callout-big-icon-top: 0.35em;
+    --callout-big-icon-left: 0.1em;
+    --callout-big-icon-font-size: 1.4em;
+    --callout-big-fc-font-size: 1.3em;
+    --callout-big-fc-padding: 1.7em;
+    --callout-big-fc-font-weight: 700;
+
+    // Style applied for small mode callout
+    --callout-small-icon-top: 0.45em;
+    --callout-small-icon-left: 0.2em;
+    --callout-small-icon-font-size: 1em;
+    --callout-small-fc-font-size: 1em;
+    --callout-small-fc-padding: 2.2em;
+    --callout-small-fc-font-weight: inherit;
+
+    // Style applied for folded callout
+    --callout-fold-height: 34px;
+    --callout-fold-icon-top: 10px;
+    --callout-fold-font-size: 19px;
+    --callout-fold-icon: "⤴";
+}
+```
+
+For example, when a callout block is folded, a small collapse icon is displayed on the right side.
 
 ![Collapsed View](asset/folded.png)
 
-You can customize the collapsible icon (emoji) to your preference using CSS variables, for example:
+You can configure your preferred collapse icon (emoji) in the code snippets, for example:
 
 ```css
 :root {

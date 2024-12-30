@@ -127,13 +127,57 @@
 如果你对 Callout 的样式有更高级的定制需求，可以在插件的设置中添加自定义的 CSS 片段。
 本质上和使用思源的代码片段没有什么区别。
 
-### 折叠样式
+Callout 块的本质是思源的引述块，只不过会设置特殊的块属性并配置了对应的 CSS 样式。
 
-当 Callout 块被折叠时，只有第一行内容会被显示；同时右侧会有一个图标用来标明该块被折叠。
+由于历史原因，Callout 块有两种不同的块属性 `custom-b` 和 `custom-callout`，前者是继承自 Savor 主题的 callout 样式，后者是自定义的 callout 样式。
 
-![](asset/folded.png)
+- 默认 Callout 的块属性选择器为 `.protyle-wysiwyg [data-node-id][custom-b="<CALLOUT_ID>"].bq`
+- 自定义的 Callout 的块属性选择器为 `.protyle-wysiwyg [data-node-id][custom-callout="<CALLOUT_ID>"].bq`
 
-你可以通过 css 变量的方式来配置你自己喜好的折叠图标（emoji），例如：
+### CSS 变量
+
+Callout 插件配置了大量的 css 变量，如果你有更高的自定义需求，可以在代码片段中进行修改。
+
+```scss
+:root {
+    // Styles applied as default
+    --callout-default-icon-top: 0.35em;
+    --callout-default-icon-left: 0.1em;
+    --callout-default-icon-font-size: 1.4em;
+    --callout-default-fc-font-size: 1.3em;
+    --callout-default-fc-padding: 1.7em;
+    --callout-default-fc-font-weight: 700;
+
+    //Style applied for big mode callout
+    --callout-big-icon-top: 0.35em;
+    --callout-big-icon-left: 0.1em;
+    --callout-big-icon-font-size: 1.4em;
+    --callout-big-fc-font-size: 1.3em;
+    --callout-big-fc-padding: 1.7em;
+    --callout-big-fc-font-weight: 700;
+
+    //Style applied for small mode callout
+    --callout-small-icon-top: 0.45em;
+    --callout-small-icon-left: 0.2em;
+    --callout-small-icon-font-size: 1em;
+    --callout-small-fc-font-size: 1em;
+    --callout-small-fc-padding: 2.2em;
+    --callout-small-fc-font-weight: inherit;
+
+    //Style applied for folded callout
+    --callout-fold-height: 34px;
+    --callout-fold-icon-top: 10px;
+    --callout-fold-font-size: 19px;
+    --callout-fold-icon: "⤴";
+}
+```
+
+例如在引述块被折叠的时候，会在右侧显示一个小小的折叠图标.
+
+![Collapsed View](asset/folded.png)
+
+
+你可以在代码片段中配置你自己喜好的折叠图标（emoji），例如：
 
 ```css
 :root {
