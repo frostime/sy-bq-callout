@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2025-01-19 18:48:13
+ LastEditTime : 2025-01-19 19:09:55
  Description  : 
 -->
 <script lang="ts">
@@ -260,7 +260,7 @@
     }
 }}>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="fn__flex" style="font-size: 1.2rem; align-items: center;">
+    <div class="fn__flex" style="font-size: 1.2rem; align-items: center; gap: 5px;">
         <div>ID:</div>
         <div class="fn__space" />
         {#if callout.custom}
@@ -278,6 +278,7 @@
         {/if}
         <span class="counter">{$count}</span>
         <div class="fn__flex-1" />
+        <span class="b3-label__text">{I18n.chooseIcon}</span>
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
 

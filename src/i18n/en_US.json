@@ -70,7 +70,8 @@
         "slashCommand": {
             "title": "✒️ / Command",
             "desc": "If set，you can insert the callout with this mode in `/` menu"
-        }
+        },
+        "chooseIcon": "Click to select"
     },
     "CalloutList": {
         "Add": "Add Callout"
