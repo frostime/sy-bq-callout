@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2024-10-01 16:37:00
+ LastEditTime : 2025-01-19 18:48:13
  Description  : 
 -->
 <script lang="ts">
@@ -11,7 +11,7 @@
     import { Dialog, showMessage, confirm } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import IconChooser from "./icon-chooser.svelte";
-    import ColorPicker from 'svelte-awesome-color-picker';
+    import ColorPicker from "svelte-awesome-color-picker";
     import { i18n, queryCalloutBlock } from "@/callout";
     import { writable } from "svelte/store";
     import { debounce } from "./utils";
@@ -34,20 +34,20 @@
         custom: true,
         slash: {
             big: false,
-            small: false
-        }
+            small: false,
+        },
     };
-    export let mode: 'new' | 'edit' = 'edit';
+    export let mode: "new" | "edit" = "edit";
 
     let count = writable("?");
     const queryCount = async (id: string, custom: boolean) => {
         let blocks = await queryCalloutBlock(id, custom);
         return blocks.length;
-    }
+    };
     const queryCountDebounce = debounce(async (id: string, custom: boolean) => {
         let cnt = await queryCount(id, custom);
         if (cnt >= 999) {
-            count.set('999+')
+            count.set("999+");
         } else {
             count.set(`${cnt}`);
         }
@@ -88,41 +88,58 @@
     let picker = {
         type: "",
         mode: "",
-        color: {
-            r: 0,
-            g: 0,
-            b: 0,
-            a: 1,
+        colors: {
+            bg: {
+                light: { r: 0, g: 0, b: 0, a: 1 },
+                dark: { r: 0, g: 0, b: 0, a: 1 },
+            },
+            box: {
+                light: { r: 0, g: 0, b: 0, a: 1 },
+                dark: { r: 0, g: 0, b: 0, a: 1 },
+            },
         },
         x: "",
         y: "",
     };
+
+    function initializePickerColors() {
+        ["bg", "box"].forEach((type) => {
+            ["light", "dark"].forEach((mode) => {
+                let colorStr = callout[type][mode]
+                    .replace("rgba(", "")
+                    .replace(")", "");
+                let [r, g, b, a] = colorStr.split(",").map(Number);
+                picker.colors[type][mode] = { r, g, b, a };
+            });
+        });
+    }
+
+    initializePickerColors();
 
     const changeColor = (
         e: MouseEvent,
         type: "bg" | "box",
         mode: "light" | "dark",
     ) => {
+        e.stopPropagation();
         if (PickColor && picker.type === type && picker.mode === mode) {
             PickColor = false;
             return;
         }
         let ele = e.target as HTMLElement;
-        let rect = ele.getBoundingClientRect();
+        let rect = ele.parentElement.getBoundingClientRect();
         picker.x = rect.right + 5 + "px";
         picker.y = rect.top + "px";
-        let colorStr = callout[type][mode].replace('rgba(', '').replace(')', '');
-        let [r, g, b, a] = colorStr.split(',').map(Number);
-        picker.color = { r, g, b, a };
         picker.type = type;
         picker.mode = mode;
         PickColor = true;
     };
 
     const handleColorChange = () => {
-        // picker.color = e.detail.value;
-        let rgba = `rgba(${picker.color.r}, ${picker.color.g}, ${picker.color.b}, ${picker.color.a})`;
-        callout[picker.type][picker.mode] = rgba;
+        const { type, mode } = picker;
+        const color = picker.colors[type][mode];
+        let rgba = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+        callout[type][mode] = rgba;
     };
 
     const dispatch = createEventDispatcher();
@@ -133,8 +150,8 @@
 
     const slash = {
         big: callout.slash?.big ?? false,
-        small: callout.slash?.small ?? false
-    }
+        small: callout.slash?.small ?? false,
+    };
 
     const onSave = () => {
         if (CreatedCallouts.includes(callout.id)) {
@@ -148,23 +165,100 @@
 
         callout.slash = slash;
 
-        if (mode === 'edit' && callout.id !== DefaulCallout.id) {
-            let text = I18n.changed.replace("{0}", DefaulCallout.id).replace("{1}", callout.id).replace("{2}", `${DefaultCalloutRefCnt}`);
-            confirm("Callout ID Changed!", text,
-            () => {
-                dispatch("save", callout);
-            },
-            () => {
-                callout.id = DefaulCallout.id;
-                return;
-            });
+        if (mode === "edit" && callout.id !== DefaulCallout.id) {
+            let text = I18n.changed
+                .replace("{0}", DefaulCallout.id)
+                .replace("{1}", callout.id)
+                .replace("{2}", `${DefaultCalloutRefCnt}`);
+            confirm(
+                "Callout ID Changed!",
+                text,
+                () => {
+                    dispatch("save", callout);
+                },
+                () => {
+                    callout.id = DefaulCallout.id;
+                    return;
+                },
+            );
         } else {
             dispatch("save", callout);
         }
     };
+
+    // Update the color conversion utilities
+    function rgbaToHex({ r, g, b, a }: { r: number; g: number; b: number; a: number }): string {
+        const toHex = (n: number) => {
+            const hex = Math.round(n).toString(16);
+            return hex.length === 1 ? "0" + hex : hex;
+        };
+        // Convert alpha from 0-1 to 0-255 range
+        const alpha = Math.round(a * 255);
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(alpha)}`;
+    }
+
+    function hexToRgba(hex: string): { r: number; g: number; b: number; a: number } {
+        // Remove the hash if present
+        hex = hex.replace("#", "");
+
+        // Parse the hex values
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        // Parse alpha value if present, otherwise default to 255 (fully opaque)
+        const a = hex.length === 8 ? parseInt(hex.substring(6, 8), 16) : 255;
+
+        // Convert alpha back to 0-1 range
+        return { r, g, b, a: a / 255 };
+    }
+
+    function isValidHex(hex: string): boolean {
+        return /^#?[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(hex);
+    }
+
+    function handleHexInput(
+        e: Event,
+        type: "bg" | "box",
+        mode: "light" | "dark",
+    ) {
+        const input = e.target as HTMLInputElement;
+        let hex = input.value;
+
+        // Add # if missing
+        if (hex.charAt(0) !== "#") {
+            hex = "#" + hex;
+        }
+
+        if (isValidHex(hex)) {
+            // Convert hex to rgba
+            const rgba = hexToRgba(hex);
+            // Update picker color
+            picker.colors[type][mode] = rgba;
+            // Update callout color
+            callout[type][mode] = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+        }
+    }
+
+    // Add reactive hex color stores
+    $: hexColors = {
+        bg: {
+            light: rgbaToHex(picker.colors.bg.light),
+            dark: rgbaToHex(picker.colors.bg.dark),
+        },
+        box: {
+            light: rgbaToHex(picker.colors.box.light),
+            dark: rgbaToHex(picker.colors.box.dark),
+        },
+    };
 </script>
 
-<sectioin class="callout-editor">
+<sectioin class="callout-editor" on:click={(e) => {
+    const targetElement = e.target;
+    // 如果不是按钮
+    if (PickColor && targetElement.tagName !== "BUTTON") {
+        PickColor = false;
+    }
+}}>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="fn__flex" style="font-size: 1.2rem; align-items: center;">
         <div>ID:</div>
@@ -220,48 +314,85 @@
     <div class="color-editor bordered">
         <div>{I18n.lightMode}</div>
         <div>
-            <button
-                class="b3-button b3-button--outline fn__flex-center fn__size200"
-                style="background-color: {callout.bg.light}; color: black;"
-                on:click={(e) => changeColor(e, "bg", "light")}
-            >
-                {I18n.bgColor}
-            </button>
-            <button
-                class="b3-button b3-button--outline fn__flex-center fn__size200"
-                style="background-color: {callout.box.light}; color: black;"
-                on:click={(e) => changeColor(e, "box", "light")}
-            >
-                {I18n.boxShadow}
-            </button>
+            <div class="color-input-group">
+                <button
+                    class="b3-button b3-button--outline fn__flex-center"
+                    style="background-color: {callout.bg.light}; color: black;"
+                    on:click={(e) => changeColor(e, "bg", "light")}
+                >
+                    {I18n.bgColor}
+                </button>
+                <input
+                    type="text"
+                    class="b3-text-field hex-input"
+                    value={hexColors.bg.light}
+                    style="box-shadow: 0 0 2px 3px {callout.bg.light};"
+                    on:input={(e) => handleHexInput(e, "bg", "light")}
+                />
+            </div>
+            <div class="color-input-group">
+                <button
+                    class="b3-button b3-button--outline fn__flex-center"
+                    style="background-color: {callout.box.light}; color: black;"
+                    on:click={(e) => changeColor(e, "box", "light")}
+                >
+                    {I18n.boxShadow}
+                </button>
+                <input
+                    type="text"
+                    class="b3-text-field hex-input"
+                    value={hexColors.box.light}
+                    style="box-shadow: 0 0 2px 3px {callout.box.light};"
+                    on:input={(e) => handleHexInput(e, "box", "light")}
+                />
+            </div>
         </div>
     </div>
     <div class="color-editor bordered">
         <div>{I18n.darkMode}</div>
         <div>
-            <button
-                class="b3-button b3-button--outline fn__flex-center fn__size200"
-                style="background-color: {callout.bg.dark}; color: white;"
-                on:click={(e) => changeColor(e, "bg", "dark")}
-            >
-                {I18n.bgColor}
-            </button>
-            <button
-                class="b3-button b3-button--outline fn__flex-center fn__size200"
-                style="background-color: {callout.box.dark}; color: white;"
-                on:click={(e) => changeColor(e, "box", "dark")}
-            >
-                {I18n.boxShadow}
-            </button>
+            <div class="color-input-group">
+                <button
+                    class="b3-button b3-button--outline fn__flex-center"
+                    style="background-color: {callout.bg.dark}; color: white;"
+                    on:click={(e) => changeColor(e, "bg", "dark")}
+                >
+                    {I18n.bgColor}
+                </button>
+                <input
+                    type="text"
+                    class="b3-text-field hex-input"
+                    value={hexColors.bg.dark}
+                    style="box-shadow: 0 0 2px 3px {callout.bg.dark};"
+                    on:input={(e) => handleHexInput(e, "bg", "dark")}
+                />
+            </div>
+            <div class="color-input-group">
+                <button
+                    class="b3-button b3-button--outline fn__flex-center"
+                    style="background-color: {callout.box.dark}; color: white;"
+                    on:click={(e) => changeColor(e, "box", "dark")}
+                >
+                    {I18n.boxShadow}
+                </button>
+                <input
+                    type="text"
+                    class="b3-text-field hex-input"
+                    value={hexColors.box.dark}
+                    style="box-shadow: 0 0 2px 3px {callout.box.dark};"
+                    on:input={(e) => handleHexInput(e, "box", "dark")}
+                />
+            </div>
         </div>
     </div>
 
-    <div class="fn__flex fn__flex-column bordered" style="gap: 10px;">
+    <div class="bordered" style="gap: 10px; display: flex; flex-direction: column;">
         <CalloutItem {callout} mode="light" />
         <CalloutItem {callout} mode="dark" />
     </div>
 
     <div class="fn__flex-1" />
+
     <div class="action-btns fn__flex" style="gap: 10px;">
         <button
             class="b3-button b3-button--text"
@@ -313,18 +444,15 @@
 </sectioin>
 
 {#if PickColor}
-    <!-- <rgba-string-color-picker
-        color={picker.color}
-        on:color-changed={handleColorChange}
+    <div
+        class="fn__flex color-picker"
         style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;"
     >
-    </rgba-string-color-picker> -->
-    <div class="fn__flex color-picker" style="position: fixed; left: {picker.x}; top: {picker.y}; z-index: 99;">
         <ColorPicker
             textInputModes={["rgb"]}
             isAlpha={true}
             isDialog={false}
-            bind:rgb={picker.color}
+            bind:rgb={picker.colors[picker.type][picker.mode]}
             on:input={handleColorChange}
         />
     </div>
@@ -344,6 +472,7 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        flex: 1;
     }
 
     div.bordered {
@@ -373,6 +502,23 @@
             gap: 10px;
             align-items: center;
             justify-content: end;
+        }
+    }
+
+    .color-input-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 8px;
+
+        button {
+            text-align: center;
+            width: 100px;
+        }
+
+        .hex-input {
+            width: 100px;
+            text-align: center;
         }
     }
 </style>

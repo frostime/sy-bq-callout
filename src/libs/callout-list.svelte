@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { Dialog } from "siyuan";
     import CalloutItem from "./callout-item.svelte";
     import CalloutEditor from "./callout-editor.svelte";
 
     import { draggingSource } from "./store";
     import { i18n } from "@/callout";
+    import { svelteDialog } from "./dialog";
 
     export let callouts: ICallout[];
     export let type: string;
@@ -12,32 +12,30 @@
 
     const editCallout = (callout: ICallout) => {
         if (!callout) return;
-        let dialog = new Dialog({
+
+        const { dialog, component } = svelteDialog({
             title: i18n.editcallout,
-            content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
-            width: "35rem",
-            height: "35rem",
-            destroyCallback: () => {
-                pannel.$destroy();
-            },
+            constructor: (container) => new CalloutEditor({
+                target: container,
+                props: {
+                    CreatedCallouts: callouts.map(
+                        (callout) => callout.id,
+                    ).filter((id) => id !== callout.id),
+                    callout: callout,
+                },
+            }),
+            width: "40rem",
+            height: "38rem",
         });
-        let pannel = new CalloutEditor({
-            target: dialog.element.querySelector("#CalloutEditor"),
-            props: {
-                CreatedCallouts: callouts.map(
-                    (callout) => callout.id,
-                ).filter((id) => id !== callout.id),
-                callout: callout,
-            },
-        });
-        pannel.$on("cancel", (e: CustomEvent<ICallout>) => {
+
+        component.$on("cancel", (e: CustomEvent<ICallout>) => {
             let index = callouts.findIndex(
                 (item) => item.id === e.detail.id,
             );
             callouts[index] = e.detail;
             dialog.destroy();
         });
-        pannel.$on("save", (e: CustomEvent<ICallout>) => {
+        component.$on("save", (e: CustomEvent<ICallout>) => {
             let index = callouts.findIndex(
                 (item) => item.id === e.detail.id,
             );
@@ -47,24 +45,20 @@
     };
 
     const newCallout = () => {
-        let dialog = new Dialog({
+        const { dialog, component } = svelteDialog({
             title: i18n.newcallout,
-            content: `<div id="CalloutEditor" style="height: 100%;"></div>`,
-            width: "30rem",
-            height: "32rem",
-            destroyCallback: () => {
-                pannel.$destroy();
-            },
-        });
-        let pannel = new CalloutEditor({
-            target: dialog.element.querySelector("#CalloutEditor"),
+            constructor: (container) => new CalloutEditor({
+            target: container,
             props: {
                 CreatedCallouts: callouts.map((callout) => callout.id),
                 mode: "new"
             },
+        }),
+            width: "40rem",
+            height: "38rem",
         });
-        pannel.$on("cancel", () => dialog.destroy());
-        pannel.$on("save", (e: CustomEvent<ICallout>) => {
+        component.$on("cancel", () => dialog.destroy());
+        component.$on("save", (e: CustomEvent<ICallout>) => {
             callouts = [...callouts, e.detail];
             dialog.destroy();
         });

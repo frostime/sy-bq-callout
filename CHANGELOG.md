@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0 | 2025-01-19
+
+- ✨ feat: 优化颜色选择器
+
 ## v1.1.1 | 2024-07-01
 
 - 🐛 fix: 在 Savor 主题下，段落模式的 Callout 的 font-weight 为粗体。
