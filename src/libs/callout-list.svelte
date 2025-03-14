@@ -24,8 +24,8 @@
                     callout: callout,
                 },
             }),
-            width: "40rem",
-            height: "38rem",
+            width: "42rem",
+            height: "40rem",
         });
 
         component.$on("cancel", (e: CustomEvent<ICallout>) => {
@@ -54,8 +54,8 @@
                 mode: "new"
             },
         }),
-            width: "40rem",
-            height: "38rem",
+            width: "42rem",
+            height: "40rem",
         });
         component.$on("cancel", () => dialog.destroy());
         component.$on("save", (e: CustomEvent<ICallout>) => {

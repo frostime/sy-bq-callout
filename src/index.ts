@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2024-07-13 19:51:14
+ * @LastEditTime : 2025-03-14 19:00:44
  * @Description  : 
  */
 import {
@@ -143,12 +143,25 @@ export default class BqCalloutPlugin extends Plugin {
             let filterSuffix = mode ? `-${mode}` : "";
             let modenameSuffix = mode ? ` | ${modeName}` : "";
 
+            // Default filters
+            const defaultFilters = [
+                `callout-${ct.id}${filterSuffix}`,
+                `bq-${ct.id}${filterSuffix}`,
+                callout.calloutName(ct) + filterSuffix
+            ];
+
+            // Add custom slash filters if available
+            let filters = [...defaultFilters];
+            if (ct.customSlash) {
+                const customFilters = ct.customSlash.split(',')
+                    .map(filter => filter.trim())
+                    .filter(filter => filter.length > 0)
+                    .map(filter => filter + filterSuffix);
+                filters = [...customFilters, ...defaultFilters];
+            }
+
             this.protyleSlash.push({
-                filter: [
-                    `callout-${ct.id}${filterSuffix}`,
-                    `bq-${ct.id}${filterSuffix}`,
-                    callout.calloutName(ct) + filterSuffix
-                ],
+                filter: filters,
                 html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}${modenameSuffix}</span>`,
                 id: ct.id + filterSuffix,
                 callback: (protyle: Protyle) => {
@@ -213,7 +226,7 @@ export default class BqCalloutPlugin extends Plugin {
         });
 
         submenus.push({
-            element: callout.createCalloutButton("", {id: this.i18n.mode.big, icon: '🇹'}),
+            element: callout.createCalloutButton("", { id: this.i18n.mode.big, icon: '🇹' }),
             click: () => {
                 setBlockAttrs(ele.getAttribute("data-node-id"), {
                     'custom-callout-mode': 'big',
@@ -221,7 +234,7 @@ export default class BqCalloutPlugin extends Plugin {
             }
         });
         submenus.push({
-            element: callout.createCalloutButton("", {id: this.i18n.mode.small, icon: '🇵'}),
+            element: callout.createCalloutButton("", { id: this.i18n.mode.small, icon: '🇵' }),
             click: () => {
                 setBlockAttrs(ele.getAttribute("data-node-id"), {
                     'custom-callout-mode': 'small',

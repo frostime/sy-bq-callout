@@ -69,7 +69,8 @@
         "pasteEmpty": "粘贴内容为空",
         "slashCommand": {
             "title": "✒️ / 命令",
-            "desc": "如果模式被选中，则可以在 / 命令中插入指定模式的 Callout"
+            "desc": "如果模式被选中，则可以在 / 命令中插入指定模式的 Callout",
+            "custom": "自定义编辑器命令 /<filter>（用逗号 \",\" 分隔）"
         },
         "chooseIcon": "点击选择图标"
     },

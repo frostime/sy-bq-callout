@@ -3,7 +3,7 @@
  Author       : frostime
  Date         : 2024-05-25 20:27:24
  FilePath     : /src/libs/callout-editor.svelte
- LastEditTime : 2025-01-19 19:09:55
+ LastEditTime : 2025-03-14 19:25:08
  Description  : 
 -->
 <script lang="ts">
@@ -36,6 +36,7 @@
             big: false,
             small: false,
         },
+        customSlash: "",
     };
     export let mode: "new" | "edit" = "edit";
 
@@ -187,7 +188,17 @@
     };
 
     // Update the color conversion utilities
-    function rgbaToHex({ r, g, b, a }: { r: number; g: number; b: number; a: number }): string {
+    function rgbaToHex({
+        r,
+        g,
+        b,
+        a,
+    }: {
+        r: number;
+        g: number;
+        b: number;
+        a: number;
+    }): string {
         const toHex = (n: number) => {
             const hex = Math.round(n).toString(16);
             return hex.length === 1 ? "0" + hex : hex;
@@ -197,7 +208,12 @@
         return `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(alpha)}`;
     }
 
-    function hexToRgba(hex: string): { r: number; g: number; b: number; a: number } {
+    function hexToRgba(hex: string): {
+        r: number;
+        g: number;
+        b: number;
+        a: number;
+    } {
         // Remove the hash if present
         hex = hex.replace("#", "");
 
@@ -235,7 +251,8 @@
             // Update picker color
             picker.colors[type][mode] = rgba;
             // Update callout color
-            callout[type][mode] = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+            callout[type][mode] =
+                `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
         }
     }
 
@@ -252,15 +269,21 @@
     };
 </script>
 
-<sectioin class="callout-editor" on:click={(e) => {
-    const targetElement = e.target;
-    // 如果不是按钮
-    if (PickColor && targetElement.tagName !== "BUTTON") {
-        PickColor = false;
-    }
-}}>
+<sectioin
+    class="callout-editor"
+    on:click={(e) => {
+        const targetElement = e.target;
+        // 如果不是按钮
+        if (PickColor && targetElement.tagName !== "BUTTON") {
+            PickColor = false;
+        }
+    }}
+>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="fn__flex" style="font-size: 1.2rem; align-items: center; gap: 5px;">
+    <div
+        class="fn__flex"
+        style="font-size: 1.2rem; align-items: center; gap: 5px;"
+    >
         <div>ID:</div>
         <div class="fn__space" />
         {#if callout.custom}
@@ -282,33 +305,50 @@
         <div class="callout-icon" on:click={chooseIcon}>{callout.icon}</div>
     </div>
 
-    <div class="item-wrap fn__flex b3-label config__item" style="padding: 0px;">
-        <div class="fn__flex-1">
-            <span style="font-weight: bold;">{I18n.slashCommand.title}</span>
-            <div class="b3-label__text">
-                {I18n.slashCommand.desc}
+    <div class="item-wrap config__item" style="padding: 3px 0px;">
+        <div
+            class="fn__flex"
+            style="border-bottom: 1px solid var(--b3-border-color); padding-bottom: 5px;"
+        >
+            <div class="fn__flex-1">
+                <span style="font-weight: bold;">{I18n.slashCommand.title}</span
+                >
+                <div class="b3-label__text">
+                    {I18n.slashCommand.desc}
+                </div>
+            </div>
+            <span class="fn__space" />
+            <div class="fn__flex fn__flex-column" style="gap: 5px;">
+                <div class="fn__flex" style="gap: 5px;">
+                    <span style="flex: 1;">{i18n.mode.big}</span>
+                    <input
+                        class="b3-switch fn__flex-center"
+                        data-id={callout.id}
+                        type="checkbox"
+                        bind:checked={slash.big}
+                    />
+                </div>
+                <div class="fn__flex" style="gap: 5px;">
+                    <span style="flex: 1;">{i18n.mode.small}</span>
+                    <input
+                        class="b3-switch fn__flex-center"
+                        data-id={callout.id}
+                        type="checkbox"
+                        bind:checked={slash.small}
+                    />
+                </div>
             </div>
         </div>
-        <span class="fn__space" />
-        <div class="fn__flex fn__flex-column" style="gap: 5px;">
-            <div class="fn__flex" style="gap: 5px;">
-                <span style="flex: 1;">{i18n.mode.big}</span>
-                <input
-                    class="b3-switch fn__flex-center"
-                    data-id={callout.id}
-                    type="checkbox"
-                    bind:checked={slash.big}
-                />
-            </div>
-            <div class="fn__flex" style="gap: 5px;">
-                <span style="flex: 1;">{i18n.mode.small}</span>
-                <input
-                    class="b3-switch fn__flex-center"
-                    data-id={callout.id}
-                    type="checkbox"
-                    bind:checked={slash.small}
-                />
-            </div>
+
+        <div
+            style="gap: 5px; display: flex; flex-direction: column; align-items: flex-start; padding-top: 5px;"
+        >
+            <span class="b3-label__text">{I18n.slashCommand.custom}</span>
+            <input
+                class="b3-text-field fn__flex-center"
+                style="width: 100%;"
+                bind:value={callout.customSlash}
+            />
         </div>
     </div>
 
@@ -387,7 +427,10 @@
         </div>
     </div>
 
-    <div class="bordered" style="gap: 10px; display: flex; flex-direction: column;">
+    <div
+        class="bordered"
+        style="gap: 10px; display: flex; flex-direction: column;"
+    >
         <CalloutItem {callout} mode="light" />
         <CalloutItem {callout} mode="dark" />
     </div>

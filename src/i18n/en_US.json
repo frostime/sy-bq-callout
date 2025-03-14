@@ -69,7 +69,8 @@
         "pasteEmpty": "Paste content is empty",
         "slashCommand": {
             "title": "✒️ / Command",
-            "desc": "If set，you can insert the callout with this mode in `/` menu"
+            "desc": "If set，you can insert the callout with this mode in `/` menu",
+            "custom": "Custom filter /<filter> (separated by comma ,)"
         },
         "chooseIcon": "Click to select"
     },

@@ -36,6 +36,7 @@ interface ICallout {
         big?: boolean;
         small?: boolean;
     }
+    customSlash?: string;
 }
 
 /**
