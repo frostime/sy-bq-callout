@@ -173,7 +173,9 @@ html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-callout].bq {
 
     >[data-node-id]:not(:first-child) {
         margin-left: 2.2em !important;
-        padding-left: 0px !important;
+        &:not(.bq) {
+            padding-left: 0px !important;
+        }
 
         &[data-type="NodeList"] {
             margin-left: 2.0em !important;
