@@ -44,19 +44,23 @@
 
 /*Folded callout style*/
 .protyle-wysiwyg [data-node-id][fold="1"].bq {
-    &[custom-b], &[custom-callout] {
+
+    &[custom-b],
+    &[custom-callout] {
         opacity: 1 !important;
         height: var(--callout-fold-height) !important;
 
         &>div[data-node-id]:first-child {
             display: block;
             font-size: var(--callout-fold-font-size) !important;
+
             // 有些主题会擅自显示一个“blockquote”
-            &::before, &::after {
+            &::before,
+            &::after {
                 display: none;
             }
 
-            & > * {
+            &>* {
                 display: initial;
             }
         }
@@ -65,6 +69,7 @@
             top: var(--callout-fold-icon-top);
             font-size: var(--callout-fold-font-size);
         }
+
         &::before {
             display: inline-block;
             content: var(--callout-fold-icon);
@@ -89,10 +94,24 @@
  * https://github.com/frostime/sy-bq-callout/issues/13
  * https://github.com/frostime/sy-bq-callout/issues/14
 */
-html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
-    &.protyle-wysiwyg--hl, &.protyle-wysiwyg--select {
+html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq,
+html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-callout].bq {
+
+    &.protyle-wysiwyg--hl,
+    &.protyle-wysiwyg--select {
         background-color: var(--b3-theme-primary-lightest) !important;
         // border: 2px solid var(--b3-theme-primary-light) !important;
+    }
+}
+
+
+// https://github.com/frostime/sy-bq-callout/issues/22
+.protyle-wysiwyg div.bq[custom-b],
+.protyle-wysiwyg div.bq[custom-callout] {
+
+    &.protyle-wysiwyg--select::after,
+    &.protyle-wysiwyg--hl::after {
+        background: transparent;
     }
 }
 
@@ -152,7 +171,7 @@ html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
     //     // }
     // }
 
-    > [data-node-id]:not(:first-child) {
+    >[data-node-id]:not(:first-child) {
         margin-left: 2.2em !important;
         padding-left: 0px !important;
 
@@ -201,6 +220,7 @@ html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
 }
 
 .protyle-wysiwyg {
+
     .bq[custom-b]:not([custom-callout-mode])::after,
     .bq[custom-callout]:not([custom-callout-mode])::after {
         top: var(--callout-default-icon-top);
@@ -211,6 +231,7 @@ html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
 
 
 .protyle-wysiwyg {
+
     .bq[custom-b][custom-callout-mode="big"]::after,
     .bq[custom-callout][custom-callout-mode="big"]::after {
         top: var(--callout-big-icon-top);
@@ -220,6 +241,7 @@ html[data-theme-mode] .protyle-wysiwyg [data-node-id][custom-b].bq {
 }
 
 .protyle-wysiwyg {
+
     .bq[custom-b][custom-callout-mode="small"]::after,
     .bq[custom-callout][custom-callout-mode="small"]::after {
         top: var(--callout-small-icon-top);
