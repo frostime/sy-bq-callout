@@ -1,6 +1,6 @@
 {
   "name": "sy-bq-callout",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "type": "module",
   "description": "",
   "repository": "",
@@ -24,7 +24,7 @@
     "minimist": "^1.2.8",
     "rollup-plugin-livereload": "^2.0.5",
     "sass": "^1.72.0",
-    "siyuan": "0.9.9",
+    "siyuan": "1.1.2",
     "svelte": "^4.2.17",
     "svelte-awesome-color-picker": "^3.1.0",
     "ts-node": "^10.9.2",

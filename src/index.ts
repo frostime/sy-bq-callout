@@ -3,7 +3,7 @@
  * @Author       : Yp Z
  * @Date         : 2023-10-02 20:30:13
  * @FilePath     : /src/index.ts
- * @LastEditTime : 2025-03-14 19:00:44
+ * @LastEditTime : 2025-08-23 16:53:41
  * @Description  : 
  */
 import {
@@ -11,18 +11,20 @@ import {
     Menu,
     Protyle,
     showMessage,
-    Dialog
+    Dialog,
+    Lute
 } from "siyuan";
 import "@/index.scss";
 
 // import { changelog } from "sy-plugin-changelog";
 
-import { setBlockAttrs, getFile } from "./api"
+import { setBlockAttrs, getFile, insertBlock, updateBlock } from "./api"
 import * as I18n from "./i18n/zh_CN.json";
 import * as callout from "./callout";
 import { DynamicStyle, StyleDOMId } from "./style";
 
 import Settings from './libs/settings.svelte';
+import { siyuanVersion } from "./libs/utils";
 
 
 const SettingName = 'setting.json';
@@ -54,10 +56,12 @@ async function exportStyle() {
 
 export default class BqCalloutPlugin extends Plugin {
 
+    // @ts-ignore
     declare i18n: typeof I18n;
 
     private blockIconEventBindThis = this.blockIconEvent.bind(this);
     private dynamicStyle: DynamicStyle;
+    private incompatible: boolean;  // 3.3.0 有问题需要特殊处理
 
     configs: IConfigs = {
         EmojiFont: `'Twitter Emoji', 'Noto Color Emoji', 'OpenMoji', sans-serif`,
@@ -94,6 +98,11 @@ export default class BqCalloutPlugin extends Plugin {
 
         this.dynamicStyle.update();
         this.resetSlash();
+
+        this.incompatible = false
+        if (siyuanVersion().compare('3.3.0') >= 0) {
+            this.incompatible = true;
+        }
 
         // changelog(this, 'i18n/CHANGELOG.md').then(ans => {
         //     if (ans.Dialog) {
@@ -164,15 +173,49 @@ export default class BqCalloutPlugin extends Plugin {
                 filter: filters,
                 html: `<span class="b3-menu__label">${ct.icon}${callout.calloutName(ct)}${modenameSuffix}</span>`,
                 id: ct.id + filterSuffix,
-                callback: (protyle: Protyle) => {
-                    console.log('Insert', ct.id, mode);
+                callback: (protyle: Protyle, nodeElement: HTMLElement) => {
+                    // console.log('Insert', ct.id, mode);
                     let toInsert = "";
+                    const attrs = {
+                        [`custom-${calloutAttr}`]: ct.id
+                    }
                     if (mode === undefined) {
                         toInsert = `>\n{: custom-${calloutAttr}="${ct.id}" }`;
                     } else {
                         toInsert = `>\n{: custom-${calloutAttr}="${ct.id}" custom-callout-mode="${mode}" }`;
+                        attrs[`custom-callout-mode`] = mode;
                     }
-                    protyle.insert(toInsert);
+
+                    // https://github.com/frostime/sy-bq-callout/issues/24#issuecomment-3197505513
+                    if (this.incompatible) {
+                        protyle.insert(window.Lute.Caret);
+                        const nid = nodeElement.getAttribute('data-node-id');
+                        // 在下方插入块
+                        insertBlock('markdown', toInsert, null, nid).then(operation => {
+                            const id = operation[0].doOperations[0].id;
+                            const ele = document.querySelector(`[data-node-id="${id}"]`) as HTMLElement;
+                            // 鼠标
+                            protyle.focusBlock(ele, true);
+                        });
+                        // const text = (nodeElement.querySelector('[contenteditable]') as HTMLElement).innerText;
+                        // console.debug(text)
+                        // if (text && text !== window.Lute.Caret) {
+                        //     // 在下方插入块
+                        //     insertBlock('markdown', toInsert, null, nid).then(operation => {
+                        //         const id = operation[0].doOperations[0].id;
+                        //         const ele = document.querySelector(`[data-node-id="${id}"]`) as HTMLElement;
+                        //         // 鼠标
+                        //         protyle.focusBlock(ele, true);
+                        //     })
+                        // } else {
+                        //     setTimeout(async () => {
+                        //         await updateBlock('markdown', '> ', nid);
+                        //         await setBlockAttrs(nid, attrs);
+                        //     }, 10);
+                        // }
+                    } else {
+                        protyle.insert(toInsert);
+                    }
                 }
             });
         }
