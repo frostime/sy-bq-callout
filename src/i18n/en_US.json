@@ -48,6 +48,11 @@
             "description": "If you find that the Callout icon and text are not aligned, you can change the following variable (Larger the value, lower the icon)",
             "big": "Title Mode",
             "small": "Para  Mode"
+        },
+        "CopyCSS": {
+            "title": "Copy Current CSS Styles",
+            "description": "If you don't plan to use this plugin but still want the past styles to remain effective, you can copy the CSS styles and put them into code snippets to make them globally effective",
+            "copied": "The CSS code has been copied to your clipboard. You can now paste it into your code snippet and set it to apply globally."
         }
     },
     "mode": {

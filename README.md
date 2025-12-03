@@ -2,6 +2,13 @@
 
 Ported from the Savor theme, this plugin implements simple callout styles.
 
+> [!TIP] 
+> **Migration Guide**
+> 
+> SiYuan Note is expected to natively support the Callout syntax starting from version v3.5.0. Unless you have specific requirements, it is **recommended that users utilize the native functionality** directly.
+>
+> If you have already created a large number of Callout blocks using this plugin and do not wish to lose them, you can **copy** the CSS styles for the Callouts from the settings panel and **paste** them into SiYuan's code snippets. This way, even if you **uninstall** the plugin, the previously created Callout styles will continue to display correctly.
+
 ## Basic Usage
 
 - Click on a quote block to convert it into a callout.

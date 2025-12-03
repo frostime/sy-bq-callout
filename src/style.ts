@@ -7,6 +7,33 @@
  * @Description  : 
  */
 import type BqCalloutPlugin from ".";
+import { getFile } from "./api";
+
+export async function exportStyle() {
+    let indexCss: string = await getFile(`/data/plugins/sy-bq-callout/index.css`);
+    // if (!indexCss) {
+    //     indexCss = "";
+    //     showMessage('index.css not found', 4000, 'error');
+    // }
+    const startMark = `/* Callout Style Start */`;
+    const endMark = `/* Callout Style End */`;
+    //获取 start 和 end 之间的内容
+    const start = indexCss.indexOf(startMark);
+    const end = indexCss.indexOf(endMark);
+    indexCss = indexCss.substring(start + startMark.length, end).trim();
+
+    let styleDom = document.getElementById(StyleDOMId);
+    const styles = indexCss + '\n\n' + (styleDom ? styleDom.innerHTML : '');
+    return styles;
+    //download
+    // const blob = new Blob([styles], { type: 'text/css' });
+    // const url = URL.createObjectURL(blob);
+    // const a = document.createElement('a');
+    // a.href = url;
+    // a.download = 'callout-style.css';
+    // a.click();
+    // URL.revokeObjectURL(url);
+}
 
 export const StyleDOMId = 'snippetCSS-BqCallout';
 const TemplateEmojiFont = `.protyle-wysiwyg .bq[custom-b]::after,

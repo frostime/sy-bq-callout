@@ -8,18 +8,21 @@
 -->
 <script lang="ts">
     import { setContext } from "svelte";
-    import { confirm } from "siyuan";
+    import { confirm, showMessage } from "siyuan";
     import SettingItemWrap from "./setting-item-wrap.svelte";
     import CalloutList from "./callout-list.svelte";
     import { DefaultCallouts, queryCalloutBlock } from "@/callout";
 
+    import { exportStyle } from "@/style";
+
     import type BqCalloutPlugin from "..";
+    import { simpleDialog } from "./dialog";
 
     export let plugin: BqCalloutPlugin;
 
     let i18n = plugin.i18n;
 
-    setContext('EmojiFont', plugin.configs.EmojiFont);
+    setContext("EmojiFont", plugin.configs.EmojiFont);
 
     let configs = {
         EmojiFont: {
@@ -31,6 +34,10 @@
             title: i18n.setting.CustomCSS.title,
             description: i18n.setting.CustomCSS.description,
             value: plugin.configs.CustomCSS,
+        },
+        CopyCSS: {
+            title: i18n.setting.CopyCSS.title,
+            description: i18n.setting.CopyCSS.description,
         },
         CustomCallout: {
             title: "Custom Callout",
@@ -72,15 +79,11 @@
             .replace("{0}", callout.icon)
             .replace("{1}", callout.id)
             .replace("{2}", blocks.length.toString());
-        confirm(
-            "确实删除?", text,
-            () => {
-                configs.CustomCallout.value =
-                    configs.CustomCallout.value.filter(
-                        (item) => item.id !== cid,
-                    );
-            },
-        );
+        confirm("确实删除?", text, () => {
+            configs.CustomCallout.value = configs.CustomCallout.value.filter(
+                (item) => item.id !== cid,
+            );
+        });
     };
 </script>
 
@@ -140,10 +143,7 @@
         description={i18n.setting.CustomCallout.description}
         direction="row"
     >
-        <CalloutList
-            bind:callouts={configs.CustomCallout.value}
-            type="Custom"
-        >
+        <CalloutList bind:callouts={configs.CustomCallout.value} type="Custom">
             <div
                 class="toolbar__item ariaLabel"
                 aria-label={i18n.delete}
@@ -160,13 +160,25 @@
         direction="column"
     >
         <div class="fn__flex fn__flex-column" style="gap: 2px;">
-            <div class="fn__flex fn__flex-1" style="gap: 2px; align-items: center;">
+            <div
+                class="fn__flex fn__flex-1"
+                style="gap: 2px; align-items: center;"
+            >
                 <span>{i18n.setting.IconTop.big}</span>
-                <input class="b3-text-field" bind:value={plugin.configs.VarIconTop.Big}/>
+                <input
+                    class="b3-text-field"
+                    bind:value={plugin.configs.VarIconTop.Big}
+                />
             </div>
-            <div class="fn__flex  fn__flex-1" style="gap: 2px; align-items: center;">
+            <div
+                class="fn__flex fn__flex-1"
+                style="gap: 2px; align-items: center;"
+            >
                 <span>{i18n.setting.IconTop.small}</span>
-                <input class="b3-text-field" bind:value={plugin.configs.VarIconTop.Small}/>
+                <input
+                    class="b3-text-field"
+                    bind:value={plugin.configs.VarIconTop.Small}
+                />
             </div>
         </div>
     </SettingItemWrap>
@@ -182,5 +194,36 @@
             spellcheck="false"
             bind:value={configs.CustomCSS.value}
         ></textarea>
+    </SettingItemWrap>
+
+    <SettingItemWrap
+        title={configs.CopyCSS.title}
+        description={configs.CopyCSS.description}
+        direction="column"
+    >
+        <button
+            class="b3-button b3-button--text"
+            on:click={async () => {
+                let styles = await exportStyle();
+                // copy to clipboard
+                navigator.clipboard.writeText(styles);
+                showMessage("Copied!");
+                const html = `<div style="width: 100%; height: 100%; overflow: auto; padding: 10px; box-sizing: border-box;">
+                <p>${i18n.setting.CopyCSS.copied}</p>
+                <pre style="background: #f5f5f5; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: var(--b3-font-family-code);">${styles}</pre>
+                </div>`;
+                const ele = document.createElement("div");
+                ele.innerHTML = html;
+                ele.style.display = "contents";
+                simpleDialog({
+                    title: i18n.setting.CopyCSS.title,
+                    ele: ele,
+                    width: "750px",
+                    height: "70%",
+                });
+            }}
+        >
+            Copy
+        </button>
     </SettingItemWrap>
 </div>

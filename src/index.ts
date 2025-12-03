@@ -29,30 +29,6 @@ import Settings from './libs/settings.svelte';
 
 const SettingName = 'setting.json';
 
-async function exportStyle() {
-    let indexCss: string = await getFile(`/data/plugins/sy-bq-callout/index.css`);
-    if (!indexCss) {
-        indexCss = "";
-        showMessage('index.css not found', 4000, 'error');
-    }
-    const startMark = `/* Callout Style Start */`;
-    const endMark = `/* Callout Style End */`;
-    //获取 start 和 end 之间的内容
-    const start = indexCss.indexOf(startMark);
-    const end = indexCss.indexOf(endMark);
-    indexCss = indexCss.substring(start + startMark.length, end).trim();
-
-    let styleDom = document.getElementById(StyleDOMId);
-    const styles = indexCss + '\n\n' + (styleDom ? styleDom.innerHTML : '');
-    //download
-    const blob = new Blob([styles], { type: 'text/css' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'callout-style.css';
-    a.click();
-    URL.revokeObjectURL(url);
-}
 
 const lute = window.Lute.New();
 
@@ -81,9 +57,6 @@ export default class BqCalloutPlugin extends Plugin {
     async onload() {
         callout.setUp(this);
         this.dynamicStyle = new DynamicStyle(this);
-        if (process.env.DEV_MODE === 'true') {
-            globalThis.exportStyle = exportStyle;
-        }
 
         this.eventBus.on("click-blockicon", this.blockIconEventBindThis);
 
